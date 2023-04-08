@@ -1,4 +1,4 @@
-import type { V2_MetaFunction } from "@remix-run/cloudflare";
+import type { V2_MetaFunction } from "@remix-run/node";
 import CountDown from "~/components/count-down";
 
 export const meta: V2_MetaFunction = () => {
