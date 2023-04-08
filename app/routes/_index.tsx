@@ -11,11 +11,14 @@ export default function Index() {
   );
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <p>Days: {days}</p>
-      <p>Hours: {hours}</p>
-      <p>Minutes: {minutes}</p>
-      <p>Seconds: {seconds}</p>
+    <div className="w-full min-h-screen bg-black text-white flex flex-col gap-10 justify-center items-center">
+      <h1>We're getting married!</h1>
+      <div className="flex gap-5">
+        <p>Days: {days}</p>
+        <p>Hours: {hours}</p>
+        <p>Minutes: {minutes}</p>
+        <p>Seconds: {seconds}</p>
+      </div>
     </div>
   );
 }
