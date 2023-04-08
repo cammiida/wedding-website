@@ -5,7 +5,7 @@ export const formStrategy = new FormStrategy(async ({ form }) => {
   const passphrase = form.get("passphrase");
 
   if (passphrase === process.env.PASSPHRASE) {
-    return { loggedIn: true };
+    return true;
   }
   throw new AuthorizationError("Not a correct passphrase.");
 });
