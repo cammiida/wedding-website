@@ -1,10 +1,8 @@
 import { useCountDown } from "~/hooks/useCountDown";
 import NumberBox from "./number-box";
 
-const CountDown = () => {
-  const { days, hours, minutes, seconds } = useCountDown(
-    new Date("2024-06-14")
-  );
+const CountDown = ({ countDownDate }: { countDownDate: Date }) => {
+  const { days, hours, minutes, seconds } = useCountDown(countDownDate);
 
   return (
     <div className="">
