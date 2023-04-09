@@ -16,7 +16,9 @@ const Header = () => {
         <div />
       )}
       <ul className="flex justify-center">
-        <NavLink to="/">Camilla + Tyler</NavLink>
+        <NavLink to="/" className="text-lg font-semibold">
+          Camilla + Tyler
+        </NavLink>
       </ul>
       {isAuthenticated ? (
         <>
