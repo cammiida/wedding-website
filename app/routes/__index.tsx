@@ -14,10 +14,7 @@ export const meta: V2_MetaFunction = () => {
 export default function Index() {
   return (
     <Layout>
-      <div className="w-full bg-emerald-800 text-white flex flex-col gap-5 justify-center items-center p-8 rounded-sm">
-        <h1 className="text-4xl text-primary font-semibold">
-          Tyler & Camilla Wedding
-        </h1>
+      <div className="w-full text-white flex flex-col gap-5 justify-center items-center p-8 rounded-sm">
         <CountDown countDownDate={new Date("2024-06-15")} />
       </div>
     </Layout>

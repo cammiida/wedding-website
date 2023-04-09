@@ -7,9 +7,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLocation,
 } from "@remix-run/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 import stylesheet from "~/tailwind.css";
 import { authenticator } from "./services/authenticator.server";
@@ -34,15 +33,7 @@ export default function App() {
       </head>
       <body className="font-redhat ">
         <AnimatePresence mode="wait" initial={false}>
-          <motion.main
-            key={useLocation().pathname}
-            initial={{ x: "-10%", opacity: 0 }}
-            animate={{ x: "0", opacity: 1 }}
-            exit={{ y: "-10%", opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Outlet />
-          </motion.main>
+          <Outlet />
         </AnimatePresence>
         <ScrollRestoration />
         <Scripts />

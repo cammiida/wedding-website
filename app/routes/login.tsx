@@ -28,7 +28,7 @@ const Login = () => {
             name="passphrase"
             placeholder="Password to enter site here"
             type="password"
-            className=" border-2 rounded-sm border-cyan-800 w-96 h-10 p-3"
+            className="border-2 rounded-sm border-cyan-800 w-96 h-10 p-3 text-black"
           />
         </Form>
       </div>
