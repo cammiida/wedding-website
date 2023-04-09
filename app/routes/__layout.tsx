@@ -31,7 +31,7 @@ const Layout = () => {
             alt="Two peoples feet in the heather overlooking a body of water and the sun setting behind some mountains."
             className="absolute h-full w-full z-0 bg-fixed  object-cover top-0 left-0 max-h-screen overflow-y-clip"
           />
-          <div className="absolute top-0 left-0 z-9 w-full h-full bg-gradient-radial from-transparent to-dark-grey" />
+          <div className="absolute top-0 left-0 z-9 w-full h-full bg-gradient-radial from-transparent to-grey-transparent" />
         </>
       )}
       <Header />

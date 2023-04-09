@@ -16,10 +16,10 @@ export async function loader({ request }: LoaderArgs) {
 
 const Login = () => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-grey-transparent p-8 rounded-md font-roboto">
+      <h1 className="text-3xl">Oh no! Looks like you're not logged in 😢</h1>
       <p className="max-w-md p-4 text-center">
-        Oh no, looks like you're not logged in! 😢 Enter the provided password
-        you have received in order to gain access.
+        Enter the provided password you have received in order to gain access.
       </p>
       <Form method="post">
         <input
