@@ -2,11 +2,16 @@
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    colors: {
-      yellow: "#FFD98F",
-      blue: "#3E85C6",
+    extend: {
+      colors: {
+        yellow: "#FFD98F",
+        blue: "#3E85C6",
+        "dark-grey": "#00000040",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
     },
-    extend: {},
     fontFamily: {
       redhat: ["Red Hat Text", "sans-serif"],
     },

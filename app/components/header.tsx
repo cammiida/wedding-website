@@ -46,7 +46,7 @@ const Header = () => {
         )}
         <ul className="flex justify-center items-center">
           <p className="text-xl">
-            <b>C+T</b> 15.06.24
+            <b>C&#10084;T</b> 15.06.24
           </p>
         </ul>
         {isAuthenticated ? (
