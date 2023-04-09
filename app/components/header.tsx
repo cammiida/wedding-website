@@ -6,52 +6,64 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed grid grid-cols-3 gap-4 top-0 p-4 w-full bg-transparent z-10">
-      {isAuthenticated ? (
-        <ul className="flex items-center gap-4">
-          <NavLink
-            to="/story"
-            className={({ isActive }) => (isActive ? "underline" : "")}
-          >
-            Our story
-          </NavLink>
-          <NavLink
-            to="/venue"
-            className={({ isActive }) => (isActive ? "underline" : "")}
-          >
-            The venue
-          </NavLink>
-        </ul>
-      ) : (
-        <div />
-      )}
-      <ul className="flex justify-center">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `text-lg font-bold ${isActive ? "underline" : ""}`
-          }
-        >
-          Camilla + Tyler
-        </NavLink>
-      </ul>
-      {isAuthenticated ? (
-        <>
-          <ul className="flex justify-end gap-4">
+    <div className="fixed h-20 top-0 p-4 w-full bg-transparent z-10 text-yellow flex justify-center">
+      <div className="grid grid-cols-3 gap-4 w-full max-w-6xl">
+        {isAuthenticated ? (
+          <ul className="flex items-center gap-4">
             <NavLink
-              to="/rsvp"
+              to="/"
               className={({ isActive }) => (isActive ? "underline" : "")}
             >
-              RSVP
+              Home
             </NavLink>
-            <Form method="post" action="/logout">
-              <button>Logout</button>
-            </Form>
+            <NavLink
+              to="/story"
+              className={({ isActive }) => (isActive ? "underline" : "")}
+            >
+              Story
+            </NavLink>
+            <NavLink
+              to="/travel"
+              className={({ isActive }) => (isActive ? "underline" : "")}
+            >
+              Travel
+            </NavLink>
+            <NavLink
+              to="/sleep"
+              className={({ isActive }) => (isActive ? "underline" : "")}
+            >
+              Sleep
+            </NavLink>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) => (isActive ? "underline" : "")}
+            >
+              Contact
+            </NavLink>
           </ul>
-        </>
-      ) : (
-        <div />
-      )}
+        ) : (
+          <div />
+        )}
+        <ul className="flex justify-center items-center">
+          <p className="text-xl">
+            <b>C+T</b> 15.06.24
+          </p>
+        </ul>
+        {isAuthenticated ? (
+          <>
+            <ul className="flex justify-end items-center gap-4">
+              <NavLink to="/rsvp" className="border-2 p-2 rounded-3xl">
+                RSVP by May 31, 2023
+              </NavLink>
+              <Form method="post" action="/logout">
+                <button>Logout</button>
+              </Form>
+            </ul>
+          </>
+        ) : (
+          <div />
+        )}
+      </div>
     </div>
   );
 };

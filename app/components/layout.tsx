@@ -6,9 +6,15 @@ type LayoutProps = PropsWithChildren;
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="text-gray-100 w-full min-h-screen bg-sky-300 flex justify-center items-center overflow-y-scroll">
+    <div className="w-full">
+      <img
+        src="/banner-image.png"
+        alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
+        className="absolute w-full z-0 bg-fixed bg-cover top-0 left-0"
+      />
+      <div className="absolute top-0 left-0 z-9 w-full h-60 bg-gradient-to-b from-blue" />
       <Header />
-      <div className="relative w-full py-10 flex justify-center items-center box-border">
+      <div className="relative w-full mt-20 flex justify-center items-center box-border">
         {children}
       </div>
     </div>

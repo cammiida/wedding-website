@@ -32,7 +32,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="font-redhat ">
+      <body className="font-redhat text-yellow">
         <Layout>
           <AnimatePresence mode="wait" initial={false}>
             <Outlet />
