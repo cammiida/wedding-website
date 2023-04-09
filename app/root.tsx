@@ -12,6 +12,7 @@ import { AnimatePresence } from "framer-motion";
 
 import stylesheet from "~/tailwind.css";
 import { authenticator } from "./services/authenticator.server";
+import Layout from "./components/layout";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -32,9 +33,11 @@ export default function App() {
         <Links />
       </head>
       <body className="font-redhat ">
-        <AnimatePresence mode="wait" initial={false}>
-          <Outlet />
-        </AnimatePresence>
+        <Layout>
+          <AnimatePresence mode="wait" initial={false}>
+            <Outlet />
+          </AnimatePresence>
+        </Layout>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

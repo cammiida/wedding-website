@@ -1,6 +1,5 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import CountDown from "~/components/count-down";
-import Layout from "~/components/layout";
 import { authenticator } from "~/services/authenticator.server";
 
 export async function loader({ request }: LoaderArgs) {
@@ -13,10 +12,8 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <Layout>
-      <div className="w-full text-white flex flex-col gap-5 justify-center items-center p-8 rounded-sm">
-        <CountDown countDownDate={new Date("2024-06-15")} />
-      </div>
-    </Layout>
+    <div className="w-full text-white flex flex-col gap-5 justify-center items-center p-8 rounded-sm">
+      <CountDown countDownDate={new Date("2024-06-15")} />
+    </div>
   );
 }
