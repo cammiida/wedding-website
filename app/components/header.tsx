@@ -6,8 +6,8 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed h-20 top-0 p-4 w-full bg-transparent z-10 text-yellow flex justify-center">
-      <div className="grid grid-cols-3 gap-4 w-full max-w-6xl">
+    <div className="fixed top-0 z-10 flex h-20 w-full justify-center bg-transparent p-4 text-yellow">
+      <div className="grid w-full max-w-6xl grid-cols-3 gap-4">
         {isAuthenticated ? (
           <ul className="flex items-center gap-4">
             <NavLink
@@ -44,8 +44,8 @@ const Header = () => {
         ) : (
           <div />
         )}
-        <ul className="flex justify-center items-center">
-          <p className="text-xl flex gap-1">
+        <ul className="flex items-center justify-center">
+          <p className="flex gap-1 text-xl">
             <b className="flex">
               C<img alt="heart" src="/heart-icon.svg" className="pb-2" />T
             </b>
@@ -54,10 +54,10 @@ const Header = () => {
         </ul>
         {isAuthenticated ? (
           <>
-            <ul className="flex justify-end items-center gap-4">
+            <ul className="flex items-center justify-end gap-4">
               <NavLink
                 to="/rsvp"
-                className="border-2 p-2 border-yellow rounded-3xl"
+                className="rounded-3xl border-2 border-yellow p-2"
               >
                 RSVP by May 31, 2023
               </NavLink>

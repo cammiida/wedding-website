@@ -12,10 +12,10 @@ const RSVP = () => {
   const [extraAttendees, setExtraAttendees] = useState<number[]>([]);
 
   return (
-    <div className="w-full flex justify-center pt-12">
+    <div className="flex w-full justify-center pt-12">
       <Form
         method="post"
-        className="bg-white text-gray-600 w-1/2 max-w-xl p-8 rounded-sm"
+        className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600"
       >
         <h1 className="text-2xl font-semibold">RSVP</h1>
         <h2 className="text-xl font-semibold text-red-500">
@@ -28,12 +28,12 @@ const RSVP = () => {
               name="email"
               type="email"
               required
-              className="border-2 w-full p-1"
+              className="w-full border-2 p-1"
             />
           </div>
           <div>
             <label htmlFor="name">Full name</label>
-            <input name="name" required className="border-2 w-full p-1" />
+            <input name="name" required className="w-full border-2 p-1" />
             {extraAttendees.map((attendeeId) => (
               <React.Fragment key={attendeeId}>
                 <label htmlFor={`attendeeName${attendeeId}`}>
@@ -42,7 +42,7 @@ const RSVP = () => {
                 <input
                   name={`attendeeName${attendeeId}`}
                   required
-                  className="border-2 w-full p-1"
+                  className="w-full border-2 p-1"
                 />
               </React.Fragment>
             ))}
@@ -67,7 +67,7 @@ const RSVP = () => {
           </div>
           <div>
             <label htmlFor="dietary">Dietary restrictions or preferences</label>
-            <input name="dietary" className="border-2 w-full p-1" />
+            <input name="dietary" className="w-full border-2 p-1" />
           </div>
           <div>
             <label htmlFor="roomType">Room type</label>
@@ -78,7 +78,7 @@ const RSVP = () => {
               very important that you get a certain type of room, please provide
               more details in the field below.
             </p>
-            <select name="roomType" className="border-2 w-full p-1">
+            <select name="roomType" className="w-full border-2 p-1">
               <option value="room1">Room type 1</option>
               <option value="room2">Room type 2</option>
               <option value="room3">Room type 3</option>
@@ -90,17 +90,17 @@ const RSVP = () => {
             <input
               name="roomTypeDetails"
               type="text"
-              className="border-2 w-full p-1"
+              className="w-full border-2 p-1"
             />
             <label htmlFor="partner">Partner</label>
-            <input name="name" className="border-2 w-full p-1" />
+            <input name="name" className="w-full border-2 p-1" />
           </div>
           <div>
             <p>Would you like a confirmation email with your answers?</p>
           </div>
           <button
             type="submit"
-            className="bg-blue-200 p-2 rounded-sm float-right mt-8"
+            className="bg-blue-200 float-right mt-8 rounded-sm p-2"
           >
             Submit
           </button>

@@ -19,23 +19,23 @@ const Layout = () => {
           <img
             src="/banner-image.png"
             alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
-            className="absolute w-full z-0 bg-fixed bg-cover top-0 left-0"
+            className="absolute left-0 top-0 z-0 w-full bg-cover bg-fixed"
           />
-          <div className="absolute top-0 left-0 z-9 w-full h-60 bg-gradient-to-b from-blue" />
+          <div className="z-9 absolute left-0 top-0 h-60 w-full bg-gradient-to-b from-blue" />
         </>
       )}
       {!isAuthenticated && (
         <>
           <img
             src="/login-bg.jpg"
-            alt="Two peoples feet in the heather overlooking a body of water and the sun setting behind some mountains."
-            className="absolute h-full w-full z-0 bg-fixed  object-cover top-0 left-0 max-h-screen overflow-y-clip"
+            alt="Two people's feet in the heather overlooking a body of water and the sun setting behind some mountains."
+            className="absolute left-0 top-0 z-0 h-full max-h-screen w-full overflow-y-clip bg-fixed object-cover"
           />
-          <div className="absolute top-0 left-0 z-9 w-full h-full bg-gradient-radial from-transparent to-grey-transparent" />
+          <div className="z-9 absolute left-0 top-0 h-full w-full bg-gradient-radial from-transparent to-grey-transparent" />
         </>
       )}
       <Header />
-      <div className="absolute min-h-[calc(100%-5rem)] w-full mt-20 flex justify-center items-center box-border">
+      <div className="absolute mt-20 box-border flex min-h-[calc(100%-5rem)] w-full items-center justify-center">
         <Outlet />
       </div>
     </>

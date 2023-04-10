@@ -4,9 +4,9 @@ type NumberBoxProps = { num: string | number; unit: string };
 
 const NumberBox: React.FC<NumberBoxProps> = ({ num, unit }: NumberBoxProps) => {
   return (
-    <div className="flex flex-col items-center mt-4 px-2 text-yellow">
-      <div className="relative bg-transparent flex flex-col items-center justify-center rounded-lg w-28 h-28 text-2xl md:text-4xl mt-4 ">
-        <div className="border-2 border-yellow w-full h-full flex justify-center items-center text-5xl">
+    <div className="mt-4 flex flex-col items-center px-2 text-yellow">
+      <div className="relative mt-4 flex h-28 w-28 flex-col items-center justify-center rounded-lg bg-transparent text-2xl md:text-4xl ">
+        <div className="flex h-full w-full items-center justify-center border-2 border-yellow text-5xl">
           {num}
         </div>
       </div>

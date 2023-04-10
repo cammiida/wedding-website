@@ -12,7 +12,7 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="w-full text-white flex flex-col gap-5 justify-center items-center p-8 rounded-sm">
+    <div className="flex w-full flex-col items-center justify-center gap-5 rounded-sm p-8 text-white">
       <CountDown countDownDate={new Date("2024-06-15")} />
     </div>
   );
