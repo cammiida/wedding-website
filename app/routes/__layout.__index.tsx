@@ -12,8 +12,18 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-5 rounded-sm p-8 text-white">
-      <CountDown countDownDate={new Date("2024-06-15")} />
-    </div>
+    <>
+      <div className="fixed flex min-h-screen w-full flex-col items-center justify-center rounded-sm p-8 pt-20 text-white">
+        <CountDown countDownDate={new Date("2024-06-15")} />
+      </div>
+      <div className="z-2 absolute top-[calc(100%+5rem)]">
+        <img
+          src="/mountain-silhouette.svg"
+          alt="Dark mountain silhouette"
+          className="-top-10"
+        />
+        <div className="h-screen w-full bg-grey"></div>
+      </div>
+    </>
   );
 }
