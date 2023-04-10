@@ -1,12 +1,28 @@
+import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { Form, NavLink, useRouteLoaderData } from "@remix-run/react";
+import { useState } from "react";
 
 const Header = () => {
   const { isAuthenticated } = useRouteLoaderData("root") as {
     isAuthenticated: boolean;
   };
 
+  const [blackHeaderBg, setBlackHeaderBg] = useState(false);
+
+  useScrollPosition(({ currPos }) => {
+    if (currPos.y < -window.innerHeight - 100) {
+      setBlackHeaderBg(true);
+    } else {
+      setBlackHeaderBg(false);
+    }
+  });
+
   return (
-    <div className="fixed top-0 z-10 flex h-20 w-full justify-center bg-transparent p-4 text-yellow">
+    <div
+      className={`fixed top-0 z-10 flex h-20 w-full justify-center p-4 text-yellow ${
+        blackHeaderBg && "z-40 bg-grey"
+      }`}
+    >
       <div className="grid w-full max-w-6xl grid-cols-3 gap-4">
         {isAuthenticated ? (
           <ul className="flex items-center gap-4">
