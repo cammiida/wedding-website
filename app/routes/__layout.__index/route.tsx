@@ -1,6 +1,7 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { authenticator } from "~/services/authenticator.server";
 import CountDown from "./count-down";
+import MountainContent from "./mountain-content";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
@@ -33,6 +34,7 @@ export default function Index() {
         />
         <div className="w-full bg-grey">
           <CountDown countDownDate={new Date("2024-06-15")} />
+          <MountainContent />
         </div>
       </div>
     </>
