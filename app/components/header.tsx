@@ -45,8 +45,11 @@ const Header = () => {
           <div />
         )}
         <ul className="flex justify-center items-center">
-          <p className="text-xl">
-            <b>C&#10084;T</b> 15.06.24
+          <p className="text-xl flex gap-1">
+            <b className="flex">
+              C<img alt="heart" src="/heart-icon.svg" className="pb-2" />T
+            </b>
+            15.06.24
           </p>
         </ul>
         {isAuthenticated ? (
