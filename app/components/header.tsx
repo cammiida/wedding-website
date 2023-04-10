@@ -12,31 +12,31 @@ const Header = () => {
           <ul className="flex items-center gap-4">
             <NavLink
               to="/"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) => (isActive ? "text-orange" : "")}
             >
               Home
             </NavLink>
             <NavLink
               to="/story"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) => (isActive ? "text-orange" : "")}
             >
               Story
             </NavLink>
             <NavLink
               to="/travel"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) => (isActive ? "text-orange" : "")}
             >
               Travel
             </NavLink>
             <NavLink
               to="/sleep"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) => (isActive ? "text-orange" : "")}
             >
               Sleep
             </NavLink>
             <NavLink
               to="/contact"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) => (isActive ? "text-orange" : "")}
             >
               Contact
             </NavLink>
@@ -57,7 +57,7 @@ const Header = () => {
             <ul className="flex items-center justify-end gap-4">
               <NavLink
                 to="/rsvp"
-                className="rounded-3xl border-2 border-yellow p-2"
+                className="rounded-3xl border-[1px] border-yellow bg-yellow bg-opacity-[15%] px-4"
               >
                 RSVP by May 31, 2023
               </NavLink>

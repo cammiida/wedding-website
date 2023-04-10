@@ -14,6 +14,7 @@ module.exports = {
         blue: "#3E85C6",
         "grey-transparent": "#00000040",
         grey: "#292929",
+        orange: "#F68C59",
       },
       textShadow: {
         sm: "0 1px 2px var(--tw-shadow-color)",
