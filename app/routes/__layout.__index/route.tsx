@@ -30,7 +30,7 @@ export default function Index() {
         <img
           src="/mountain-silhouette.svg"
           alt="Dark mountain silhouette"
-          className="-top-10"
+          className="-top-10 w-full"
         />
         <div className="w-full bg-grey">
           <CountDown countDownDate={new Date("2024-06-15")} />
