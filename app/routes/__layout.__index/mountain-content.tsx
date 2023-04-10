@@ -3,7 +3,7 @@ import React from "react";
 
 const MountainContent = () => {
   return (
-    <div className="grid grid-rows-3 gap-12 py-24">
+    <div className="grid grid-rows-3 gap-12 py-12">
       <div className="flex justify-center gap-24">
         <Link to="/story" className="group w-1/4">
           <h3 className="font-roboto text-2xl font-thin text-orange group-hover:subpixel-antialiased	">
@@ -17,7 +17,7 @@ const MountainContent = () => {
       </div>
       <div className="flex flex-row-reverse justify-center gap-24">
         <Link to="/travel" className="group w-1/4">
-          <h3 className="font-roboto text-2xl font-thin text-orange group-hover:subpixel-antialiased	">
+          <h3 className="font-roboto text-2xl font-thin text-orange group-hover:subpixel-antialiased">
             HOW TO GET THERE
           </h3>
           <p className="pt-4 font-thin">
@@ -29,8 +29,8 @@ const MountainContent = () => {
         <img src="/login-bg.jpg" className="w-1/4 rounded-md" alt="" />
       </div>
       <div className="flex justify-center gap-24">
-        <Link to="/sleep" className="w-1/4">
-          <h3 className="font-roboto text-2xl font-thin text-orange">
+        <Link to="/sleep" className="group w-1/4">
+          <h3 className="font-roboto text-2xl font-thin text-orange group-hover:subpixel-antialiased">
             WHERE WE CAN SLEEP
           </h3>
           <p className="pt-4 font-thin">

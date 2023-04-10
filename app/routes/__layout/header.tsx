@@ -1,6 +1,7 @@
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { Form, NavLink, useRouteLoaderData } from "@remix-run/react";
 import { useState } from "react";
+import RsvpBtn from "~/components/rsvp-btn";
 
 const Header = () => {
   const { isAuthenticated } = useRouteLoaderData("root") as {
@@ -71,12 +72,7 @@ const Header = () => {
         {isAuthenticated ? (
           <>
             <ul className="flex items-center justify-end gap-4">
-              <NavLink
-                to="/rsvp"
-                className="rounded-3xl border-[1px] border-yellow bg-yellow bg-opacity-[15%] px-4"
-              >
-                RSVP by May 31, 2023
-              </NavLink>
+              <RsvpBtn />
               <Form method="post" action="/logout">
                 <button>Logout</button>
               </Form>
