@@ -53,7 +53,7 @@ export default function Index() {
             </h3>
             <Link
               to="mailto: hello@camillaplustyler.com"
-              className="font-roboto text-3xl font-thin text-orange hover:underline"
+              className="font-roboto text-2xl font-thin text-orange hover:underline"
             >
               HELLO@CAMILLAPLUSTYLER.COM
             </Link>

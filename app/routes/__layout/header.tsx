@@ -1,6 +1,6 @@
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { Form, NavLink, useRouteLoaderData } from "@remix-run/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RsvpBtn from "~/components/rsvp-btn";
 
 const Header = () => {
@@ -9,6 +9,10 @@ const Header = () => {
   };
 
   const [blackHeaderBg, setBlackHeaderBg] = useState(false);
+
+  useEffect(() => {
+    if (window.scrollY > 0) setBlackHeaderBg(true);
+  }, []);
 
   useScrollPosition(({ currPos }) => {
     if (currPos.y < -window.innerHeight - 100) {

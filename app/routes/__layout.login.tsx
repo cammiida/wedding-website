@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="z-10 flex max-w-xl flex-col items-center rounded-md bg-grey-transparent  p-8">
-        <h1 className="text-center font-roboto text-3xl font-thin">
+        <h1 className="text-center font-roboto text-3xl font-extralight ">
           OH NO! IT LOOKS LIKE YOU'RE NOT LOGGED IN 😢
         </h1>
         <p className="max-w-md p-4 text-center font-thin">
