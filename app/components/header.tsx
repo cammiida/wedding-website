@@ -55,7 +55,10 @@ const Header = () => {
         {isAuthenticated ? (
           <>
             <ul className="flex justify-end items-center gap-4">
-              <NavLink to="/rsvp" className="border-2 p-2 rounded-3xl">
+              <NavLink
+                to="/rsvp"
+                className="border-2 p-2 border-yellow rounded-3xl"
+              >
                 RSVP by May 31, 2023
               </NavLink>
               <Form method="post" action="/logout">
