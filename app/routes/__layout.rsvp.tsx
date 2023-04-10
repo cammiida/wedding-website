@@ -12,7 +12,7 @@ const RSVP = () => {
   const [extraAttendees, setExtraAttendees] = useState<number[]>([]);
 
   return (
-    <div className="flex w-full justify-center pt-12">
+    <div className="relative flex w-full justify-center pt-12">
       <Form
         method="post"
         className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600"

@@ -5,7 +5,11 @@ export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
 }
 const Story = () => {
-  return <div>To be developed...</div>;
+  return (
+    <div className="relative flex h-screen w-full items-center justify-center">
+      To be developed...
+    </div>
+  );
 };
 
 export default Story;
