@@ -19,7 +19,7 @@ const Layout = () => {
           <img
             src="/banner-image.png"
             alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
-            className="fixed left-0 top-0 z-0 h-full w-full overflow-y-clip bg-fixed object-cover"
+            className="fixed left-0 top-0 z-0 h-full w-full overflow-y-clip bg-fixed object-cover object-top"
           />
           <div className="z-1 fixed left-0 top-0 h-60 w-full bg-gradient-to-b from-blue" />
         </>

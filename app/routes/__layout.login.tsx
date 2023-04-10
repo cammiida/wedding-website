@@ -16,7 +16,7 @@ export async function loader({ request }: LoaderArgs) {
 
 const Login = () => {
   return (
-    <div className="flex max-w-xl flex-col items-center rounded-md bg-grey-transparent  p-8">
+    <div className="flex max-w-xl flex-col items-center rounded-md bg-grey-transparent p-8">
       <h1 className="text-center font-roboto text-3xl font-thin">
         OH NO! IT LOOKS LIKE YOU'RE NOT LOGGED IN 😢
       </h1>
