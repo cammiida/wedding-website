@@ -1,6 +1,6 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
-import CountDown from "~/components/count-down";
 import { authenticator } from "~/services/authenticator.server";
+import CountDown from "./count-down";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
@@ -13,7 +13,7 @@ export const meta: V2_MetaFunction = () => {
 export default function Index() {
   return (
     <>
-      <div className="fixed flex min-h-screen w-full flex-col items-center  pt-20 text-white">
+      <div className="fixed flex min-h-screen w-full flex-col items-center pt-20 text-white">
         <h1 className="mt-8 text-center font-roboto text-5xl font-thin text-yellow">
           WE'RE GETTING MARRIED!
         </h1>
