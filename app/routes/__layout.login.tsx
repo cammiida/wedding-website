@@ -16,9 +16,11 @@ export async function loader({ request }: LoaderArgs) {
 
 const Login = () => {
   return (
-    <div className="flex flex-col items-center bg-grey-transparent p-8 rounded-md font-roboto">
-      <h1 className="text-3xl">Oh no! Looks like you're not logged in 😢</h1>
-      <p className="max-w-md p-4 text-center">
+    <div className="flex flex-col items-center bg-grey-transparent p-8 rounded-md  max-w-xl">
+      <h1 className="text-3xl font-roboto font-thin text-center">
+        OH NO! IT LOOKS LIKE YOU'RE NOT LOGGED IN 😢
+      </h1>
+      <p className="max-w-md p-4 text-center font-thin">
         Enter the provided password you have received in order to gain access.
       </p>
       <Form method="post">
@@ -26,7 +28,7 @@ const Login = () => {
           name="passphrase"
           placeholder="Password to enter site here"
           type="password"
-          className="border-2 rounded-sm border-cyan-800 w-96 h-10 p-3 text-black"
+          className="border-2 rounded-md border-gray-600 w-96 h-10 p-3 text-black"
         />
       </Form>
     </div>

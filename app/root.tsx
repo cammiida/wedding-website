@@ -31,7 +31,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="text-yellow">
+      <body className="text-yellow antialiased">
         <AnimatePresence mode="wait" initial={false}>
           <Outlet />
         </AnimatePresence>
