@@ -1,23 +1,53 @@
-import type { LoaderArgs } from "@remix-run/node";
-import { Form } from "@remix-run/react";
-import React from "react";
-import { useState } from "react";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
+import { getGuestByEmail } from "~/notion/notion";
 import { authenticator } from "~/services/authenticator.server";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
 }
 
+export async function action({ request }: ActionArgs) {
+  const body = await request.formData();
+  const email = body.get("email")?.toString() ?? "";
+  console.log({ body });
+  console.log({ email });
+
+  const guest = await getGuestByEmail(email);
+  console.log({ guest });
+  return guest;
+}
+
 const RSVP = () => {
-  const [extraAttendees, setExtraAttendees] = useState<number[]>([]);
+  const guest = useActionData<typeof action>();
+  // const [extraAttendees, setExtraAttendees] = useState<number[]>([]);
 
   return (
     <div className="relative flex w-full justify-center pt-12">
-      <Form
-        method="post"
-        className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600"
-      >
-        <h1 className="text-2xl font-semibold">RSVP</h1>
+      {guest ? (
+        <div>
+          <h1>Welcome {guest.id}</h1>
+        </div>
+      ) : (
+        <Form
+          method="post"
+          className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600"
+        >
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="w-full border-2 p-1"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-blue-200 float-right mt-8 rounded-sm p-2"
+          >
+            Submit
+          </button>
+          {/* <h1 className="text-2xl font-semibold">RSVP</h1>
         <h2 className="text-xl font-semibold text-red-500">
           NB! Under development
         </h2>
@@ -104,8 +134,9 @@ const RSVP = () => {
           >
             Submit
           </button>
-        </div>
-      </Form>
+        </div> */}
+        </Form>
+      )}
     </div>
   );
 };

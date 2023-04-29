@@ -1,10 +1,10 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import { Link } from "@remix-run/react";
+import RsvpBtn from "~/components/rsvp-btn";
 import { authenticator } from "~/services/authenticator.server";
 import CountDown from "./count-down";
-import MountainContent from "./mountain-content";
 import Footer from "./footer";
-import RsvpBtn from "~/components/rsvp-btn";
-import { Link } from "@remix-run/react";
+import MountainContent from "./mountain-content";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
