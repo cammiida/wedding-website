@@ -1,36 +1,35 @@
-import type { ActionArgs, LoaderArgs } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
-import { getGuestByEmail } from "~/notion/notion";
+import type { LoaderArgs } from "@remix-run/node";
+import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
+import type { Guest } from "~/notion/domain";
+import { getGuestByEmail } from "~/notion/notion.server";
 import { authenticator } from "~/services/authenticator.server";
 
-export async function loader({ request }: LoaderArgs) {
-  return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
-}
+export async function loader({ request, params }: LoaderArgs) {
+  authenticator.isAuthenticated(request, {
+    failureRedirect: "/login",
+  });
 
-export async function action({ request }: ActionArgs) {
-  const body = await request.formData();
-  const email = body.get("email")?.toString() ?? "";
-  console.log({ body });
-  console.log({ email });
+  const email = new URL(request.url).searchParams.get("email");
+  if (email) {
+    const guest = await getGuestByEmail(email);
+    return { guest };
+  }
 
-  const guest = await getGuestByEmail(email);
-  console.log({ guest });
-  return guest;
+  return { guest: null };
 }
 
 const RSVP = () => {
-  const guest = useActionData<typeof action>();
-  // const [extraAttendees, setExtraAttendees] = useState<number[]>([]);
+  const { guest } = useLoaderData<typeof loader>();
 
   return (
     <div className="relative flex w-full justify-center pt-12">
       {guest ? (
         <div>
-          <h1>Welcome {guest.id}</h1>
+          <h1>Welcome {guest.name}</h1>
         </div>
       ) : (
         <Form
-          method="post"
+          method="get"
           className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600"
         >
           <label htmlFor="email">Email</label>

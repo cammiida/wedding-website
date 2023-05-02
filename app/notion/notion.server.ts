@@ -1,4 +1,6 @@
 import { Client as NotionClient } from "@notionhq/client";
+import type { Guest } from "./domain";
+import { parseGuest } from "./domain";
 
 export const getClient = (token: string) => {
   const notionClient = new NotionClient({
@@ -7,10 +9,6 @@ export const getClient = (token: string) => {
 
   return {
     getDatabasePages: getDatabasePages(notionClient),
-    // getPage: getPage(notionClient),
-    // getDatabase: getDatabase(notionClient),
-    // getBlocks: getBlocks(notionClient),
-    // getBlocksWithChildren: getBlocksWithChildren(notionClient),
   };
 };
 
@@ -48,12 +46,25 @@ const guestListId = "51db855009264a01936089d4d53adf5c";
 
 export const getGuestByEmail = async (email: string) => {
   try {
-    const response = await getClient(
+    const guests = await getClient(
       process.env.NOTION_KEY ?? ""
     ).getDatabasePages(guestListId, undefined, {
       and: [{ property: "Email", email: { equals: email } }],
     });
-    return response?.at(0);
+    const parsedGuests: Guest[] = guests.map((guest) => parseGuest(guest));
+
+    return parsedGuests.at(0);
+  } catch (error) {
+    console.error("An error occurred");
+  }
+};
+
+export const getGuestById = async (id: string) => {
+  try {
+    const response = await getClient(
+      process.env.NOTION_KEY ?? ""
+    ).getDatabasePages(guestListId);
+    return response;
   } catch (error) {
     console.error("An error occurred");
   }
