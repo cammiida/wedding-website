@@ -3,7 +3,17 @@ import type {
   PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { z } from "zod";
-import type { DatabasePage } from "./notion.server";
+import type { DatabasePage } from "../notion/notion.server";
+
+// Like the built-in Partial, but requires all keys
+export type Relaxed<T extends object> = {
+  [K in keyof T]: T[K] | undefined;
+};
+
+interface FailedParsed<T> {
+  unparsed: Partial<T>;
+  errors: z.ZodIssue[];
+}
 
 // Some typescript magic to extract the correct type
 type MaybeBlockResponse = ListBlockChildrenResponse["results"][number];
@@ -31,27 +41,43 @@ export type ComingWith = z.infer<typeof comingWithSchema>;
 
 const guestSchema = z.object({
   name: z.string(),
-  email: z.string().email(),
+  email: z.string().email().optional(),
   // comingWith: comingWithSchema,
 });
 
 export type Guest = z.infer<typeof guestSchema>;
 
 // Mappers and parsers
-export const parseGuest = (fromPage: PageObjectResponse) => {
+export const mapGuest = (fromPage: PageObjectResponse) => {
   return guestSchema.parse({
     name: getTitle("Name", fromPage),
     email: getEmail("Email", fromPage),
     // comingWithSchema: parseComingWith("", fromPage),
-  });
+  }) satisfies Relaxed<Guest>;
 };
 
-const parseComingWith = (name: string, fromPage: DatabasePage) => {
-  const property = fromPage.properties[name];
-  if (property?.type === "relation") {
-    return property.relation;
-  }
-  return undefined;
+export const safeParseGuests = (fromPages: PageObjectResponse[]) => {
+  const success: Guest[] = [];
+  const failed: FailedParsed<Guest>[] = [];
+
+  fromPages
+    .map(mapGuest)
+    .map((unparsed) => ({
+      unparsed,
+      parsed: guestSchema.safeParse(unparsed),
+    }))
+    .forEach(({ unparsed, parsed }) => {
+      if (parsed.success) {
+        success.push(parsed.data);
+      } else {
+        failed.push({
+          unparsed,
+          errors: parsed.error.errors,
+        });
+      }
+    });
+
+  return [success, failed] as const;
 };
 
 export const getRichText = (name: string, fromPage: DatabasePage) => {

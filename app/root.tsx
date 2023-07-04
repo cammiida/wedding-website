@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderArgs } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs, SerializeFrom } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -7,10 +7,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "@remix-run/react";
 import { AnimatePresence } from "framer-motion";
 
 import stylesheet from "~/tailwind.css";
+import { getData } from "./guest-list/client.server";
 import { authenticator } from "./services/authenticator.server";
 
 export const links: LinksFunction = () => [
@@ -19,8 +21,16 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderArgs) {
   const isAuthenticated = await authenticator.isAuthenticated(request);
-  return json({ isAuthenticated: !!isAuthenticated });
+
+  const data = await getData(request);
+  return json({ isAuthenticated: !!isAuthenticated, ...data });
 }
+
+export const shouldRevalidate = () => false;
+
+export type RootLoader = typeof loader;
+export const useRootData = () =>
+  useRouteLoaderData("root") as SerializeFrom<typeof loader>;
 
 export default function App() {
   return (

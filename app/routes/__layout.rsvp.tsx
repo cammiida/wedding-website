@@ -1,52 +1,82 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
-import type { Guest } from "~/notion/domain";
-import { getGuestByEmail } from "~/notion/notion.server";
+import { Form } from "@remix-run/react";
+import { useState } from "react";
+import type { Guest } from "~/guest-list/schema";
+import { useRootData } from "~/root";
 import { authenticator } from "~/services/authenticator.server";
 
 export async function loader({ request, params }: LoaderArgs) {
-  authenticator.isAuthenticated(request, {
+  return authenticator.isAuthenticated(request, {
     failureRedirect: "/login",
   });
-
-  const email = new URL(request.url).searchParams.get("email");
-  if (email) {
-    const guest = await getGuestByEmail(email);
-    return { guest };
-  }
-
-  return { guest: null };
 }
 
 const RSVP = () => {
-  const { guest } = useLoaderData<typeof loader>();
+  const { guests } = useRootData();
+
+  const [foundGuest, setFoundGuest] = useState<Guest | null>(null);
+
+  const handleEmailSearch = (search: string) => {
+    const foundGuest = guests.find(
+      (guest) => !!guest.email && guest.email === search
+    );
+
+    foundGuest && setFoundGuest(foundGuest);
+  };
 
   return (
     <div className="relative flex w-full justify-center pt-12">
-      {guest ? (
-        <div>
-          <h1>Welcome {guest.name}</h1>
-        </div>
-      ) : (
-        <Form
-          method="get"
-          className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600"
-        >
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="w-full border-2 p-1"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-blue-200 float-right mt-8 rounded-sm p-2"
-          >
-            Submit
-          </button>
-          {/* <h1 className="text-2xl font-semibold">RSVP</h1>
+      <div className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600">
+        {foundGuest ? (
+          <RsvpForm guest={foundGuest} />
+        ) : (
+          <SearchGuest onSearch={handleEmailSearch} />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const SearchGuest = ({ onSearch }: { onSearch: (search: string) => void }) => {
+  const [search, setSearch] = useState<string>("");
+
+  return (
+    <Form>
+      <label htmlFor="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        className="w-full border-2 p-1"
+        required
+        value={search}
+        onChange={(e) => setSearch(e.currentTarget.value)}
+      />
+      <button
+        className="bg-blue-200 float-right mt-8 rounded-sm p-2"
+        onClick={(e) => {
+          e.preventDefault();
+          onSearch(search);
+        }}
+      >
+        Search
+      </button>
+    </Form>
+  );
+};
+
+const RsvpForm = ({ guest }: { guest: Guest }) => {
+  return (
+    <Form method="post">
+      <input readOnly name="name" value={guest.name} />
+      <button type="submit">Submit</button>
+    </Form>
+  );
+};
+
+export default RSVP;
+
+/* <h1 className="text-2xl font-semibold">RSVP</h1>
         <h2 className="text-xl font-semibold text-red-500">
           NB! Under development
         </h2>
@@ -133,11 +163,4 @@ const RSVP = () => {
           >
             Submit
           </button>
-        </div> */}
-        </Form>
-      )}
-    </div>
-  );
-};
-
-export default RSVP;
+        </div> */
