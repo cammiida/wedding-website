@@ -37,11 +37,11 @@ export default function App() {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="viewport" content="width=device-width,user-scalable=0;" />
         <Meta />
         <Links />
       </head>
-      <body className="h-screen text-yellow antialiased">
+      <body className="min-h-screen bg-grey text-yellow antialiased">
         <AnimatePresence mode="wait" initial={false}>
           <Outlet />
         </AnimatePresence>
