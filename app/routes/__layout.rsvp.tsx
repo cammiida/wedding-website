@@ -1,19 +1,30 @@
-import type { LoaderArgs } from "@remix-run/node";
-import { Form } from "@remix-run/react";
-import type { Dispatch, SetStateAction } from "react";
-import { useEffect, useState } from "react";
+import { json, type LoaderArgs } from "@remix-run/node";
+import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import type { Guest } from "~/guest-list/schema";
 import { useRootData } from "~/root";
 import { authenticator } from "~/services/authenticator.server";
 
 export async function loader({ request }: LoaderArgs) {
-  return authenticator.isAuthenticated(request, {
+  authenticator.isAuthenticated(request, {
     failureRedirect: "/login",
   });
+
+  const params = new URL(request.url).searchParams;
+  const email = params.get("email");
+
+  return json({ email });
 }
 
 const RSVP = () => {
-  const [foundGuest, setFoundGuest] = useState<Guest | null>(null);
+  const { email } = useLoaderData<typeof loader>();
+  const { guests: allGuests } = useRootData();
+
+  const foundGuest = allGuests.find(
+    (guest) =>
+      !!guest.email &&
+      !!email &&
+      guest.email.toLocaleLowerCase() === email.toLocaleLowerCase()
+  );
 
   return (
     <div className="relative flex w-full justify-center pt-20">
@@ -25,50 +36,18 @@ const RSVP = () => {
           </small>
         </h2>
 
-        {foundGuest ? (
-          <RsvpForm guest={foundGuest} />
-        ) : (
-          <SearchGuestForm setFoundGuest={setFoundGuest} />
-        )}
+        {foundGuest ? <RsvpForm guest={foundGuest} /> : <SearchGuestForm />}
       </div>
     </div>
   );
 };
 
-const SearchGuestForm = ({
-  setFoundGuest,
-}: {
-  setFoundGuest: Dispatch<SetStateAction<Guest | null>>;
-}) => {
-  const { guests } = useRootData();
-  const [search, setSearch] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  function handleEmailSearch(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
-    e.preventDefault();
-
-    const foundGuest = guests.find(
-      (guest) =>
-        !!guest.email &&
-        guest.email.toLocaleLowerCase() === search.toLocaleLowerCase()
-    );
-
-    foundGuest && setFoundGuest(foundGuest);
-    !foundGuest &&
-      setErrorMessage(
-        "Guest with the entered email not found. Maybe check your spelling?"
-      );
-  }
-
-  useEffect(() => {
-    if (errorMessage) {
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 10 * 1000);
-    }
-  }, [errorMessage]);
+const SearchGuestForm = () => {
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email");
+  const errorMessage = email
+    ? `Guest with email: ${email} not found. Maybe check your spelling?`
+    : null;
 
   return (
     <Form className="flex flex-col gap-3">
@@ -79,15 +58,9 @@ const SearchGuestForm = ({
         placeholder="Email"
         className="w-full p-1 text-black placeholder:text-light-grey"
         required
-        value={search}
-        onChange={(e) => setSearch(e.currentTarget.value)}
       />
       {errorMessage && <small className=" text-red-600">{errorMessage}</small>}
-      <button
-        className="rounded-sm bg-blue p-2"
-        type="submit"
-        onClick={handleEmailSearch}
-      >
+      <button className="rounded-sm bg-blue p-2" type="submit">
         Search
       </button>
     </Form>
