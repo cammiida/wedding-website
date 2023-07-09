@@ -1,63 +1,92 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { Form } from "@remix-run/react";
-import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useState } from "react";
 import type { Guest } from "~/guest-list/schema";
 import { useRootData } from "~/root";
 import { authenticator } from "~/services/authenticator.server";
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, {
     failureRedirect: "/login",
   });
 }
 
 const RSVP = () => {
-  const { guests } = useRootData();
-
   const [foundGuest, setFoundGuest] = useState<Guest | null>(null);
 
-  const handleEmailSearch = (search: string) => {
-    const foundGuest = guests.find(
-      (guest) => !!guest.email && guest.email === search
-    );
-
-    foundGuest && setFoundGuest(foundGuest);
-  };
-
   return (
-    <div className="relative flex w-full justify-center pt-12">
-      <div className="w-1/2 max-w-xl rounded-sm bg-white p-8 text-gray-600">
+    <div className="relative flex w-full justify-center pt-20">
+      <div className="text-white-600 w-1/2 max-w-xl rounded-sm bg-grey p-8">
+        <h2 className="text-4xl font-bold">
+          RSVP
+          <small className="ml-2 font-semibold text-light-grey">
+            (répondez s'il vous plaît)
+          </small>
+        </h2>
+
         {foundGuest ? (
           <RsvpForm guest={foundGuest} />
         ) : (
-          <SearchGuest onSearch={handleEmailSearch} />
+          <SearchGuestForm setFoundGuest={setFoundGuest} />
         )}
       </div>
     </div>
   );
 };
 
-const SearchGuest = ({ onSearch }: { onSearch: (search: string) => void }) => {
+const SearchGuestForm = ({
+  setFoundGuest,
+}: {
+  setFoundGuest: Dispatch<SetStateAction<Guest | null>>;
+}) => {
+  const { guests } = useRootData();
   const [search, setSearch] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  function handleEmailSearch(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.preventDefault();
+
+    const foundGuest = guests.find(
+      (guest) =>
+        !!guest.email &&
+        guest.email.toLocaleLowerCase() === search.toLocaleLowerCase()
+    );
+
+    foundGuest && setFoundGuest(foundGuest);
+    !foundGuest &&
+      setErrorMessage(
+        "Guest with the entered email not found. Maybe check your spelling?"
+      );
+  }
+
+  useEffect(() => {
+    if (errorMessage) {
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 10 * 1000);
+    }
+  }, [errorMessage]);
 
   return (
-    <Form>
-      <label htmlFor="email">Email</label>
+    <Form className="flex flex-col gap-3">
+      <p>Start by typing in the email where you received your invitation.</p>
       <input
         type="email"
         name="email"
         placeholder="Email"
-        className="w-full border-2 p-1"
+        className="w-full p-1 text-black placeholder:text-light-grey"
         required
         value={search}
         onChange={(e) => setSearch(e.currentTarget.value)}
       />
+      {errorMessage && <small className=" text-red-600">{errorMessage}</small>}
       <button
-        className="bg-blue-200 float-right mt-8 rounded-sm p-2"
-        onClick={(e) => {
-          e.preventDefault();
-          onSearch(search);
-        }}
+        className="rounded-sm bg-blue p-2"
+        type="submit"
+        onClick={handleEmailSearch}
       >
         Search
       </button>
