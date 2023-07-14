@@ -15,7 +15,15 @@ type Filter = Parameters<NotionClient["databases"]["query"]>[0]["filter"];
 
 const getDatabasePages =
   (notion: NotionClient) =>
-  async (databaseId: string, sorts?: Sorts, filter?: Filter) => {
+  async ({
+    databaseId,
+    sorts,
+    filter,
+  }: {
+    databaseId: string;
+    sorts?: Sorts;
+    filter?: Filter;
+  }) => {
     const firstResponse = await notion.databases.query({
       database_id: databaseId,
       sorts,

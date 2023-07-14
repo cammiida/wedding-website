@@ -9,8 +9,8 @@ import {
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import { z } from "zod";
+import { searchGuest } from "~/guest-list/client.server";
 import type { Guest } from "~/guest-list/schema";
-import { useRootData } from "~/root";
 import { authenticator } from "~/services/authenticator.server";
 
 const rsvpSchema = z.union([
@@ -43,10 +43,9 @@ export async function loader({ request }: LoaderArgs) {
     failureRedirect: "/login",
   });
 
-  const params = new URL(request.url).searchParams;
-  const email = params.get("email");
+  const { guest } = await searchGuest(request);
 
-  return json({ email });
+  return json({ guest });
 }
 
 export async function action({ request }: ActionArgs) {
@@ -58,15 +57,7 @@ export async function action({ request }: ActionArgs) {
 }
 
 const RSVP = () => {
-  const { email } = useLoaderData<typeof loader>();
-  const { guests: allGuests } = useRootData();
-
-  const foundGuest = allGuests.find(
-    (guest) =>
-      !!guest.email &&
-      !!email &&
-      guest.email.toLocaleLowerCase() === email.toLocaleLowerCase()
-  );
+  const { guest } = useLoaderData<typeof loader>();
 
   return (
     <div className="relative flex w-full justify-center pt-20">
@@ -78,7 +69,7 @@ const RSVP = () => {
           </small>
         </h2>
 
-        {foundGuest ? <RsvpForm guest={foundGuest} /> : <SearchGuestForm />}
+        {guest ? <RsvpForm guest={guest} /> : <SearchGuestForm />}
       </div>
     </div>
   );
