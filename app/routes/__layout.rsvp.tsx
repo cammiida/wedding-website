@@ -1,17 +1,16 @@
-import type { ActionArgs } from "@remix-run/node";
-import { json, type LoaderArgs } from "@remix-run/node";
+import type { ActionArgs, DataFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   Form,
   useActionData,
   useLoaderData,
-  useSearchParams,
+  useNavigation,
 } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import { z } from "zod";
-import { getData } from "~/guest-list/client.server";
 import type { Guest } from "~/guest-list/schema";
-import { authenticator } from "~/services/authenticator.server";
+import { useRootLoaderData } from "~/root";
 
 const rsvpSchema = z.union([
   z.object({
@@ -38,26 +37,11 @@ const rsvpSchema = z.union([
     ),
 ]);
 
-export async function loader({ request }: LoaderArgs) {
-  await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
-  });
-
-  const searchParams = new URLSearchParams(request.url);
+export async function loader({ request }: DataFunctionArgs) {
+  const searchParams = new URL(request.url).searchParams;
   const email = searchParams.get("email");
-  const { guests } = await getData(request);
 
-  console.log({ guests });
-  console.log(guests.length);
-
-  const guest = guests.find(
-    (it) =>
-      !!it.email &&
-      !!email &&
-      it.email.toLocaleLowerCase() === email.toLocaleLowerCase()
-  );
-
-  return json({ guest });
+  return json({ email });
 }
 
 export async function action({ request }: ActionArgs) {
@@ -69,7 +53,18 @@ export async function action({ request }: ActionArgs) {
 }
 
 const RSVP = () => {
-  const { guest } = useLoaderData<typeof loader>();
+  const { email } = useLoaderData<typeof loader>();
+  const { guests } = useRootLoaderData();
+
+  const guest = guests.find(
+    (it) =>
+      !!it.email &&
+      !!email &&
+      it.email.toLocaleLowerCase() === email.toLocaleLowerCase()
+  );
+
+  const errorMessage =
+    !guest && !!email ? "Guest not found. Maybe check your spelling?" : null;
 
   return (
     <div className="relative flex w-full justify-center pt-20">
@@ -81,18 +76,18 @@ const RSVP = () => {
           </small>
         </h2>
 
-        {guest ? <RsvpForm guest={guest} /> : <SearchGuestForm />}
+        {guest ? (
+          <RsvpForm guest={guest} />
+        ) : (
+          <SearchGuestForm errorMessage={errorMessage} />
+        )}
       </div>
     </div>
   );
 };
 
-const SearchGuestForm = () => {
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get("email");
-  const errorMessage = email
-    ? `Guest with email: ${email} not found. Maybe check your spelling?`
-    : null;
+const SearchGuestForm = ({ errorMessage }: { errorMessage: string | null }) => {
+  const navigation = useNavigation();
 
   return (
     <Form className="flex flex-col gap-3">
@@ -106,7 +101,7 @@ const SearchGuestForm = () => {
       />
       {errorMessage && <small className=" text-red-600">{errorMessage}</small>}
       <button className="rounded-sm bg-blue p-2" type="submit">
-        Search
+        {navigation.state === "loading" ? "Searching for guest..." : "Search"}
       </button>
     </Form>
   );

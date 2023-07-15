@@ -1,5 +1,6 @@
 import type { LinksFunction, LoaderArgs, SerializeFrom } from "@remix-run/node";
 import { json } from "@remix-run/node";
+import type { ShouldRevalidateFunction } from "@remix-run/react";
 import {
   Links,
   LiveReload,
@@ -12,6 +13,7 @@ import {
 import { AnimatePresence } from "framer-motion";
 
 import stylesheet from "~/tailwind.css";
+import { getData } from "./guest-list/client.server";
 import { authenticator } from "./services/authenticator.server";
 
 export const links: LinksFunction = () => [
@@ -19,10 +21,17 @@ export const links: LinksFunction = () => [
 ];
 
 export async function loader({ request }: LoaderArgs) {
-  const isAuthenticated = await authenticator.isAuthenticated(request);
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login",
+  });
+  const { guests } = await getData(request);
 
-  return json({ isAuthenticated });
+  return json({ guests });
 }
+
+export const shouldRevalidate: ShouldRevalidateFunction = () => {
+  return false;
+};
 
 export default function App() {
   return (
