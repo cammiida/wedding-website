@@ -9,7 +9,7 @@ import {
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import { z } from "zod";
-import { searchGuest } from "~/guest-list/client.server";
+import { getData } from "~/guest-list/client.server";
 import type { Guest } from "~/guest-list/schema";
 import { authenticator } from "~/services/authenticator.server";
 
@@ -39,11 +39,23 @@ const rsvpSchema = z.union([
 ]);
 
 export async function loader({ request }: LoaderArgs) {
-  authenticator.isAuthenticated(request, {
+  await authenticator.isAuthenticated(request, {
     failureRedirect: "/login",
   });
 
-  const { guest } = await searchGuest(request);
+  const searchParams = new URLSearchParams(request.url);
+  const email = searchParams.get("email");
+  const { guests } = await getData(request);
+
+  console.log({ guests });
+  console.log(guests.length);
+
+  const guest = guests.find(
+    (it) =>
+      !!it.email &&
+      !!email &&
+      it.email.toLocaleLowerCase() === email.toLocaleLowerCase()
+  );
 
   return json({ guest });
 }
