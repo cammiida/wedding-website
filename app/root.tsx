@@ -21,14 +21,8 @@ export const links: LinksFunction = () => [
 export async function loader({ request }: LoaderArgs) {
   const isAuthenticated = await authenticator.isAuthenticated(request);
 
-  return json({ isAuthenticated: !!isAuthenticated });
+  return json({ isAuthenticated });
 }
-
-export const shouldRevalidate = () => false;
-
-export type RootLoader = typeof loader;
-export const useRootData = () =>
-  useRouteLoaderData("root") as SerializeFrom<typeof loader>;
 
 export default function App() {
   return (
@@ -49,4 +43,9 @@ export default function App() {
       </body>
     </html>
   );
+}
+
+export type RootLoaderData = SerializeFrom<typeof loader>;
+export function useRootLoaderData() {
+  return useRouteLoaderData("root") as RootLoaderData;
 }
