@@ -1,5 +1,5 @@
 import type { LinksFunction, LoaderArgs, SerializeFrom } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
 import {
   Links,
@@ -21,9 +21,15 @@ export const links: LinksFunction = () => [
 ];
 
 export async function loader({ request }: LoaderArgs) {
-  await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
-  });
+  const isAuthenticated = await authenticator.isAuthenticated(request);
+  const currentUrl = new URL(request.url);
+
+  if (!isAuthenticated) {
+    if (!currentUrl.pathname.includes("/login")) {
+      return redirect("/login");
+    }
+  }
+
   const { guests } = await getData(request);
 
   return json({ guests });

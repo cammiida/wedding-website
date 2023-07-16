@@ -6,7 +6,6 @@ import { authenticator } from "~/services/authenticator.server";
 export async function action({ request }: DataFunctionArgs) {
   return authenticator.authenticate("passphrase", request, {
     successRedirect: "/",
-    failureRedirect: "/login",
   });
 }
 

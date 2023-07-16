@@ -1,12 +1,12 @@
 import { getClient } from "~/notion/notion.server";
 import { safeParseGuests as safeParseGuestList } from "./schema";
+import { authenticator } from "~/services/authenticator.server";
 
 const GUEST_LIST_DATABASE_ID = "51db855009264a01936089d4d53adf5c";
 
 export async function searchGuest(request: Request) {
   const searchParams = new URL(request.url).searchParams;
   const email = searchParams.get("email");
-  console.log({ email });
 
   if (!email) {
     return { guest: null };
@@ -46,6 +46,11 @@ export async function searchGuest(request: Request) {
 }
 
 export async function getData(request: Request) {
+  const isAuthenticated = authenticator.isAuthenticated(request);
+  if (!isAuthenticated) {
+    return { guests: [] };
+  }
+
   const notionToken = process.env.NOTION_TOKEN as string;
 
   const result = await getClient(notionToken).getDatabasePages({
