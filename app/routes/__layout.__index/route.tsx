@@ -5,6 +5,8 @@ import { authenticator } from "~/services/authenticator.server";
 import CountDown from "./count-down";
 import Footer from "./footer";
 import MountainContent from "./mountain-content";
+import { useScroll, motion } from "framer-motion";
+import { useRef } from "react";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
@@ -15,21 +17,35 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export default function Index() {
+  const mountainRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
+
+  function scrollToMountains() {
+    mountainRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
   return (
     <>
-      <div className="fixed flex min-h-screen w-full flex-col items-center pt-20 text-white">
+      <motion.div
+        className="fixed bottom-0 right-0 top-0 z-50 w-2 origin-top-right bg-yellow"
+        style={{ scaleY: scrollYProgress }}
+      />
+      <div className="fixed grid min-h-screen w-full grid-rows-[1fr_3fr_1fr] flex-col items-center pt-20 text-white">
         <h1 className="mt-8 text-center font-roboto text-6xl font-thin text-yellow">
           WE'RE GETTING MARRIED!
         </h1>
-        <div className="mb-24 mt-auto flex max-w-xl flex-col items-center justify-self-end rounded-md bg-grey-transparent p-8 text-center font-roboto text-4xl font-thin text-yellow">
-          <h2 className="shadow-grey-transparent text-shadow">
+        <div className="flex h-full w-full flex-col items-center justify-end">
+          <h2 className="max-w-xl rounded-md bg-grey-transparent p-8 text-center font-roboto text-4xl font-thin text-yellow shadow-grey-transparent text-shadow">
             JUNE 14-16, 2024
             <br />
             JOTUNHEIMEN, NORWAY
           </h2>
         </div>
+        <div className="flex justify-center">
+          <AnimatedScrollButton onClick={scrollToMountains} />
+        </div>
       </div>
-      <div className="z-2 absolute top-[calc(100%-3rem)]">
+      <div className="absolute top-[calc(100%-3rem)] z-10" ref={mountainRef}>
         <img
           src="/mountain-silhouette.svg"
           alt="Dark mountain silhouette"
@@ -65,3 +81,31 @@ export default function Index() {
     </>
   );
 }
+
+const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
+  const transitionValues = {
+    duration: 1,
+    repeat: Infinity,
+    ease: "easeOut",
+    delay: 1,
+    repeatDelay: 2,
+  };
+
+  return (
+    <motion.button
+      onClick={onClick}
+      transition={transitionValues}
+      animate={{
+        y: ["0rem", "-1rem", "0rem"],
+      }}
+      className="z-50 flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow hover:bg-grey-transparent"
+    >
+      Scroll down to see more
+      <img
+        src="/arrow-down.svg"
+        alt="Arrow pointing downwards"
+        className="h-10 w-10"
+      />
+    </motion.button>
+  );
+};
