@@ -1,4 +1,4 @@
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionArgs, SerializeFrom } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
@@ -43,22 +43,20 @@ export async function action({ request }: ActionArgs) {
 
 const RSVP = () => {
   const data = useActionData<typeof action>();
-  const fieldErrors = data?.validationErrors?.fieldErrors;
 
   const [isGoing, setIsGoing] = useState<string>();
-  const [bringingPlusOne, setBringingPlusOne] = useState<boolean>(false);
 
   return (
     <>
       <Header />
       <div className="relative flex w-full justify-center pt-20">
-        <div className="text-white-600 w-1/2 max-w-xl rounded-sm bg-grey p-8">
+        <div className="text-white-600 w-1/2 max-w-2xl rounded-sm bg-grey p-8">
           <h1 className="text-center font-roboto text-5xl font-light">RSVP</h1>
           <h2 className="p-3 text-center font-roboto text-2xl font-thin">
             Your kind response is requested by
             <br /> October 15th 2023
           </h2>
-          <Form method="post" className="flex flex-col gap-3">
+          <Form method="post" className="flex flex-col gap-8">
             <Input
               name="name"
               required
@@ -83,79 +81,153 @@ const RSVP = () => {
               required
               onChange={setIsGoing}
             />
-            {isGoing === "true" && (
-              <>
-                <div>
-                  {/** TODO: mulitple address lines? */}
-                  <label htmlFor="address">Address (for thank you card)</label>
-                  <input
-                    name="address"
-                    className="w-full p-1 text-black placeholder:text-light-grey"
-                  />
-                  {fieldErrors?.address && <small>{fieldErrors.address}</small>}
-                </div>
-                <div>
-                  <label htmlFor="dietaryRestrictions">
-                    Dietary restrictions / preferences
-                  </label>
-                  <input
-                    name="dietaryRestrictions"
-                    className="w-full p-1 text-black placeholder:text-light-grey"
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <input
-                    name="plusOne"
-                    type="checkbox"
-                    checked={bringingPlusOne}
-                    onChange={() => {
-                      setBringingPlusOne((prev) => !prev);
-                    }}
-                    className="p-1 text-black placeholder:text-light-grey"
-                  />
-                  <label htmlFor="plusOne">Bringing plus one?</label>
-                </div>
-                {bringingPlusOne && (
-                  <>
-                    <div>
-                      <label htmlFor="plusOneName">Plus one name</label>
-                      <input
-                        name="plusOneName"
-                        className="w-full p-1 text-black placeholder:text-light-grey"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="plusOneEmail">Plus one email</label>
-                      <input
-                        name="plusOneEmail"
-                        type="email"
-                        className="w-full p-1 text-black placeholder:text-light-grey"
-                      />
-                    </div>
-                  </>
-                )}
-                <div className="flex items-center gap-2">
-                  <input
-                    name="noGift"
-                    type="checkbox"
-                    className="p-1 text-black placeholder:text-light-grey"
-                  />
-                  <label htmlFor="noGift">
-                    By responding, I hereby agree that I will NOT buy any gifts
-                    for the couple. Your participation will be your gift. 💛
-                  </label>
-                </div>
-              </>
-            )}
-            <ul>
-              <li>Make sure to read all details before </li>
-            </ul>
-            <button className="rounded-sm bg-blue p-2" type="submit">
+            {isGoing === "true" && <IsGoingFormPart actionData={data} />}
+            <button className="rounded-md bg-blue p-2" type="submit">
               Submit
             </button>
           </Form>
         </div>
       </div>
+    </>
+  );
+};
+
+const IsGoingFormPart = ({
+  actionData,
+}: {
+  actionData: SerializeFrom<typeof action> | undefined;
+}) => {
+  const fieldErrors = actionData?.validationErrors?.fieldErrors;
+  const [bringingPlusOne, setBringingPlusOne] = useState<string>();
+
+  return (
+    <>
+      <Input
+        name="email"
+        type="email"
+        placeholder="Your email here"
+        label="Email"
+        required
+      />
+      <Input
+        name="address"
+        placeholder="Your full address"
+        label="Address"
+        description="For thank you card."
+        error={fieldErrors?.address}
+      />
+      <Input
+        name="allergies"
+        type="text"
+        placeholder=""
+        label="Allergies or food preferences?" // TODO: make textarea
+      />
+
+      <RadioButtons
+        label="Bringing a partner?"
+        name="bringingPartner"
+        options={[
+          {
+            label: "Yes",
+            value: "true",
+            id: "bringing",
+          },
+          {
+            label: "No",
+            value: "false",
+            id: "notBringing",
+          },
+        ]}
+        required
+        onChange={setBringingPlusOne}
+      />
+
+      {bringingPlusOne === "true" && <BringingPartnerFormPart />}
+      <AccomodationFormPart />
+      <div className="flex flex-col gap-1">
+        <label htmlFor="otherInfo" className="font-semibold">
+          Anything else you would like us to know?
+        </label>
+        <textarea
+          name="otherInfo"
+          className="w-full rounded-md p-2 text-grey placeholder:text-med-grey"
+        />
+      </div>
+    </>
+  );
+};
+
+const BringingPartnerFormPart = () => {
+  return (
+    <>
+      <Input
+        label="Name of partner"
+        name="partnerName"
+        placeholder="Partner name"
+        required
+      />
+      <Input
+        label="Partner email"
+        name="partnerEmail"
+        placeholder="Partner email"
+        required
+      />
+      <Input
+        label="Partner allergies or food preferences?"
+        name="partnerAllergies"
+        placeholder="Allergies or food preferences"
+      />
+    </>
+  );
+};
+
+const AccomodationFormPart = () => {
+  const [stayingFriday, setStayingFriday] = useState<string>();
+  return (
+    <>
+      {/** TODO: Room type selection */}
+      <RadioButtons
+        name="stayingFriday"
+        label="Which nights will you be staying at the cabin?"
+        required
+        description={`The service and party will be held on Saturday from 13:00 to late, 
+          however there will also be activities planned for Friday evening
+          and Saturday morning. We will cover the cost of food and drinks on the Saturday, 
+          but unfortunately not the Friday.`}
+        options={[
+          {
+            label: "Friday and Saturday",
+            value: "true",
+            id: "both",
+          },
+          {
+            label: "Only Saturday",
+            value: "false",
+            id: "saturday",
+          },
+        ]}
+        onChange={setStayingFriday}
+      />
+      {stayingFriday === "true" && (
+        <RadioButtons
+          name="dinnerFriday"
+          label="Will you be joining dinner on the Friday?"
+          required
+          description={`Dinner is from 18:00 to 21:00 and costs 600 NOK for three courses (excluding drinks).`}
+          options={[
+            {
+              label: "Yes",
+              value: "true",
+              id: "yes",
+            },
+            {
+              label: "No",
+              value: "false",
+              id: "no",
+            },
+          ]}
+        />
+      )}
     </>
   );
 };

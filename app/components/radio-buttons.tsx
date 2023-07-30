@@ -9,16 +9,18 @@ type RadioOption<V extends string> = {
 type RadioButtonsProps<V extends string> = {
   name: string;
   label: string;
-  required?: boolean;
   options: RadioOption<V>[];
+  description?: string;
+  required?: boolean;
   onChange?: (value: V | undefined) => void;
 };
 
 const RadioButtons = <V extends string>({
   name,
   label,
-  required = false,
   options,
+  description,
+  required = false,
   onChange,
 }: RadioButtonsProps<V>) => {
   return (
@@ -26,6 +28,7 @@ const RadioButtons = <V extends string>({
       <label htmlFor={name} className="font-semibold">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
+      {description && <p className="pb-3">{description}</p>}
       <div className="flex gap-4">
         {options.map(({ id, value, label: optionLabel }) => (
           <label key={id} htmlFor={name} className="flex gap-2">
