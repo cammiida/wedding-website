@@ -1,7 +1,7 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import { authenticator } from "~/services/authenticator.server";
-import Header from "./header";
+import Header from "~/components/header";
 
 export async function loader({ request }: LoaderArgs) {
   return await authenticator.isAuthenticated(request, {

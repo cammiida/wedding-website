@@ -1,5 +1,5 @@
 import type { LinksFunction, LoaderArgs, SerializeFrom } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
 import {
   Links,
@@ -13,7 +13,6 @@ import {
 import { AnimatePresence } from "framer-motion";
 
 import stylesheet from "~/tailwind.css";
-import { getData } from "./guest-list/client.server";
 import { authenticator } from "./services/authenticator.server";
 
 export const links: LinksFunction = () => [
@@ -30,9 +29,7 @@ export async function loader({ request }: LoaderArgs) {
     }
   }
 
-  const { guests } = await getData(request);
-
-  return json({ guests });
+  return null;
 }
 
 export const shouldRevalidate: ShouldRevalidateFunction = () => {
