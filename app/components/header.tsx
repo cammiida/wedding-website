@@ -4,11 +4,15 @@ import { useEffect, useState } from "react";
 import { HeaderCenter } from "~/components/header-center";
 import RsvpBtn from "~/components/rsvp-btn";
 
-const Header = () => {
+const Header = ({
+  headerPosition = "fixed",
+}: {
+  headerPosition?: "fixed" | "relative";
+}) => {
   const [blackHeaderBg, setBlackHeaderBg] = useState(false);
 
   useEffect(() => {
-    if (window.scrollY > 0) setBlackHeaderBg(true);
+    if (window.scrollY > 100) setBlackHeaderBg(true);
   }, []);
 
   useScrollPosition(({ currPos }) => {
@@ -21,7 +25,7 @@ const Header = () => {
 
   return (
     <div
-      className={`fixed top-0 z-10 flex h-20 w-full justify-center p-4 text-yellow ${
+      className={`${headerPosition} top-0 z-10 flex h-20 w-full justify-center p-4 text-yellow ${
         blackHeaderBg && "z-40 bg-grey"
       }`}
     >

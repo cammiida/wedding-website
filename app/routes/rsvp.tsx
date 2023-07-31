@@ -49,7 +49,7 @@ const RSVP = () => {
 
   return (
     <>
-      <Header />
+      <Header headerPosition="relative" />
       <div className="relative flex w-full justify-center py-20">
         <div className="text-white-600 w-full max-w-2xl rounded-sm bg-grey p-8">
           <h1 className="text-center font-roboto text-5xl font-light">RSVP</h1>
