@@ -7,6 +7,7 @@ import { z } from "zod";
 import Header from "~/components/header";
 import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
+import Select from "~/components/select";
 
 const rsvpSchema = z.union([
   z.object({
@@ -49,8 +50,8 @@ const RSVP = () => {
   return (
     <>
       <Header />
-      <div className="relative flex w-full justify-center pt-20">
-        <div className="text-white-600 w-1/2 max-w-2xl rounded-sm bg-grey p-8">
+      <div className="relative flex w-full justify-center py-20">
+        <div className="text-white-600 w-full max-w-2xl rounded-sm bg-grey p-8">
           <h1 className="text-center font-roboto text-5xl font-light">RSVP</h1>
           <h2 className="p-3 text-center font-roboto text-2xl font-thin">
             Your kind response is requested by
@@ -82,7 +83,10 @@ const RSVP = () => {
               onChange={setIsGoing}
             />
             {isGoing === "true" && <IsGoingFormPart actionData={data} />}
-            <button className="rounded-md bg-blue p-2" type="submit">
+            <button
+              className="rounded-md bg-blue py-2 lg:w-1/4 lg:self-end"
+              type="submit"
+            >
               Submit
             </button>
           </Form>
@@ -119,10 +123,9 @@ const IsGoingFormPart = ({
       <Input
         name="allergies"
         type="text"
-        placeholder=""
+        placeholder="Allergies or food preferences"
         label="Allergies or food preferences?" // TODO: make textarea
       />
-
       <RadioButtons
         label="Bringing a partner?"
         name="bringingPartner"
@@ -185,7 +188,50 @@ const AccomodationFormPart = () => {
   const [stayingFriday, setStayingFriday] = useState<string>();
   return (
     <>
-      {/** TODO: Room type selection */}
+      <Select
+        name="roomType"
+        label="Room type preference?"
+        placeholder="Select room type"
+        description={
+          <p className="pb-3">
+            As there is a limited number of beds at the cabin, we need to
+            allocate rooms to everyone to make sure every bed is used. <br />
+            <br />
+            We'll try our best to give you your preferred room type and, if you
+            are coming with a partner, you will share a room together. <br />
+            <br />
+            Note that you might have to share a room with someone you do not
+            know, especially if you're travelling alone. If this is the case, we
+            will ask you if that's alright. All our friends are nice people.
+            <br />
+            <br />
+            You can see details of the available room types and prices here:{" "}
+            <a
+              className="text-blue underline"
+              target="_blank"
+              href="https://online.bookvisit.com/R?channelId=d55f9e6e-32f9-42dd-8e4c-0cbb775cc89f&initialPath=/accommodation#/accommodation"
+              rel="noreferrer"
+            >
+              link (opens new tab).
+            </a>
+            <br />
+            <br />
+            You can pay for everything at the cabin.
+          </p>
+        }
+        options={[
+          "No preferences",
+          "Double/Twin Room with bathroom",
+          "Room for two Economy - Shared bathroom in corridor",
+          "Family Bunk Bed room - Historical department",
+          "4-Bed Room/ Family room - Shared bathroom in corridor",
+          "Historical Double Rooms with a View - Shared bathroom",
+          "Single room - Historical department",
+          "4-Bed Room/Familyroom with bathroom",
+          "Økonomirom med køyeseng og bad på korridor",
+          "Jotunheimen Arctic Domes - 2 persons",
+        ]}
+      />
       <RadioButtons
         name="stayingFriday"
         label="Which nights will you be staying at the cabin?"
