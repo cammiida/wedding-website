@@ -1,14 +1,14 @@
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { Form, NavLink } from "@remix-run/react";
 import type { Variants } from "framer-motion";
-import { AnimatePresence, motion, useCycle } from "framer-motion";
+import { motion, useCycle } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { HeaderCenter } from "~/components/header-center";
 import RsvpBtn from "~/components/rsvp-btn";
 import { useDimensions } from "~/hooks/useDimensions";
+import { useScrollBlock } from "~/hooks/useScrollBlock";
 import { MenuItem } from "./menu-item";
 import { MenuToggle } from "./menu-toggle";
-import { useScrollBlock } from "~/hooks/useScrollBlock";
 
 export type Route = { path: `/${string}`; name: string };
 const routes: Route[] = [
@@ -17,6 +17,7 @@ const routes: Route[] = [
   { name: "Travel", path: "/travel" },
   { name: "Sleep", path: "/sleep" },
   { name: "Contact", path: "/contact" },
+  { name: "RSVP", path: "/rsvp" },
 ];
 
 const Header = ({
@@ -111,7 +112,9 @@ const MobileHeader = () => {
       animate={isOpen ? "open" : "closed"}
       custom={height}
       ref={containerRef}
-      className="fixed top-0 flex h-screen w-full flex-col items-center justify-center lg:hidden"
+      className={`${
+        isOpen ? "h-screen" : "h-0"
+      } fixed top-0 z-40 flex w-full flex-col items-center justify-center lg:hidden`}
     >
       <motion.div
         className="absolute bottom-0 left-0 top-0 w-full bg-grey"

@@ -6,7 +6,7 @@ const RsvpBtn = () => {
       to="/rsvp"
       className="rounded-3xl border-[1px] border-yellow bg-yellow bg-opacity-[15%] px-4"
     >
-      RSVP by May 31, 2023
+      RSVP by October 15th, 2023
     </NavLink>
   );
 };
