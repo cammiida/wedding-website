@@ -27,7 +27,7 @@ export default function Index() {
   return (
     <>
       <motion.div
-        className="fixed bottom-0 right-0 top-0 z-50 w-2 origin-top-right bg-yellow"
+        className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-yellow"
         style={{ scaleY: scrollYProgress }}
       />
       <div className="fixed grid min-h-screen w-full grid-rows-[1fr_3fr_1fr] flex-col items-center pt-20 text-white">
@@ -45,7 +45,7 @@ export default function Index() {
           <AnimatedScrollButton onClick={scrollToMountains} />
         </div>
       </div>
-      <div className="absolute top-[calc(100%-3rem)] z-10" ref={mountainRef}>
+      <div className="z-1 absolute top-[calc(100%-3rem)]" ref={mountainRef}>
         <img
           src="/mountain-silhouette.svg"
           alt="Dark mountain silhouette"
@@ -98,7 +98,7 @@ const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
       animate={{
         y: ["0rem", "-1rem", "0rem"],
       }}
-      className="z-50 flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow hover:bg-grey-transparent"
+      className="z-40 flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow hover:bg-grey-transparent"
     >
       Scroll down to see more
       <img
