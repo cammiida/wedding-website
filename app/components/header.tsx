@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import { HeaderCenter } from "~/components/header-center";
 import RsvpBtn from "~/components/rsvp-btn";
 
+type Route = { path: `/${string}`; name: string };
+const routes: Route[] = [
+  { name: "Home", path: "/" },
+  { name: "Story", path: "/story" },
+  { name: "Travel", path: "/travel" },
+  { name: "Sleep", path: "/sleep" },
+  { name: "Contact", path: "/contact" },
+];
+
 const Header = ({
   headerPosition = "fixed",
 }: {
@@ -31,36 +40,15 @@ const Header = ({
     >
       <div className="grid w-full max-w-6xl grid-cols-3 gap-4">
         <ul className="flex items-center gap-4">
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? "text-orange" : "")}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/story"
-            className={({ isActive }) => (isActive ? "text-orange" : "")}
-          >
-            Story
-          </NavLink>
-          <NavLink
-            to="/travel"
-            className={({ isActive }) => (isActive ? "text-orange" : "")}
-          >
-            Travel
-          </NavLink>
-          <NavLink
-            to="/sleep"
-            className={({ isActive }) => (isActive ? "text-orange" : "")}
-          >
-            Sleep
-          </NavLink>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) => (isActive ? "text-orange" : "")}
-          >
-            Contact
-          </NavLink>
+          {routes.map((route) => (
+            <NavLink
+              key={route.path}
+              to={route.path}
+              className={({ isActive }) => (isActive ? "text-orange" : "")}
+            >
+              {route.name}
+            </NavLink>
+          ))}
         </ul>
         <HeaderCenter />
         <ul className="flex items-center justify-end gap-4">
