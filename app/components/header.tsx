@@ -1,7 +1,7 @@
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { Form, NavLink } from "@remix-run/react";
 import type { Variants } from "framer-motion";
-import { motion, useCycle } from "framer-motion";
+import { AnimatePresence, motion, useCycle } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { HeaderCenter } from "~/components/header-center";
 import RsvpBtn from "~/components/rsvp-btn";
@@ -111,7 +111,7 @@ const MobileHeader = () => {
       animate={isOpen ? "open" : "closed"}
       custom={height}
       ref={containerRef}
-      className="fixed top-0 z-50 flex h-screen w-full flex-col items-center justify-center lg:hidden"
+      className="fixed top-0 flex h-screen w-full flex-col items-center justify-center lg:hidden"
     >
       <motion.div
         className="absolute bottom-0 left-0 top-0 w-full bg-grey"
@@ -127,17 +127,16 @@ const Navigation = ({ toggle }: { toggle: () => void }) => {
   const variants: Variants = {
     open: {
       transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+      display: "flex",
     },
     closed: {
       transition: { staggerChildren: 0.05, staggerDirection: -1 },
+      display: "none",
     },
   };
 
   return (
-    <motion.ul
-      variants={variants}
-      className="z-10 flex flex-col items-center gap-4"
-    >
+    <motion.ul variants={variants} className="z-10 flex-col items-center gap-4">
       {routes.map((route) => (
         <MenuItem key={route.path} route={route} onClick={toggle} />
       ))}
