@@ -30,23 +30,21 @@ export default function Index() {
         className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-yellow"
         style={{ scaleY: scrollYProgress }}
       />
-      <div className="fixed grid min-h-screen w-full grid-rows-[1fr_3fr_1fr] flex-col items-center pt-20 text-white">
-        <h1 className="mt-8 text-center font-roboto text-6xl font-thin text-yellow">
-          WE'RE GETTING MARRIED!
-        </h1>
-        <div className="mx-auto flex max-w-xl flex-col items-center justify-end self-end rounded-md bg-grey-transparent shadow-grey-transparent text-shadow">
-          <h2 className=" p-8 text-center text-4xl text-yellow ">
-            JUNE 14-16, 2024
-            <br />
-            JOTUNHEIMEN, NORWAY
-          </h2>
-          <AnimatedScrollButton onClick={scrollToMountains} />
+
+      <div className="z-1 absolute flex flex-col" ref={mountainRef}>
+        <div className="relative flex h-screen w-full flex-col items-center justify-between py-16 text-white">
+          <h1 className="mt-8 text-center font-roboto text-6xl font-thin text-yellow">
+            WE'RE GETTING MARRIED!
+          </h1>
+          <div className="mx-auto flex max-w-xl flex-col items-center justify-end self-end rounded-md bg-grey-transparent shadow-grey-transparent text-shadow">
+            <h2 className=" p-8 text-center text-4xl text-yellow ">
+              JUNE 14-16, 2024
+              <br />
+              JOTUNHEIMEN, NORWAY
+            </h2>
+            <AnimatedScrollButton onClick={scrollToMountains} />
+          </div>
         </div>
-      </div>
-      <div
-        className="z-1 absolute top-[calc(100%-3rem)] flex flex-col"
-        ref={mountainRef}
-      >
         <img
           src="/mountain-silhouette.svg"
           alt="Dark mountain silhouette"
