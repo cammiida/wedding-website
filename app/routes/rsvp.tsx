@@ -8,6 +8,7 @@ import Header from "~/components/header";
 import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
+import TextArea from "~/components/text-area";
 
 const rsvpSchema = z.union([
   z.object({
@@ -120,11 +121,10 @@ const IsGoingFormPart = ({
         description="For thank you card."
         error={fieldErrors?.address}
       />
-      <Input
+      <TextArea
         name="allergies"
-        type="text"
+        label="Allergies or food preferences?"
         placeholder="Allergies or food preferences"
-        label="Allergies or food preferences?" // TODO: make textarea
       />
       <RadioButtons
         label="Bringing a partner?"
@@ -147,15 +147,17 @@ const IsGoingFormPart = ({
 
       {bringingPlusOne === "true" && <BringingPartnerFormPart />}
       <AccomodationFormPart />
-      <div className="flex flex-col gap-1">
-        <label htmlFor="otherInfo" className="font-semibold">
-          Anything else you would like us to know?
-        </label>
-        <textarea
-          name="otherInfo"
-          className="w-full rounded-md p-2 text-grey placeholder:text-med-grey"
-        />
-      </div>
+      <Input
+        name="song"
+        type="text"
+        placeholder="Song request"
+        label="Any songs you would like to hear during the party?"
+      />
+      <TextArea
+        name="comments"
+        label=" Anything else you would like us to know?"
+        placeholder="Other comments"
+      />
     </>
   );
 };
@@ -175,7 +177,7 @@ const BringingPartnerFormPart = () => {
         placeholder="Partner email"
         required
       />
-      <Input
+      <TextArea
         label="Partner allergies or food preferences?"
         name="partnerAllergies"
         placeholder="Allergies or food preferences"
