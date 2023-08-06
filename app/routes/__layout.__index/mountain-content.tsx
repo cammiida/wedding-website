@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 
 const MountainContent = () => {
   return (
-    <div className="grid grid-rows-3 gap-12 py-12">
+    <div className="flex flex-col gap-16 md:grid md:grid-rows-3 md:gap-12">
       <Element
         title="HOW C&T MET"
         content="Prepare yourself for an exciting weekend."
@@ -43,7 +43,7 @@ const Element = ({
 }) => {
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-24 lg:items-start ${
+      className={`flex flex-col items-center gap-6 md:justify-center md:gap-24 lg:items-start ${
         reverse ? "lg:flex-row-reverse" : "lg:flex-row"
       }`}
     >

@@ -51,7 +51,7 @@ export default function Index() {
           className="relative top-[1px] w-full"
           ref={mountainRef}
         />
-        <div className="flex w-full flex-col items-center gap-20 bg-grey">
+        <div className="flex w-full flex-col items-center gap-20 bg-grey py-10 md:py-20">
           <CountDown countDownDate={new Date("2024-06-15")} />
           <MountainContent />
           <div className="flex flex-col items-center gap-6 text-center">
@@ -77,8 +77,8 @@ export default function Index() {
               </span>
             </Link>
           </div>
-          <Footer />
         </div>
+        <Footer />
       </div>
     </>
   );
