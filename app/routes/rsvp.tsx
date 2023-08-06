@@ -188,6 +188,7 @@ const BringingPartnerFormPart = () => {
 
 const AccomodationFormPart = () => {
   const [stayingFriday, setStayingFriday] = useState<string>();
+
   return (
     <>
       <Select
@@ -217,21 +218,25 @@ const AccomodationFormPart = () => {
               link (opens new tab).
             </a>
             <br />
+            NB: all rooms with shared facilities has a sink in the room.
             <br />
-            You can pay for everything at the cabin.
+            <br />
+            You can pay for everything at the cabin. Price per person.
           </p>
         }
         options={[
           "No preferences",
-          "Double/Twin Room with bathroom",
-          "Room for two Economy - Shared bathroom in corridor",
-          "Family Bunk Bed room - Historical department",
-          "4-Bed Room/ Family room - Shared bathroom in corridor",
-          "Historical Double Rooms with a View - Shared bathroom",
-          "Single room - Historical department",
-          "4-Bed Room/Familyroom with bathroom",
-          "Økonomirom med køyeseng og bad på korridor",
-          "Jotunheimen Arctic Domes - 2 persons",
+          "Single room, toilet and shower in corridor - NOK 795",
+          "Single room Historic department, toilet and shower in corridor - NOK 985",
+          "Single room with bathroom - NOK 1300",
+          "Twinbed room, economy department, toilet and shower in corridor - NOK 735",
+          "Doubleroom with bathroom - NOK 975",
+          "Doubleroom Historic Department, toilet and shower in corridor - NOK 885",
+          "3-bed economy room, toilet and shower in corridor - NOK 695",
+          "Family Bunkbed room, Historic Department, toilet and shower in corridor - NOK 695",
+          "4-bed familyroom, toilet and shower in corridor - NOK 695",
+          "4-bed familyroom with Bathroom - NOK 795",
+          // "Jotunheimen Arctic Domes - 2 persons",
         ]}
       />
       <RadioButtons
