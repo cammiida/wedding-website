@@ -14,4 +14,13 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .weight-grow:hover {
+    text-shadow: -0.25px -0.25px 0 #ffd98f, 0.25px -0.25px 0 #ffd98f,
+      -0.25px 0.25px 0 #ffd98f, 0.25px 0.25px 0 #ffd98f;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+  }
 }
