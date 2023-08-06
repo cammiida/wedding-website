@@ -17,7 +17,7 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export default function Index() {
-  const mountainRef = useRef<HTMLDivElement>(null);
+  const mountainRef = useRef<HTMLImageElement>(null);
   const { scrollYProgress } = useScroll();
 
   function scrollToMountains() {
@@ -31,7 +31,7 @@ export default function Index() {
         style={{ scaleY: scrollYProgress }}
       />
 
-      <div className="z-1 absolute flex flex-col" ref={mountainRef}>
+      <div className="z-1 absolute flex flex-col">
         <div className="relative flex h-screen w-full flex-col items-center justify-between py-16 text-white">
           <h1 className="mt-8 text-center font-roboto text-6xl font-thin text-yellow">
             WE'RE GETTING MARRIED!
@@ -49,6 +49,7 @@ export default function Index() {
           src="/mountain-silhouette.svg"
           alt="Dark mountain silhouette"
           className="relative top-[1px] w-full"
+          ref={mountainRef}
         />
         <div className="flex w-full flex-col items-center gap-20 bg-grey">
           <CountDown countDownDate={new Date("2024-06-15")} />
