@@ -1,12 +1,12 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
+import { motion, useAnimationControls, useScroll } from "framer-motion";
+import { useEffect, useRef } from "react";
 import RsvpBtn from "~/components/rsvp-btn";
 import { authenticator } from "~/services/authenticator.server";
 import CountDown from "./count-down";
 import Footer from "./footer";
 import MountainContent from "./mountain-content";
-import { useScroll, motion } from "framer-motion";
-import { useRef } from "react";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
@@ -34,14 +34,12 @@ export default function Index() {
         <h1 className="mt-8 text-center font-roboto text-6xl font-thin text-yellow">
           WE'RE GETTING MARRIED!
         </h1>
-        <div className="flex h-full w-full flex-col items-center justify-end">
-          <h2 className="max-w-xl rounded-md bg-grey-transparent p-8 text-center font-roboto text-4xl font-thin text-yellow shadow-grey-transparent text-shadow">
+        <div className="mx-auto flex max-w-xl flex-col items-center justify-end self-end rounded-md bg-grey-transparent shadow-grey-transparent text-shadow">
+          <h2 className=" p-8 text-center text-4xl text-yellow ">
             JUNE 14-16, 2024
             <br />
             JOTUNHEIMEN, NORWAY
           </h2>
-        </div>
-        <div className="flex justify-center">
           <AnimatedScrollButton onClick={scrollToMountains} />
         </div>
       </div>
@@ -88,22 +86,33 @@ export default function Index() {
 }
 
 const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
-  const transitionValues = {
-    duration: 1,
-    repeat: Infinity,
-    ease: "easeOut",
-    delay: 1,
-    repeatDelay: 2,
-  };
+  const controls = useAnimationControls();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function startAnimation() {
+    controls.start({
+      transition: {
+        duration: 1,
+        repeat: Infinity,
+        ease: "easeOut",
+        delay: 1,
+        repeatDelay: 2,
+      },
+      y: ["0rem", "-1rem", "0rem"],
+    });
+  }
+
+  useEffect(() => {
+    startAnimation();
+  }, [controls, startAnimation]);
 
   return (
     <motion.button
       onClick={onClick}
-      transition={transitionValues}
-      animate={{
-        y: ["0rem", "-1rem", "0rem"],
-      }}
-      className="z-40 flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow hover:bg-grey-transparent"
+      animate={controls}
+      onHoverStart={() => controls.stop()}
+      onHoverEnd={startAnimation}
+      className="z-40 flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow hover:font-bold"
     >
       Scroll down to see more
       <img
