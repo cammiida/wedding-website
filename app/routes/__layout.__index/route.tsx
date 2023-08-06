@@ -111,7 +111,7 @@ const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
       animate={controls}
       onHoverStart={() => controls.stop()}
       onHoverEnd={startAnimation}
-      className="weight-grow z-40 flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow"
+      className="weight-grow flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow"
     >
       Scroll down to see more
       <img
