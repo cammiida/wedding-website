@@ -1,52 +1,37 @@
-import type { ActionArgs, SerializeFrom } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, type ActionArgs } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
-import { z } from "zod";
 import Header from "~/components/header";
 import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
 import TextArea from "~/components/text-area";
-
-const rsvpSchema = z.union([
-  z.object({
-    name: z.string(),
-    isGoing: z.undefined().transform(() => false),
-  }),
-  z
-    .object({
-      name: z.string(),
-      isGoing: z.literal("on").transform(() => true),
-      address: z.string().nonempty(),
-      dietaryRestrictions: z.string().nullish(),
-      noGift: z.literal("on").transform(() => true),
-    })
-    .and(
-      z.union([
-        z.object({ plusOne: z.undefined().transform(() => false) }),
-        z.object({
-          plusOne: z.literal("on").transform(() => true),
-          plusOneName: z.string().min(3),
-          plusOneEmail: z.string().email(),
-        }),
-      ])
-    ),
-]);
+import { attendingSchema, notAttendingSchema } from "~/guest-list/schema";
 
 export async function action({ request }: ActionArgs) {
   const validatedFormValues = await withZod(rsvpSchema).validate(
     await request.formData()
   );
 
-  return json({ validationErrors: validatedFormValues.error });
+  const formData = await request.formData();
+  const isAttending = formData.get("attending");
+
+  let result;
+  if (isAttending === "true") {
+    result = await withZod(attendingSchema).validate(formData);
+  } else {
+    result = await withZod(notAttendingSchema).validate(formData);
+  }
+
+  return json({ errors: result.error });
 }
 
 const RSVP = () => {
   const data = useActionData<typeof action>();
+  const errors = data?.errors?.fieldErrors;
 
-  const [isGoing, setIsGoing] = useState<string>();
+  const [isGoing, setIsGoing] = useState<"true" | "false">();
 
   return (
     <>
@@ -60,14 +45,15 @@ const RSVP = () => {
           </h2>
           <Form method="post" className="flex flex-col gap-8">
             <Input
-              name="name"
+              name="fullName"
               required
               placeholder="Your name here"
               label="Full name"
+              error={errors?.fullName}
             />
             <RadioButtons
               label="Attending?"
-              name="isGoing"
+              name="attending"
               options={[
                 {
                   label: "Absolutely, count me in!",
@@ -82,10 +68,11 @@ const RSVP = () => {
               ]}
               required
               onChange={setIsGoing}
+              error={errors?.attending}
             />
-            {isGoing === "true" && <IsGoingFormPart actionData={data} />}
+            {isGoing === "true" && <IsGoingFormPart />}
             <button
-              className="rounded-md bg-blue py-2 lg:w-1/4 lg:self-end"
+              className=" rounded-md bg-blue py-2 disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
               type="submit"
             >
               Submit
@@ -97,13 +84,10 @@ const RSVP = () => {
   );
 };
 
-const IsGoingFormPart = ({
-  actionData,
-}: {
-  actionData: SerializeFrom<typeof action> | undefined;
-}) => {
-  const fieldErrors = actionData?.validationErrors?.fieldErrors;
-  const [bringingPlusOne, setBringingPlusOne] = useState<string>();
+const IsGoingFormPart = () => {
+  const data = useActionData<typeof action>();
+  const errors = data?.errors?.fieldErrors;
+  const [bringingPartner, setBringingPartner] = useState<"true" | "false">();
 
   return (
     <>
@@ -113,13 +97,13 @@ const IsGoingFormPart = ({
         placeholder="Your email here"
         label="Email"
         required
+        error={errors?.email}
       />
       <Input
         name="address"
         placeholder="Your full address"
         label="Address"
         description="For thank you card."
-        error={fieldErrors?.address}
       />
       <TextArea
         name="allergies"
@@ -142,13 +126,14 @@ const IsGoingFormPart = ({
           },
         ]}
         required
-        onChange={setBringingPlusOne}
+        onChange={setBringingPartner}
+        error={errors?.bringingPartner}
       />
 
-      {bringingPlusOne === "true" && <BringingPartnerFormPart />}
+      {bringingPartner === "true" && <BringingPartnerFormPart />}
       <AccomodationFormPart />
       <Input
-        name="song"
+        name="songRequest"
         type="text"
         placeholder="Song request"
         label="Any songs you would like to hear during the party?"
@@ -163,19 +148,24 @@ const IsGoingFormPart = ({
 };
 
 const BringingPartnerFormPart = () => {
+  const data = useActionData<typeof action>();
+  const errors = data?.errors?.fieldErrors;
+
   return (
     <>
       <Input
         label="Name of partner"
-        name="partnerName"
-        placeholder="Partner name"
+        name="partnerFullName"
+        placeholder="Partner full name"
         required
+        error={errors?.partnerFullName}
       />
       <Input
         label="Partner email"
         name="partnerEmail"
         placeholder="Partner email"
         required
+        error={errors?.partnerEmail}
       />
       <TextArea
         label="Partner allergies or food preferences?"
@@ -189,10 +179,13 @@ const BringingPartnerFormPart = () => {
 const AccomodationFormPart = () => {
   const [stayingFriday, setStayingFriday] = useState<string>();
 
+  const data = useActionData<typeof action>();
+  const errors = data?.errors?.fieldErrors;
+
   return (
     <>
       <Select
-        name="roomType"
+        name="roomTypePreferences"
         label="Room type preference?"
         placeholder="Select room type"
         description={
@@ -251,15 +244,16 @@ const AccomodationFormPart = () => {
           {
             label: "Friday and Saturday",
             value: "true",
-            id: "both",
+            id: "true",
           },
           {
             label: "Only Saturday",
             value: "false",
-            id: "saturday",
+            id: "false",
           },
         ]}
         onChange={setStayingFriday}
+        error={errors?.stayingFriday}
       />
       {stayingFriday === "true" && (
         <RadioButtons
@@ -279,6 +273,7 @@ const AccomodationFormPart = () => {
               id: "no",
             },
           ]}
+          error={errors?.dinnerFriday}
         />
       )}
     </>

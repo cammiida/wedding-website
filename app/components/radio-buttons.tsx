@@ -1,5 +1,3 @@
-import React from "react";
-
 type RadioOption<V extends string> = {
   value: V;
   id: string;
@@ -13,6 +11,7 @@ type RadioButtonsProps<V extends string> = {
   description?: string;
   required?: boolean;
   onChange?: (value: V | undefined) => void;
+  error?: string;
 };
 
 const RadioButtons = <V extends string>({
@@ -22,6 +21,7 @@ const RadioButtons = <V extends string>({
   description,
   required = false,
   onChange,
+  error,
 }: RadioButtonsProps<V>) => {
   return (
     <div className="flex flex-col gap-1">
@@ -44,6 +44,7 @@ const RadioButtons = <V extends string>({
           </label>
         ))}
       </div>
+      {error && <small className="text-red-500">{error}</small>}
     </div>
   );
 };

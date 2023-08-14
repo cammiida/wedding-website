@@ -109,3 +109,83 @@ export const getEmail = (name: string, fromPage: DatabasePage) => {
   }
   return undefined;
 };
+
+const bringingPartnerSchema = z
+  .object({
+    bringingPartner: z
+      .union([z.undefined(), z.literal("false"), z.literal("true")])
+      .refine((arg) => !!arg, "This field is required.")
+      .transform((arg) => arg === "true"),
+    partnerFullName: z.string().optional(),
+    partnerEmail: z.string().optional(),
+    partnerAllergies: z.string().optional(),
+  })
+  .superRefine(
+    (
+      { bringingPartner, partnerFullName, partnerEmail, partnerAllergies },
+      ctx
+    ) => {
+      if (bringingPartner && !partnerFullName) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "This field is required",
+          path: ["partnerFullName"],
+        });
+      }
+      if (bringingPartner && !partnerEmail) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "This field is required",
+          path: ["partnerEmail"],
+        });
+      }
+    }
+  );
+
+const stayingFridaySchema = z
+  .object({
+    stayingFriday: z
+      .union([z.undefined(), z.literal("false"), z.literal("true")])
+      .refine((arg) => !!arg, "This field is required.")
+      .transform((arg) => arg === "true"),
+    dinnerFriday: z.union([
+      z.undefined(),
+      z.literal("false"),
+      z.literal("true"),
+    ]),
+  })
+  .refine(
+    ({ stayingFriday, dinnerFriday }) =>
+      !stayingFriday || dinnerFriday !== undefined,
+    { path: ["dinnerFriday"], message: "This field is required" }
+  );
+
+export const notAttendingSchema = z
+  .object({
+    fullName: z.string().nonempty({ message: "Name cannot be blank." }),
+    attending: z.literal("false").pipe(z.coerce.boolean()).optional(),
+  })
+  .refine(({ attending }) => attending !== null && attending !== undefined, {
+    message: "This field is required.",
+    path: ["attending"],
+  });
+
+export const attendingSchema = z
+  .object({
+    fullName: z.string().nonempty({ message: "Name cannot be blank." }),
+    attending: z.literal("true").pipe(z.coerce.boolean()).optional(),
+    email: z.string().email().nonempty(),
+    address: z.string(),
+    allergies: z.string().optional(),
+    roomTypePreferences: z.string().optional(),
+    songRequest: z.string().optional(),
+    comments: z.string().optional(),
+  })
+  .and(bringingPartnerSchema)
+  .and(stayingFridaySchema)
+  .refine(({ attending }) => !!attending, {
+    message: "This field is required.",
+    path: ["attending"],
+  });
+
+export const rsvpSchema = z.union([notAttendingSchema, attendingSchema]);
