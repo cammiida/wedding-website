@@ -10,10 +10,6 @@ import TextArea from "~/components/text-area";
 import { attendingSchema, notAttendingSchema } from "~/guest-list/schema";
 
 export async function action({ request }: ActionArgs) {
-  const validatedFormValues = await withZod(rsvpSchema).validate(
-    await request.formData()
-  );
-
   const formData = await request.formData();
   const isAttending = formData.get("attending");
 
