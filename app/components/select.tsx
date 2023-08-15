@@ -47,18 +47,17 @@ const Select: React.FC<SelectProps> = ({
           } border-shadow absolute top-16 max-h-[50vh] w-full overflow-scroll rounded-md bg-white`}
         >
           {options.map((option, i) => (
-            <>
+            <React.Fragment key={option}>
               {i > 0 && (
                 <hr className="mx-2 border-t-[1px] border-solid border-t-orange" />
               )}
               <p
                 className="flex cursor-pointer rounded-md p-4 text-grey hover:bg-light-grey"
-                key={option}
                 onClick={() => handleChoice(option)}
               >
                 {option}
               </p>
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
