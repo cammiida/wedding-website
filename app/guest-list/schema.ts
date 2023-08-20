@@ -112,8 +112,7 @@ export const getEmail = (name: string, fromPage: DatabasePage) => {
 };
 
 const formValuesPreprocessing = (arg: unknown) => {
-  const result = Object.entries(arg as Object).reduce((acc, [key, value]) => {
-    console.log({ [key]: value });
+  return Object.entries(arg as Object).reduce((acc, [key, value]) => {
     switch (value) {
       case "":
         return { ...acc, [key]: undefined };
@@ -125,9 +124,6 @@ const formValuesPreprocessing = (arg: unknown) => {
         return { ...acc, [key]: value };
     }
   }, {});
-  console.log({ preprocessed: result });
-
-  return result;
 };
 
 function addRequiredIssue(ctx: z.RefinementCtx, pathName: string) {
@@ -168,7 +164,7 @@ export const rsvpSchema = z.preprocess(
         dinnerFriday,
       } = args;
       if (attending) {
-        if (!email) addRequiredIssue(ctx, "attending");
+        if (!email) addRequiredIssue(ctx, "email");
         if (bringingPartner === undefined)
           addRequiredIssue(ctx, "bringingPartner");
         if (stayingFriday === undefined) addRequiredIssue(ctx, "stayingFriday");

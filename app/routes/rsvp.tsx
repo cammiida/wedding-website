@@ -1,4 +1,5 @@
-import { json, type ActionArgs } from "@remix-run/node";
+import { isNotionClientError } from "@notionhq/client";
+import { redirect, type ActionArgs } from "@remix-run/node";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import { ValidatedForm, useFormContext } from "remix-validated-form";
@@ -7,13 +8,46 @@ import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
 import TextArea from "~/components/text-area";
-import { postRsvpResponse } from "~/guest-list/client.server";
-import { rsvpSchema } from "~/guest-list/schema";
+import { notionRsvpSchema, rsvpSchema } from "~/guest-list/schema";
+import { getClient } from "~/notion/notion.server";
+import { authenticator } from "~/services/authenticator.server";
+import { env } from "~/variables.server";
 
 export async function action({ request }: ActionArgs) {
-  const result = postRsvpResponse(request);
+  const formData = await request.formData();
+  const isAuthenticated = authenticator.isAuthenticated(request);
+  if (!isAuthenticated) {
+    // TODO: set flash message
+    throw redirect("/");
+  }
 
-  return json({ result });
+  const validatedProperties = await withZod(notionRsvpSchema).validate(
+    formData
+  );
+
+  if (validatedProperties.error) {
+    // TODO: set flash message
+    return null;
+  }
+
+  try {
+    await getClient(env.NOTION_TOKEN).postDatabasePage({
+      parent: {
+        type: "database_id",
+        database_id: env.RSVP_DATABASE_ID,
+      },
+      properties: validatedProperties.data,
+    });
+
+    // TODO: send email
+    return redirect(`/rsvp/success?email=${formData.get("email")}`);
+  } catch (error) {
+    if (isNotionClientError(error)) {
+      // TODO: set flash message
+    }
+    console.error(error);
+    return null;
+  }
 }
 
 const RSVP = () => {
