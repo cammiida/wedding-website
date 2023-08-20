@@ -1,34 +1,23 @@
 import { json, type ActionArgs } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
+import { ValidatedForm, useFormContext } from "remix-validated-form";
 import Header from "~/components/header";
 import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
 import TextArea from "~/components/text-area";
-import { attendingSchema, notAttendingSchema } from "~/guest-list/schema";
+import { rsvpSchema } from "~/guest-list/schema";
 
 export async function action({ request }: ActionArgs) {
-  const formData = await request.formData();
-  const isAttending = formData.get("attending");
 
-  let result;
-  if (isAttending === "true") {
-    result = await withZod(attendingSchema).validate(formData);
-  } else {
-    result = await withZod(notAttendingSchema).validate(formData);
-  }
+  const formData = await request.formData();
+  const result = await withZod(rsvpSchema).validate(formData);
 
   return json({ errors: result.error });
 }
 
 const RSVP = () => {
-  const data = useActionData<typeof action>();
-  const errors = data?.errors?.fieldErrors;
-
-  const [isGoing, setIsGoing] = useState<"true" | "false">();
-
   return (
     <>
       <Header headerPosition="relative" />
@@ -39,51 +28,70 @@ const RSVP = () => {
             Your kind response is requested by
             <br /> October 15th 2023
           </h2>
-          <Form method="post" className="flex flex-col gap-8">
-            <Input
-              name="fullName"
-              required
-              placeholder="Your name here"
-              label="Full name"
-              error={errors?.fullName}
-            />
-            <RadioButtons
-              label="Attending?"
-              name="attending"
-              options={[
-                {
-                  label: "Absolutely, count me in!",
-                  value: "true",
-                  id: "going",
-                },
-                {
-                  label: "Regretfully, no :(",
-                  value: "false",
-                  id: "notGoing",
-                },
-              ]}
-              required
-              onChange={setIsGoing}
-              error={errors?.attending}
-            />
-            {isGoing === "true" && <IsGoingFormPart />}
+          <ValidatedForm
+            id="rsvpForm"
+            validator={withZod(rsvpSchema)}
+            method="post"
+            className="flex flex-col gap-8"
+          >
+            <FormFields />
             <button
               className=" rounded-md bg-blue py-2 disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
               type="submit"
             >
               Submit
             </button>
-          </Form>
+          </ValidatedForm>
         </div>
       </div>
     </>
   );
 };
 
+const FormFields = () => {
+  const [isGoing, setIsGoing] = useState<"true" | "false">();
+
+  const form = useFormContext();
+  const errors = form.fieldErrors;
+
+  return (
+    <>
+      <Input
+        name="fullName"
+        required
+        placeholder="Your name here"
+        label="Full name"
+        error={errors?.fullName}
+      />
+      <RadioButtons
+        label="Attending?"
+        name="attending"
+        options={[
+          {
+            label: "Absolutely, count me in!",
+            value: "true",
+            id: "going",
+          },
+          {
+            label: "Regretfully, no :(",
+            value: "false",
+            id: "notGoing",
+          },
+        ]}
+        required
+        onChange={setIsGoing}
+        error={errors?.attending}
+      />
+      {isGoing === "true" && <IsGoingFormPart />}
+    </>
+  );
+};
+
 const IsGoingFormPart = () => {
-  const data = useActionData<typeof action>();
-  const errors = data?.errors?.fieldErrors;
   const [bringingPartner, setBringingPartner] = useState<"true" | "false">();
+
+  const form = useFormContext();
+  const errors = form.fieldErrors;
 
   return (
     <>
@@ -144,8 +152,8 @@ const IsGoingFormPart = () => {
 };
 
 const BringingPartnerFormPart = () => {
-  const data = useActionData<typeof action>();
-  const errors = data?.errors?.fieldErrors;
+  const form = useFormContext();
+  const errors = form.fieldErrors;
 
   return (
     <>
@@ -175,8 +183,8 @@ const BringingPartnerFormPart = () => {
 const AccomodationFormPart = () => {
   const [stayingFriday, setStayingFriday] = useState<string>();
 
-  const data = useActionData<typeof action>();
-  const errors = data?.errors?.fieldErrors;
+  const form = useFormContext();
+  const errors = form.fieldErrors;
 
   return (
     <>

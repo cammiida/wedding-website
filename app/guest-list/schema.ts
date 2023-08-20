@@ -160,15 +160,10 @@ const stayingFridaySchema = z
     { path: ["dinnerFriday"], message: "This field is required" }
   );
 
-export const notAttendingSchema = z
-  .object({
-    fullName: z.string().nonempty({ message: "Name cannot be blank." }),
-    attending: z.literal("false").pipe(z.coerce.boolean()).optional(),
-  })
-  .refine(({ attending }) => attending !== null && attending !== undefined, {
-    message: "This field is required.",
-    path: ["attending"],
-  });
+export const notAttendingSchema = z.object({
+  fullName: z.string().nonempty({ message: "Name cannot be blank." }),
+  attending: z.enum(["false"]).transform(() => false),
+});
 
 export const attendingSchema = z
   .object({
