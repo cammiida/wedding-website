@@ -1,8 +1,13 @@
+import { withZod } from "@remix-validated-form/with-zod";
 import { getClient } from "~/notion/notion.server";
-import { safeParseGuests as safeParseGuestList } from "./schema";
 import { authenticator } from "~/services/authenticator.server";
+import {
+  notionRsvpSchema,
+  safeParseGuests as safeParseGuestList,
+} from "./schema";
 
 const GUEST_LIST_DATABASE_ID = "51db855009264a01936089d4d53adf5c";
+const RSVP_DATABASE_ID = "363da6d146524a76a66dbc09bf154bf0";
 
 export async function searchGuest(request: Request) {
   const searchParams = new URL(request.url).searchParams;
@@ -73,4 +78,29 @@ export async function getData(request: Request) {
         }
       : {}),
   };
+}
+
+export async function postRsvpResponse(request: Request) {
+  const isAuthenticated = authenticator.isAuthenticated(request);
+  if (!isAuthenticated) {
+    return { guests: [] };
+  }
+
+  const validatedProperties = await withZod(notionRsvpSchema).validate(
+    await request.formData()
+  );
+
+  if (validatedProperties.error) {
+    throw Error("Something went horribly wrong");
+  }
+
+  const notionToken = process.env.NOTION_TOKEN as string;
+
+  return await getClient(notionToken).postDatabasePage({
+    parent: {
+      type: "database_id",
+      database_id: RSVP_DATABASE_ID,
+    },
+    properties: validatedProperties.data,
+  });
 }

@@ -7,14 +7,13 @@ import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
 import TextArea from "~/components/text-area";
+import { postRsvpResponse } from "~/guest-list/client.server";
 import { rsvpSchema } from "~/guest-list/schema";
 
 export async function action({ request }: ActionArgs) {
+  const result = postRsvpResponse(request);
 
-  const formData = await request.formData();
-  const result = await withZod(rsvpSchema).validate(formData);
-
-  return json({ errors: result.error });
+  return json({ result });
 }
 
 const RSVP = () => {

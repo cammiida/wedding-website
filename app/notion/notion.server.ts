@@ -1,4 +1,5 @@
 import { Client as NotionClient } from "@notionhq/client";
+import type { CreatePageParameters } from "@notionhq/client/build/src/api-endpoints";
 
 export const getClient = (token: string) => {
   const notionClient = new NotionClient({
@@ -7,11 +8,16 @@ export const getClient = (token: string) => {
 
   return {
     getDatabasePages: getDatabasePages(notionClient),
+    postDatabasePage: postDatabasePage(notionClient),
   };
 };
 
 type Sorts = Parameters<NotionClient["databases"]["query"]>[0]["sorts"];
 type Filter = Parameters<NotionClient["databases"]["query"]>[0]["filter"];
+
+export const postDatabasePage =
+  (notion: NotionClient) => async (createParams: CreatePageParameters) =>
+    notion.pages.create(createParams);
 
 const getDatabasePages =
   (notion: NotionClient) =>

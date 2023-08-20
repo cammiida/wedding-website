@@ -1,4 +1,5 @@
 import type {
+  CreatePageParameters,
   ListBlockChildrenResponse,
   PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
@@ -110,77 +111,145 @@ export const getEmail = (name: string, fromPage: DatabasePage) => {
   return undefined;
 };
 
-const bringingPartnerSchema = z
-  .object({
-    bringingPartner: z
-      .union([z.undefined(), z.literal("false"), z.literal("true")])
-      .refine((arg) => !!arg, "This field is required.")
-      .transform((arg) => arg === "true"),
-    partnerFullName: z.string().optional(),
-    partnerEmail: z.string().optional(),
-    partnerAllergies: z.string().optional(),
-  })
-  .superRefine(
-    (
-      { bringingPartner, partnerFullName, partnerEmail, partnerAllergies },
-      ctx
-    ) => {
-      if (bringingPartner && !partnerFullName) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "This field is required",
-          path: ["partnerFullName"],
-        });
-      }
-      if (bringingPartner && !partnerEmail) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "This field is required",
-          path: ["partnerEmail"],
-        });
-      }
+const formValuesPreprocessing = (arg: unknown) => {
+  const result = Object.entries(arg as Object).reduce((acc, [key, value]) => {
+    console.log({ [key]: value });
+    switch (value) {
+      case "":
+        return { ...acc, [key]: undefined };
+      case "true":
+        return { ...acc, [key]: true };
+      case "false":
+        return { ...acc, [key]: false };
+      default:
+        return { ...acc, [key]: value };
     }
-  );
+  }, {});
+  console.log({ preprocessed: result });
 
-const stayingFridaySchema = z
-  .object({
-    stayingFriday: z
-      .union([z.undefined(), z.literal("false"), z.literal("true")])
-      .refine((arg) => !!arg, "This field is required.")
-      .transform((arg) => arg === "true"),
-    dinnerFriday: z.union([
-      z.undefined(),
-      z.literal("false"),
-      z.literal("true"),
-    ]),
-  })
-  .refine(
-    ({ stayingFriday, dinnerFriday }) =>
-      !stayingFriday || dinnerFriday !== undefined,
-    { path: ["dinnerFriday"], message: "This field is required" }
-  );
+  return result;
+};
 
-export const notAttendingSchema = z.object({
-  fullName: z.string().nonempty({ message: "Name cannot be blank." }),
-  attending: z.enum(["false"]).transform(() => false),
-});
-
-export const attendingSchema = z
-  .object({
-    fullName: z.string().nonempty({ message: "Name cannot be blank." }),
-    attending: z.literal("true").pipe(z.coerce.boolean()).optional(),
-    email: z.string().email().nonempty(),
-    address: z.string(),
-    allergies: z.string().optional(),
-    roomTypePreferences: z.string().optional(),
-    songRequest: z.string().optional(),
-    comments: z.string().optional(),
-  })
-  .and(bringingPartnerSchema)
-  .and(stayingFridaySchema)
-  .refine(({ attending }) => !!attending, {
-    message: "This field is required.",
-    path: ["attending"],
+function addRequiredIssue(ctx: z.RefinementCtx, pathName: string) {
+  return ctx.addIssue({
+    code: z.ZodIssueCode.custom,
+    message: "Required",
+    path: [pathName],
   });
+}
 
-export const rsvpSchema = z.union([notAttendingSchema, attendingSchema]);
+export const rsvpSchema = z.preprocess(
+  formValuesPreprocessing,
+  z
+    .object({
+      fullName: z.string(),
+      attending: z.boolean(),
+      email: z.string().email().optional(),
+      address: z.string().optional(),
+      allergies: z.string().optional(),
+      roomTypePreferences: z.string().optional(),
+      songRequest: z.string().optional(),
+      comments: z.string().optional(),
+      bringingPartner: z.boolean().optional(),
+      partnerFullName: z.string().optional(),
+      partnerEmail: z.string().optional(),
+      partnerAllergies: z.string().optional(),
+      stayingFriday: z.boolean().optional(),
+      dinnerFriday: z.boolean().optional(),
+    })
+    .superRefine((args, ctx) => {
+      const {
+        attending,
+        email,
+        bringingPartner,
+        partnerFullName,
+        partnerEmail,
+        stayingFriday,
+        dinnerFriday,
+      } = args;
+      if (attending) {
+        if (!email) addRequiredIssue(ctx, "attending");
+        if (bringingPartner === undefined)
+          addRequiredIssue(ctx, "bringingPartner");
+        if (stayingFriday === undefined) addRequiredIssue(ctx, "stayingFriday");
+      }
+
+      if (attending && bringingPartner) {
+        if (!partnerFullName) addRequiredIssue(ctx, "partnerFullName");
+        if (!partnerEmail) addRequiredIssue(ctx, "partnerEmail");
+      }
+
+      if (attending && stayingFriday) {
+        if (dinnerFriday === undefined) addRequiredIssue(ctx, "dinnerFriday");
+      }
+    })
+);
+
+export type CreateDatabasePageParams = Extract<
+  CreatePageParameters,
+  { parent: { database_id: string } }
+>;
+
+export const notionRsvpSchema = rsvpSchema.transform(
+  ({
+    fullName,
+    attending,
+    email,
+    address,
+    allergies,
+    roomTypePreferences,
+    songRequest,
+    comments,
+    bringingPartner,
+    partnerFullName,
+    partnerEmail,
+    partnerAllergies,
+    stayingFriday,
+    dinnerFriday,
+  }): CreateDatabasePageParams["properties"] => {
+    return {
+      "Full name": {
+        title: [
+          {
+            text: {
+              content: fullName,
+            },
+          },
+        ],
+      },
+      "Attending?": {
+        checkbox: attending,
+      },
+      Email: {
+        email: email ?? null,
+      },
+      Address: { rich_text: [{ text: { content: address ?? "" } }] },
+      "Allergies or food preferences": {
+        rich_text: [{ text: { content: allergies ?? "" } }],
+      },
+      "Bringing a partner": { checkbox: bringingPartner ?? false },
+      "Room type preference": {
+        rich_text: [{ text: { content: roomTypePreferences ?? "" } }],
+      },
+      "Staying Friday": {
+        checkbox: stayingFriday ?? false,
+      },
+      "Dinner Friday": { checkbox: dinnerFriday ?? false },
+      "Song request": {
+        rich_text: [{ text: { content: songRequest ?? "" } }],
+      },
+      Comments: {
+        rich_text: [{ text: { content: comments ?? "" } }],
+      },
+      "Partner - Full Name": {
+        rich_text: [{ text: { content: partnerFullName ?? "" } }],
+      },
+      "Partner - Email": {
+        email: partnerEmail ?? null,
+      },
+      "Partner - Allergies or food preferences?": {
+        rich_text: [{ text: { content: partnerAllergies ?? "" } }],
+      },
+    };
+  }
+);
