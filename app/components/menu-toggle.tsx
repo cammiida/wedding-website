@@ -13,7 +13,7 @@ export const MenuToggle = ({ toggle }: { toggle: () => void }) => {
   return (
     <button
       onClick={toggle}
-      className="absolute left-0 top-0 z-10 flex items-center p-4"
+      className="absolute left-0 top-0 z-10 flex h-20 items-center p-4"
     >
       <svg width="32" height="32" viewBox="0 0 23 23">
         <Path
