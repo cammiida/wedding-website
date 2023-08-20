@@ -1,9 +1,11 @@
-import { Client as NotionClient } from "@notionhq/client";
+import { LogLevel, Client as NotionClient } from "@notionhq/client";
 import type { CreatePageParameters } from "@notionhq/client/build/src/api-endpoints";
+import { env } from "~/variables.server";
 
 export const getClient = (token: string) => {
   const notionClient = new NotionClient({
     auth: token,
+    logLevel: env.NODE_ENV === "development" ? LogLevel.DEBUG : LogLevel.WARN,
   });
 
   return {

@@ -1,13 +1,7 @@
 import { withZod } from "@remix-validated-form/with-zod";
 import { getClient } from "~/notion/notion.server";
 import { authenticator } from "~/services/authenticator.server";
-import {
-  notionRsvpSchema,
-  safeParseGuests as safeParseGuestList,
-} from "./schema";
-
-const GUEST_LIST_DATABASE_ID = "51db855009264a01936089d4d53adf5c";
-const RSVP_DATABASE_ID = "363da6d146524a76a66dbc09bf154bf0";
+import { env } from "~/variables.server";
 
 export async function searchGuest(request: Request) {
   const searchParams = new URL(request.url).searchParams;
@@ -17,10 +11,8 @@ export async function searchGuest(request: Request) {
     return { guest: null };
   }
 
-  const notionToken = process.env.NOTION_TOKEN as string;
-
-  const result = await getClient(notionToken).getDatabasePages({
-    databaseId: GUEST_LIST_DATABASE_ID,
+  const result = await getClient(env.NOTION_TOKEN).getDatabasePages({
+    databaseId: env.GUEST_LIST_DATABASE_ID,
     filter: {
       or: [{ property: "Email", email: { equals: email } }],
     },
@@ -28,7 +20,7 @@ export async function searchGuest(request: Request) {
   const [guests, invalidGuests] = safeParseGuestList(result);
 
   // Filter out parse errors and unpublished data unless a preview secret is given
-  const previewSecret = process.env.PREVIEW_SECRET;
+  const previewSecret = env.PREVIEW_SECRET;
   const showPreview =
     previewSecret != undefined &&
     new URL(request.url).searchParams.get("preview") === previewSecret;
@@ -56,10 +48,8 @@ export async function getData(request: Request) {
     return { guests: [] };
   }
 
-  const notionToken = process.env.NOTION_TOKEN as string;
-
-  const result = await getClient(notionToken).getDatabasePages({
-    databaseId: GUEST_LIST_DATABASE_ID,
+  const result = await getClient(env.NOTION_TOKEN).getDatabasePages({
+    databaseId: env.GUEST_LIST_DATABASE_ID,
   });
   const [guests, invalidGuests] = safeParseGuestList(result);
 
