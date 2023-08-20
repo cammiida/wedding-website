@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const nonEmptyString = z.string().min(1);
+const nonEmptyString = z.string().nonempty();
 
 const zodEnv = z.object({
   SESSION_SECRET: nonEmptyString,
@@ -10,9 +10,6 @@ const zodEnv = z.object({
   NOTION_TOKEN: nonEmptyString,
   GUEST_LIST_DATABASE_ID: nonEmptyString,
   RSVP_DATABASE_ID: nonEmptyString,
-
-  AWS_ACCESS_KEY_ID: nonEmptyString,
-  AWS_SECRET_ACCESS_KEY: nonEmptyString,
 
   NODE_ENV: z.enum(["development", "production", "test"]).optional(),
 });
