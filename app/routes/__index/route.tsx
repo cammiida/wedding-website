@@ -8,6 +8,7 @@ import { AnimatedScrollButton } from "./animated-scroll-btn";
 import CountDown from "./count-down";
 import Footer from "./footer";
 import MountainContent from "./mountain-content";
+import Header from "~/components/header";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
@@ -27,6 +28,12 @@ export default function Index() {
 
   return (
     <>
+      <img
+        src="/banner-image.png"
+        alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
+        className="fixed left-0 top-0 z-0 min-h-screen w-full overflow-y-clip bg-fixed object-cover object-top supports-[height:100cqh]:h-[100cqh] supports-[height:100svh]:h-[100svh]"
+      />
+      <Header />
       <motion.div
         className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-orange"
         style={{ scaleY: scrollYProgress }}
