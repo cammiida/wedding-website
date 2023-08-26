@@ -1,14 +1,13 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
-import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
+import Header from "~/components/header";
 import RsvpBtn from "~/components/rsvp-btn";
 import { authenticator } from "~/services/authenticator.server";
 import { AnimatedScrollButton } from "./animated-scroll-btn";
 import CountDown from "./count-down";
 import Footer from "./footer";
 import MountainContent from "./mountain-content";
-import Header from "~/components/header";
 
 export async function loader({ request }: LoaderArgs) {
   return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
@@ -20,7 +19,6 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   const mountainRef = useRef<HTMLImageElement>(null);
-  const { scrollYProgress } = useScroll();
 
   function scrollToMountains() {
     mountainRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -34,10 +32,6 @@ export default function Index() {
         className="fixed left-0 top-0 z-0 min-h-screen w-full overflow-y-clip bg-fixed object-cover object-top supports-[height:100cqh]:h-[100cqh] supports-[height:100svh]:h-[100svh]"
       />
       <Header />
-      <motion.div
-        className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-orange"
-        style={{ scaleY: scrollYProgress }}
-      />
 
       <div className="z-1 absolute flex flex-col">
         <div className="relative flex h-screen w-full flex-col items-center justify-between py-16 text-white">
