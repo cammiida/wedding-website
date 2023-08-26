@@ -45,7 +45,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="no-scrollbar min-h-screen bg-grey text-yellow antialiased">
+      <body className="no-scrollbar min-h-screen bg-yellow text-orange antialiased">
         <AnimatePresence mode="wait" initial={false}>
           <Outlet />
         </AnimatePresence>

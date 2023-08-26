@@ -1,14 +1,13 @@
-import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { Form, NavLink } from "@remix-run/react";
 import type { Variants } from "framer-motion";
 import { motion, useCycle } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { HeaderCenter } from "~/components/header-center";
+import { useRef } from "react";
 import RsvpBtn from "~/components/rsvp-btn";
 import { useDimensions } from "~/hooks/useDimensions";
 import { useScrollBlock } from "~/hooks/useScrollBlock";
 import { MenuItem } from "./menu-item";
 import { MenuToggle } from "./menu-toggle";
+import { HeaderCenter } from "./header-center";
 
 export type Route = { path: `/${string}`; name: string };
 const routes: Route[] = [
@@ -20,58 +19,51 @@ const routes: Route[] = [
   { name: "RSVP", path: "/rsvp" },
 ];
 
-const Header = ({
-  headerPosition = "fixed",
-}: {
-  headerPosition?: "fixed" | "relative";
-}) => {
-  const [blackHeaderBg, setBlackHeaderBg] = useState(false);
+type HeaderProps = {
+  position?: "fixed" | "relative";
+};
 
-  useEffect(() => {
-    if (window.scrollY > 100) setBlackHeaderBg(true);
-  }, []);
-
-  useScrollPosition(({ currPos }) => {
-    if (currPos.y < -window.innerHeight - 100) {
-      setBlackHeaderBg(true);
-    } else {
-      setBlackHeaderBg(false);
-    }
-  });
-
+const Header = ({ position = "fixed" }: HeaderProps) => {
   return (
-    <div
-      className={`${headerPosition} top-0 z-10 flex h-20 w-full justify-center p-4 text-yellow ${
-        blackHeaderBg && "z-40 bg-grey"
-      }`}
-    >
-      <DesktopHeader />
+    <>
+      <DesktopHeader position={position} />
       <MobileHeader />
-    </div>
+    </>
   );
 };
 
-const DesktopHeader = () => {
+const DesktopHeader = ({ position }: HeaderProps) => {
   return (
-    <div className="hidden w-full max-w-6xl grid-cols-3 gap-4 lg:grid">
-      <ul className="flex items-center gap-4">
-        {routes.map((route) => (
-          <NavLink
-            key={route.path}
-            to={route.path}
-            className={({ isActive }) => (isActive ? "text-orange" : "")}
-          >
-            {route.name}
-          </NavLink>
-        ))}
-      </ul>
-      <HeaderCenter />
-      <ul className="flex items-center justify-end gap-4">
-        <RsvpBtn />
-        <Form method="post" action="/logout">
-          <button>Logout</button>
-        </Form>
-      </ul>
+    <div
+      className={`${position} top-0 z-20 flex h-20 w-full justify-center text-yellow`}
+    >
+      <div
+        className={`${
+          position === "fixed" ? position : "absolute"
+        } left-0 top-0 hidden h-40 w-full bg-gradient-to-b from-blue lg:flex`}
+      />
+      <div className="z-20 hidden w-full max-w-6xl grid-cols-3 gap-4 lg:grid">
+        <ul className="flex items-center gap-4">
+          {routes.map((route) => (
+            <NavLink
+              key={route.path}
+              to={route.path}
+              className={({ isActive }) =>
+                isActive ? " font-semibold text-orange" : "hover:text-orange"
+              }
+            >
+              {route.name}
+            </NavLink>
+          ))}
+        </ul>
+        <HeaderCenter />
+        <ul className="flex items-center justify-end gap-4">
+          <RsvpBtn colorScheme="yellow" />
+          <Form method="post" action="/logout">
+            <button>Logout</button>
+          </Form>
+        </ul>
+      </div>
     </div>
   );
 };

@@ -1,10 +1,17 @@
 import { NavLink } from "@remix-run/react";
 
-const RsvpBtn = () => {
+type ColorScheme = "yellow" | "grey";
+
+const RsvpBtn = ({ colorScheme }: { colorScheme: ColorScheme }) => {
+  const styles: Record<ColorScheme, string> = {
+    yellow: "border-yellow by-yellow text-yellow",
+    grey: "border-grey bg-grey text-grey",
+  };
+
   return (
     <NavLink
       to="/rsvp"
-      className="rounded-3xl border-[1px] border-yellow bg-yellow bg-opacity-[15%] px-4 hover:bg-opacity-10"
+      className={`rounded-3xl border-[1px] bg-opacity-5 px-4 hover:bg-opacity-10 ${styles[colorScheme]}`}
     >
       RSVP by October 15th, 2023
     </NavLink>

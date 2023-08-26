@@ -1,10 +1,12 @@
 import { motion, type SVGMotionProps } from "framer-motion";
+import { z } from "zod";
+import { theme } from "~/theme";
 
 const Path = (props: SVGMotionProps<SVGPathElement>) => (
   <motion.path
     fill="transparent"
     strokeWidth="3"
-    stroke="#FFD98F"
+    stroke={z.string().parse(theme?.colors?.orange)}
     strokeLinecap="round"
     {...props}
   />

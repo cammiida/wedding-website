@@ -53,11 +53,11 @@ export async function action({ request }: ActionArgs) {
 const RSVP = () => {
   return (
     <>
-      <Header headerPosition="relative" />
+      <Header position="relative" />
       <div className="relative flex w-full justify-center px-8 lg:px-0 lg:py-20">
-        <div className="text-white-600 w-full max-w-2xl rounded-sm bg-grey">
-          <h1 className="text-center font-roboto text-5xl font-light">RSVP</h1>
-          <h2 className="p-3 text-center font-roboto text-2xl font-thin">
+        <div className="text-white-600 w-full max-w-2xl rounded-sm">
+          <h1 className="text-center font-roboto text-5xl">RSVP</h1>
+          <h2 className="p-3 text-center text-2xl font-thin text-grey">
             Your kind response is requested by
             <br /> October 15th 2023
           </h2>
@@ -65,11 +65,11 @@ const RSVP = () => {
             id="rsvpForm"
             validator={withZod(rsvpSchema)}
             method="post"
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-8 text-grey"
           >
             <FormFields />
             <button
-              className=" rounded-md bg-blue py-2 disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
+              className=" rounded-md bg-blue py-2 text-yellow disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
               type="submit"
             >
               Submit

@@ -28,13 +28,13 @@ export default function Index() {
   return (
     <>
       <motion.div
-        className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-yellow"
+        className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-orange"
         style={{ scaleY: scrollYProgress }}
       />
 
       <div className="z-1 absolute flex flex-col">
         <div className="relative flex h-screen w-full flex-col items-center justify-between py-16 text-white">
-          <h1 className="mt-8 text-center font-roboto text-6xl font-thin text-yellow">
+          <h1 className="z-20 mt-8 text-center font-roboto text-6xl font-thin text-yellow">
             WE'RE GETTING MARRIED!
           </h1>
           <div className="mx-auto flex max-w-xl flex-col items-center justify-end self-end rounded-md bg-grey-transparent shadow-grey-transparent text-shadow">
@@ -52,7 +52,7 @@ export default function Index() {
           className="relative top-[1px] w-full"
           ref={mountainRef}
         />
-        <div className="flex w-full flex-col items-center gap-20 bg-grey py-10 md:py-20">
+        <div className="flex w-full flex-col items-center gap-20 bg-yellow py-10 md:py-20">
           <CountDown countDownDate={new Date("2024-06-15")} />
           <MountainContent />
           <div className="flex flex-col items-center gap-6 text-center">
@@ -60,7 +60,7 @@ export default function Index() {
               DON'T FORGET TO RSVP
               <br /> AS SOON AS POSSIBLE!
             </h3>
-            <RsvpBtn />
+            <RsvpBtn colorScheme="grey" />
           </div>
           <div className="flex flex-col items-center gap-6 text-center">
             <h3 className="max font-roboto text-xl font-thin md:text-5xl">
@@ -70,7 +70,7 @@ export default function Index() {
             </h3>
             <Link
               to="mailto: hello@camillaplustyler.com"
-              className="max-w-full font-roboto text-lg font-thin text-orange hover:underline md:text-2xl"
+              className="max-w-full font-roboto text-lg font-thin text-blue hover:underline md:text-2xl"
             >
               HELLO
               <span className="whitespace-pre before:content-['\A'] md:before:content-none">

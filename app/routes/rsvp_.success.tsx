@@ -12,7 +12,7 @@ export default function RsvpSuccess() {
 
   return (
     <>
-      <Header headerPosition="relative" />
+      <Header position="relative" />
       <div className="mx-auto flex max-w-lg flex-col gap-4 p-12">
         {email ? (
           <>

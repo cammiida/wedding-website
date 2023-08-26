@@ -17,7 +17,6 @@ const Layout = () => {
         alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
         className="fixed left-0 top-0 z-0 min-h-screen w-full overflow-y-clip bg-fixed object-cover object-top supports-[height:100cqh]:h-[100cqh] supports-[height:100svh]:h-[100svh]"
       />
-      <div className="z-1 fixed left-0 top-0 h-60 w-full bg-gradient-to-b from-blue" />
       <Header />
       <Outlet />
     </>

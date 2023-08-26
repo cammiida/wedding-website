@@ -44,7 +44,7 @@ const Select: React.FC<SelectProps> = ({
         <div
           className={`${
             !isOpen && "hidden"
-          } border-shadow absolute top-16 max-h-[50vh] w-full overflow-scroll rounded-md bg-white`}
+          } border-shadow absolute top-16 max-h-[50vh] w-full overflow-y-scroll rounded-md bg-white`}
         >
           {options.map((option, i) => (
             <React.Fragment key={option}>
