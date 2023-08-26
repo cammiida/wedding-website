@@ -247,3 +247,51 @@ export const notionRsvpSchema = rsvpSchema.transform(
     };
   }
 );
+
+export const emailSchema = rsvpSchema.transform(
+  ({
+    fullName,
+    attending,
+    email,
+    address,
+    allergies,
+    roomTypePreferences,
+    songRequest,
+    comments,
+    bringingPartner,
+    partnerFullName,
+    partnerEmail,
+    partnerAllergies,
+    stayingFriday,
+    dinnerFriday,
+  }) => {
+    const partnerPart = {
+      "Partner full name": partnerFullName,
+      "Partner email": partnerEmail,
+      "Partner allergies": partnerAllergies,
+    };
+
+    const attendingPart = {
+      Address: address,
+      Allergies: allergies,
+      "Bringing partner": bringingPartner ? "Yes" : "No",
+      ...(bringingPartner ? partnerPart : {}),
+      "Room type preference": roomTypePreferences,
+      "Staying Friday": stayingFriday ? "Yes" : "No",
+      ...(stayingFriday
+        ? { "Dinner Friday": dinnerFriday ? "Yes" : "No" }
+        : {}),
+      "Song Request": songRequest,
+      Comments: comments,
+    };
+
+    return {
+      "Full name": fullName,
+      Email: email,
+      Attending: attending ? "Yes" : "No",
+      ...(attending ? attendingPart : {}),
+    };
+  }
+);
+
+export type EmailSchema = z.infer<typeof emailSchema>;

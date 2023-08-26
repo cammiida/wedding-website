@@ -8,9 +8,10 @@ import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
 import TextArea from "~/components/text-area";
-import { notionRsvpSchema, rsvpSchema } from "~/guest-list/schema";
+import { emailSchema, notionRsvpSchema, rsvpSchema } from "~/guest-list/schema";
 import { getClient } from "~/notion/notion.server";
 import { authenticator } from "~/services/authenticator.server";
+import { sendEmail } from "~/ses/ses.server";
 import { env } from "~/variables.server";
 
 export async function action({ request }: ActionArgs) {
@@ -24,8 +25,9 @@ export async function action({ request }: ActionArgs) {
   const validatedProperties = await withZod(notionRsvpSchema).validate(
     formData
   );
+  const emailResponseData = await withZod(emailSchema).validate(formData);
 
-  if (validatedProperties.error) {
+  if (validatedProperties.error || emailResponseData.error) {
     // TODO: set flash message
     return null;
   }
@@ -39,8 +41,8 @@ export async function action({ request }: ActionArgs) {
       properties: validatedProperties.data,
     });
 
-    // TODO: send email
-    return redirect(`/rsvp/success?email=${formData.get("email")}`);
+    sendEmail(emailResponseData.data);
+    return redirect(`/rsvp/success?email=${emailResponseData.data.Email}`);
   } catch (error) {
     if (isNotionClientError(error)) {
       // TODO: set flash message
