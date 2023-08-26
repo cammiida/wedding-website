@@ -1,7 +1,17 @@
 import { SESv2, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import type { EmailSchema } from "~/guest-list/schema";
 
-const client = new SESv2({ region: "eu-west-1" });
+const client = new SESv2({
+  region: "eu-west-1",
+  credentials: {
+    accessKeyId:
+      process.env.ENV_AWS_ACCESS_KEY_ID ?? process.env.AWS_ACCESS_KEY_ID ?? "",
+    secretAccessKey:
+      process.env.ENV_AWS_SECRET_ACCESS_KEY ??
+      process.env.AWS_SECRET_ACCESS_KEY ??
+      "",
+  },
+});
 
 const CHARSET = "UTF-8";
 // The email body for recipients with non-HTML email clients.
