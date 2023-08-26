@@ -96,6 +96,14 @@ const FormFields = () => {
         label="Full name"
         error={errors?.fullName}
       />
+      <Input
+        name="email"
+        type="email"
+        placeholder="Your email here"
+        label="Email"
+        required
+        error={errors?.email}
+      />
       <RadioButtons
         label="Attending?"
         name="attending"
@@ -128,14 +136,6 @@ const IsGoingFormPart = () => {
 
   return (
     <>
-      <Input
-        name="email"
-        type="email"
-        placeholder="Your email here"
-        label="Email"
-        required
-        error={errors?.email}
-      />
       <Input
         name="address"
         placeholder="Your full address"

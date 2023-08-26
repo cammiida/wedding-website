@@ -140,7 +140,7 @@ export const rsvpSchema = z.preprocess(
     .object({
       fullName: z.string(),
       attending: z.boolean(),
-      email: z.string().email().optional(),
+      email: z.string().email(),
       address: z.string().optional(),
       allergies: z.string().optional(),
       roomTypePreferences: z.string().optional(),
@@ -156,7 +156,6 @@ export const rsvpSchema = z.preprocess(
     .superRefine((args, ctx) => {
       const {
         attending,
-        email,
         bringingPartner,
         partnerFullName,
         partnerEmail,
@@ -164,7 +163,6 @@ export const rsvpSchema = z.preprocess(
         dinnerFriday,
       } = args;
       if (attending) {
-        if (!email) addRequiredIssue(ctx, "email");
         if (bringingPartner === undefined)
           addRequiredIssue(ctx, "bringingPartner");
         if (stayingFriday === undefined) addRequiredIssue(ctx, "stayingFriday");
@@ -217,7 +215,7 @@ export const notionRsvpSchema = rsvpSchema.transform(
         checkbox: attending,
       },
       Email: {
-        email: email ?? null,
+        email: email,
       },
       Address: { rich_text: [{ text: { content: address ?? "" } }] },
       "Allergies or food preferences": {

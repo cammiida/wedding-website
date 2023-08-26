@@ -19,7 +19,7 @@ export default function RsvpSuccess() {
             <h1 className="text-3xl font-bold">Success!</h1>
             <p>
               You have successfully submitted an RSVP for our wedding. A
-              confirmation email has been send to{" "}
+              confirmation email has been sent to{" "}
               <a className="text-blue underline" href={`mailto:${email}`}>
                 {email}
               </a>{" "}
