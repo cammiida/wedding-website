@@ -1,5 +1,5 @@
 [build]
-  command = "./scripts/write-aws-file && remix build"
+  command = "npm run build"
   publish = "public"
 
 [dev]
