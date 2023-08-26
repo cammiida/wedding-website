@@ -14,6 +14,7 @@ import { AnimatePresence, motion, useScroll } from "framer-motion";
 
 import stylesheet from "~/tailwind.css";
 import { authenticator } from "./services/authenticator.server";
+import Footer from "./components/footer";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -58,6 +59,7 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        <Footer />
       </body>
     </html>
   );
