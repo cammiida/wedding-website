@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build && ./app/scripts/write-aws-file"
+  command = "npm run build && ./scripts/write-aws-file.sh"
   publish = "public"
 
 [dev]
