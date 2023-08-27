@@ -30,9 +30,9 @@ export default function Index() {
         alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
         className="fixed left-0 top-0 z-0 min-h-screen w-full overflow-y-clip bg-fixed object-cover object-top supports-[height:100cqh]:h-[100cqh] supports-[height:100svh]:h-[100svh]"
       />
-      <Header />
-      <div className="z-1 absolute flex flex-col">
-        <div className="relative flex h-screen w-full flex-col items-center justify-between py-16 text-white">
+      <div className="relative flex flex-col">
+        <div className="relative flex h-screen w-full flex-col items-center justify-between py-20 text-white">
+          <Header />
           <h1 className="z-20 mt-8 text-center font-roboto text-6xl font-thin text-yellow">
             WE'RE GETTING MARRIED!
           </h1>
