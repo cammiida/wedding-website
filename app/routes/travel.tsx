@@ -49,7 +49,7 @@ const Travel = () => {
             </a>{" "}
             Select departure from Oslo bussterminal and destination Bygdin,
             Vang, Innlandet. You can also drive your own car if you'd prefer and
-            this takes about 3 and a half hours.
+            this takes about 3 hours 30 mins.
           </p>
         </section>
         <section className="flex flex-col items-center">
