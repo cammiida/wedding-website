@@ -1,7 +1,7 @@
-import { SESv2, SendEmailCommand } from "@aws-sdk/client-sesv2";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import type { EmailSchema } from "~/guest-list/schema";
 
-const client = new SESv2({
+const sesClient = new SESClient({
   region: "eu-west-1",
   credentials: {
     accessKeyId:
@@ -33,30 +33,28 @@ const BODY_HTML = (response: Partial<EmailSchema>) => {
 };
 
 export async function sendEmail(response: Partial<EmailSchema>) {
-  const command: SendEmailCommand = new SendEmailCommand({
-    FromEmailAddress: "hello@camillaplustyler.com",
+  const command = new SendEmailCommand({
+    Source: "hello@camillaplustyler.com",
     Destination: { ToAddresses: ["camillamdalan@gmail.com"] },
-    Content: {
-      Simple: {
-        Subject: {
-          Data: "Tyler & Camilla: Wedding invitation response",
-          Charset: "utf-8",
+    Message: {
+      Subject: {
+        Data: "Tyler & Camilla: Wedding invitation response",
+        Charset: CHARSET,
+      },
+      Body: {
+        Html: {
+          Charset: CHARSET,
+          Data: BODY_HTML(response),
         },
-        Body: {
-          Html: {
-            Charset: CHARSET,
-            Data: BODY_HTML(response),
-          },
-          Text: {
-            Charset: CHARSET,
-            Data: BODY_TEXT,
-          },
+        Text: {
+          Charset: CHARSET,
+          Data: BODY_TEXT,
         },
       },
     },
   });
   try {
-    await client.send(command);
+    await sesClient.send(command);
   } catch (error) {
     console.error("Oh no, an error occurred...");
     console.error({ error });

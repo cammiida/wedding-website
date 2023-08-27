@@ -41,7 +41,8 @@ export async function action({ request }: ActionArgs) {
       properties: validatedProperties.data,
     });
 
-    sendEmail(emailResponseData.data);
+    await sendEmail(emailResponseData.data);
+
     return redirect(`/rsvp/success?email=${emailResponseData.data.Email}`);
   } catch (error) {
     if (isNotionClientError(error)) {
