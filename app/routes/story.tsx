@@ -1,10 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
 import Header from "~/components/header";
-import { authenticator } from "~/services/authenticator.server";
-
-export async function loader({ request }: LoaderArgs) {
-  return authenticator.isAuthenticated(request, { failureRedirect: "/login" });
-}
 
 const Story = () => {
   return (

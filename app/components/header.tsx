@@ -8,6 +8,7 @@ import { useScrollBlock } from "~/hooks/useScrollBlock";
 import { MenuItem } from "./menu-item";
 import { MenuToggle } from "./menu-toggle";
 import { HeaderCenter } from "./header-center";
+import { useRootLoaderData } from "~/root";
 
 export type Route = { path: `/${string}`; name: string };
 const routes: Route[] = [
@@ -33,6 +34,8 @@ const Header = ({ position = "fixed" }: HeaderProps) => {
 };
 
 const DesktopHeader = ({ position }: HeaderProps) => {
+  const { isAuthenticated } = useRootLoaderData();
+
   return (
     <div
       className={`${position} top-0 z-20 flex h-20 w-full justify-center text-yellow`}
@@ -59,9 +62,11 @@ const DesktopHeader = ({ position }: HeaderProps) => {
         <HeaderCenter />
         <ul className="flex items-center justify-end gap-4">
           <RsvpBtn colorScheme="yellow" />
-          <Form method="post" action="/logout">
-            <button>Logout</button>
-          </Form>
+          {isAuthenticated && (
+            <Form method="post" action="/logout">
+              <button>Logout</button>
+            </Form>
+          )}
         </ul>
       </div>
     </div>
