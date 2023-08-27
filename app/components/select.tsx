@@ -19,9 +19,9 @@ const Select: React.FC<SelectProps> = ({
   required = false,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [chosenOption, setChosenOption] = useState<string>();
+  const [chosenOption, setChosenOption] = useState<string>("");
 
-  function handleChoice(option: string | undefined) {
+  function handleChoice(option: string) {
     setChosenOption(option);
     setIsOpen(false);
   }

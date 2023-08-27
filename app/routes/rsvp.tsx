@@ -4,7 +4,11 @@ import { redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
-import { ValidatedForm, useFormContext } from "remix-validated-form";
+import {
+  ValidatedForm,
+  useFormContext,
+  useIsSubmitting,
+} from "remix-validated-form";
 import Header from "~/components/header";
 import Input from "~/components/input";
 import NotLoggedIn from "~/components/not-logged-in";
@@ -62,6 +66,7 @@ export async function action({ request }: DataFunctionArgs) {
 
 const RSVP = () => {
   const isAuthenticated = useLoaderData<typeof loader>();
+  const isSubmitting = useIsSubmitting("rsvpForm");
 
   const content = isAuthenticated ? (
     <>
@@ -78,10 +83,11 @@ const RSVP = () => {
       >
         <FormFields />
         <button
-          className=" rounded-md bg-blue py-2 text-yellow disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
+          className="flex justify-center rounded-md bg-blue py-2 text-yellow disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
           type="submit"
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? <div className="spinner" /> : "Submit"}
         </button>
       </ValidatedForm>
     </>
