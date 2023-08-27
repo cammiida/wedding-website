@@ -1,14 +1,14 @@
-import { Form, NavLink } from "@remix-run/react";
+import { Form, Link, NavLink, useLocation } from "@remix-run/react";
 import type { Variants } from "framer-motion";
 import { motion, useCycle } from "framer-motion";
 import { useRef } from "react";
 import RsvpBtn from "~/components/rsvp-btn";
 import { useDimensions } from "~/hooks/useDimensions";
 import { useScrollBlock } from "~/hooks/useScrollBlock";
+import { useRootLoaderData } from "~/root";
+import { HeaderCenter } from "./header-center";
 import { MenuItem } from "./menu-item";
 import { MenuToggle } from "./menu-toggle";
-import { HeaderCenter } from "./header-center";
-import { useRootLoaderData } from "~/root";
 
 export type Route = { path: `/${string}`; name: string };
 const routes: Route[] = [
@@ -35,6 +35,7 @@ const Header = ({ position = "fixed" }: HeaderProps) => {
 
 const DesktopHeader = ({ position }: HeaderProps) => {
   const { isAuthenticated } = useRootLoaderData();
+  const { pathname } = useLocation();
 
   return (
     <div
@@ -43,7 +44,7 @@ const DesktopHeader = ({ position }: HeaderProps) => {
       <div
         className={`${
           position === "fixed" ? position : "absolute"
-        } left-0 top-0 hidden h-40 w-full bg-gradient-to-b from-blue lg:flex`}
+        } left-0 top-0 hidden h-24 w-full bg-gradient-to-b from-blue lg:flex`}
       />
       <div className="z-20 hidden w-full max-w-6xl grid-cols-3 gap-4 lg:grid">
         <ul className="flex items-center gap-4">
@@ -62,10 +63,12 @@ const DesktopHeader = ({ position }: HeaderProps) => {
         <HeaderCenter />
         <ul className="flex items-center justify-end gap-4">
           <RsvpBtn colorScheme="yellow" />
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <Form method="post" action="/logout">
               <button>Logout</button>
             </Form>
+          ) : (
+            <Link to={`/login?returnTo=${pathname}`}>Log in</Link>
           )}
         </ul>
       </div>

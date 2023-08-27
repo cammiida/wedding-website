@@ -4,7 +4,7 @@ export default function NotLoggedIn() {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex min-h-[calc(100vh-10rem)] flex-col items-center justify-center gap-2 text-grey">
       You need to be logged in to view the content of this page.
       <Link
         to={`/login?returnTo=${pathname}`}

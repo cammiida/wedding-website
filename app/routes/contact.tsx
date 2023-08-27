@@ -12,7 +12,7 @@ const Contact = () => {
   const isAuthenticated = useLoaderData<typeof loader>();
 
   return (
-    <div className="relative flex h-screen w-full flex-col bg-yellow text-grey">
+    <div className="relative flex w-full flex-col bg-yellow text-grey">
       <Header position="relative"></Header>
       <div className="flex flex-1 flex-col items-center justify-center">
         {isAuthenticated ? "To be developed..." : <NotLoggedIn />}

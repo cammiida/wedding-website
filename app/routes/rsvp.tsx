@@ -65,7 +65,7 @@ const RSVP = () => {
 
   const content = isAuthenticated ? (
     <>
-      <h1 className="text-center font-roboto text-5xl">RSVP</h1>
+      <h1 className="text-center font-roboto text-5xl lg:pt-20">RSVP</h1>
       <h2 className="p-3 text-center text-2xl font-thin text-grey">
         Your kind response is requested by
         <br /> October 15th 2023
@@ -91,8 +91,8 @@ const RSVP = () => {
 
   return (
     <>
-      <Header position="relative" />
-      <div className="relative flex w-full justify-center px-8 lg:px-0 lg:py-20">
+      <div className="relative flex w-full flex-col items-center px-8 lg:px-0 ">
+        <Header position="relative" />
         <div className="flex w-full max-w-2xl flex-col">{content}</div>
       </div>
     </>
