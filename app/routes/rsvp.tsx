@@ -1,5 +1,6 @@
 import { isNotionClientError } from "@notionhq/client";
-import { redirect, type ActionArgs } from "@remix-run/node";
+import type { DataFunctionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import { ValidatedForm, useFormContext } from "remix-validated-form";
@@ -14,7 +15,13 @@ import { authenticator } from "~/services/authenticator.server";
 import { sendEmail } from "~/ses/ses.server";
 import { env } from "~/variables.server";
 
-export async function action({ request }: ActionArgs) {
+export async function loader({ request }: DataFunctionArgs) {
+  return authenticator.isAuthenticated(request, {
+    failureRedirect: "/login?returnTo=/rsvp",
+  });
+}
+
+export async function action({ request }: DataFunctionArgs) {
   const formData = await request.formData();
   const isAuthenticated = authenticator.isAuthenticated(request);
   if (!isAuthenticated) {

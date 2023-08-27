@@ -2,17 +2,47 @@ import type { DataFunctionArgs } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { HeaderCenter } from "~/components/header-center";
 import { authenticator } from "~/services/authenticator.server";
+import { returnToCookie } from "~/services/return-to-cookie.server";
 
-export async function action({ request }: DataFunctionArgs) {
-  return authenticator.authenticate("passphrase", request, {
+export async function loader({ request }: DataFunctionArgs) {
+  let url = new URL(request.url);
+  let returnTo = url.searchParams.get("returnTo");
+
+  let headers = new Headers();
+  if (returnTo) {
+    headers.append("Set-Cookie", await returnToCookie.serialize(returnTo));
+  }
+
+  return await authenticator.isAuthenticated(request, {
     successRedirect: "/",
   });
 }
 
-export async function loader({ request }: DataFunctionArgs) {
-  return authenticator.isAuthenticated(request, {
-    successRedirect: "/",
-  });
+export async function action({ request }: DataFunctionArgs) {
+  const url = new URL(request.url);
+  const returnTo = url.searchParams.get("returnTo") as string | null;
+
+  try {
+    return await authenticator.authenticate("passphrase", request, {
+      successRedirect: returnTo ?? "/",
+      failureRedirect: "/",
+    });
+  } catch (error) {
+    if (!returnTo) throw error;
+    if (error instanceof Response && isRedirect(error)) {
+      error.headers.append(
+        "Set-Cookie",
+        await returnToCookie.serialize(returnTo)
+      );
+      return error;
+    }
+    throw error;
+  }
+}
+
+function isRedirect(response: Response) {
+  if (response.status < 300 || response.status >= 400) return false;
+  return response.headers.has("Location");
 }
 
 const Login = () => {

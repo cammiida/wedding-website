@@ -1,6 +1,4 @@
 import type { LinksFunction, LoaderArgs, SerializeFrom } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
-import type { ShouldRevalidateFunction } from "@remix-run/react";
 import {
   Links,
   LiveReload,
@@ -13,8 +11,8 @@ import {
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 
 import stylesheet from "~/tailwind.css";
-import { authenticator } from "./services/authenticator.server";
 import Footer from "./components/footer";
+import { authenticator } from "./services/authenticator.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -22,20 +20,9 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderArgs) {
   const isAuthenticated = await authenticator.isAuthenticated(request);
-  const currentUrl = new URL(request.url);
 
-  if (!isAuthenticated) {
-    if (!currentUrl.pathname.includes("/login")) {
-      return redirect("/login");
-    }
-  }
-
-  return null;
+  return { isAuthenticated };
 }
-
-export const shouldRevalidate: ShouldRevalidateFunction = () => {
-  return false;
-};
 
 export default function App() {
   const { scrollYProgress } = useScroll();
