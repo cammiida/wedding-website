@@ -1,11 +1,13 @@
 import { isNotionClientError } from "@notionhq/client";
 import type { DataFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import { ValidatedForm, useFormContext } from "remix-validated-form";
 import Header from "~/components/header";
 import Input from "~/components/input";
+import NotLoggedIn from "~/components/not-logged-in";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
 import TextArea from "~/components/text-area";
@@ -16,9 +18,7 @@ import { sendEmail } from "~/ses/ses.server";
 import { env } from "~/variables.server";
 
 export async function loader({ request }: DataFunctionArgs) {
-  return authenticator.isAuthenticated(request, {
-    failureRedirect: "/login?returnTo=/rsvp",
-  });
+  return await authenticator.isAuthenticated(request);
 }
 
 export async function action({ request }: DataFunctionArgs) {
@@ -61,31 +61,39 @@ export async function action({ request }: DataFunctionArgs) {
 }
 
 const RSVP = () => {
+  const isAuthenticated = useLoaderData<typeof loader>();
+
+  const content = isAuthenticated ? (
+    <>
+      <h1 className="text-center font-roboto text-5xl">RSVP</h1>
+      <h2 className="p-3 text-center text-2xl font-thin text-grey">
+        Your kind response is requested by
+        <br /> October 15th 2023
+      </h2>
+      <ValidatedForm
+        id="rsvpForm"
+        validator={withZod(rsvpSchema)}
+        method="post"
+        className="flex flex-col gap-8 text-grey"
+      >
+        <FormFields />
+        <button
+          className=" rounded-md bg-blue py-2 text-yellow disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
+          type="submit"
+        >
+          Submit
+        </button>
+      </ValidatedForm>
+    </>
+  ) : (
+    <NotLoggedIn />
+  );
+
   return (
     <>
       <Header position="relative" />
       <div className="relative flex w-full justify-center px-8 lg:px-0 lg:py-20">
-        <div className="text-white-600 w-full max-w-2xl rounded-sm">
-          <h1 className="text-center font-roboto text-5xl">RSVP</h1>
-          <h2 className="p-3 text-center text-2xl font-thin text-grey">
-            Your kind response is requested by
-            <br /> October 15th 2023
-          </h2>
-          <ValidatedForm
-            id="rsvpForm"
-            validator={withZod(rsvpSchema)}
-            method="post"
-            className="flex flex-col gap-8 text-grey"
-          >
-            <FormFields />
-            <button
-              className=" rounded-md bg-blue py-2 text-yellow disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
-              type="submit"
-            >
-              Submit
-            </button>
-          </ValidatedForm>
-        </div>
+        <div className="flex w-full max-w-2xl flex-col">{content}</div>
       </div>
     </>
   );
