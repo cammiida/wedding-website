@@ -4,7 +4,7 @@ const Travel = () => {
   return (
     <>
       <Header position="relative"></Header>
-      <div className="relative mx-auto flex w-full max-w-2xl flex-col gap-10 pb-10 md:pt-20">
+      <div className="relative mx-auto flex w-full max-w-2xl flex-col gap-10 px-5 pb-10 md:pt-20 lg:px-0">
         <section className="flex flex-col items-center">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Travel
