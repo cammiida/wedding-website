@@ -46,7 +46,7 @@ export default function Index() {
           className="relative top-[1px] w-full"
           ref={mountainRef}
         />
-        <div className="flex w-full flex-col items-center gap-20 bg-yellow py-10 md:py-20">
+        <div className="flex w-full flex-col items-center gap-28 bg-yellow py-10 md:py-20">
           <CountDown countDownDate={new Date("2024-06-15")} />
           <MountainContent />
           <div className="flex flex-col items-center gap-6 text-center">
@@ -57,14 +57,14 @@ export default function Index() {
             <RsvpBtn colorScheme="grey" />
           </div>
           <div className="flex flex-col items-center gap-6 text-center">
-            <h3 className="max font-roboto text-xl font-thin md:text-5xl">
+            <h3 className="max font-roboto text-xl font-thin md:text-4xl">
               FEEL FREE TO CONTACT C&T
               <br />
               WITH ANY QUESTIONS
             </h3>
             <Link
               to="mailto: hello@camillaplustyler.com"
-              className="max-w-full font-roboto text-lg font-thin text-blue hover:underline md:text-2xl"
+              className="max-w-full font-roboto text-lg font-thin text-blue hover:underline md:text-xl"
             >
               HELLO
               <span className="whitespace-pre before:content-['\A'] md:before:content-none">

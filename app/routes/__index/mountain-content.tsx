@@ -43,7 +43,7 @@ const Element = ({
 }) => {
   return (
     <div
-      className={`flex flex-col items-center gap-6 md:justify-center md:gap-24 lg:items-start ${
+      className={`flex flex-col items-center gap-6 md:justify-center lg:items-start lg:gap-8 ${
         reverse ? "lg:flex-row-reverse" : "lg:flex-row"
       }`}
     >

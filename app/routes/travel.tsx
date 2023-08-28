@@ -4,9 +4,9 @@ const Travel = () => {
   return (
     <>
       <Header position="relative"></Header>
-      <div className="relative mx-auto flex w-full max-w-2xl flex-col gap-10 px-5 pb-10 md:pt-20 lg:px-0">
+      <div className="relative mx-auto flex w-full max-w-lg flex-col gap-14 px-5 pb-10 md:pt-20 lg:px-0">
         <section className="flex flex-col items-center">
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Travel
           </h2>
           <p className="text-grey">
@@ -17,7 +17,7 @@ const Travel = () => {
           </p>
         </section>
         <section className="flex flex-col items-center">
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Getting to Oslo
           </h2>
           <p className="text-grey">
@@ -31,7 +31,7 @@ const Travel = () => {
           </p>
         </section>
         <section className="flex flex-col items-center">
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Getting to Bygdin
           </h2>
           <p className="text-grey">
@@ -53,7 +53,7 @@ const Travel = () => {
           </p>
         </section>
         <section className="flex flex-col items-center">
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Travelling together
           </h2>
           <p className="text-grey">
