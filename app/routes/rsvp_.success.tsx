@@ -1,8 +1,13 @@
 import { json, type DataFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Header from "~/components/header";
+import { authenticator } from "~/services/authenticator.server";
 
 export async function loader({ request }: DataFunctionArgs) {
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login?returnTo=/rsvp",
+  });
+
   const email = new URL(request.url).searchParams.get("email");
   return json({ email });
 }

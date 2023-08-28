@@ -1,4 +1,4 @@
-import type { V2_MetaFunction } from "@remix-run/node";
+import type { DataFunctionArgs, V2_MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { useRef } from "react";
 import Header from "~/components/header";
@@ -6,10 +6,17 @@ import RsvpBtn from "~/components/rsvp-btn";
 import { AnimatedScrollButton } from "./animated-scroll-btn";
 import CountDown from "./count-down";
 import MountainContent from "./mountain-content";
+import { authenticator } from "~/services/authenticator.server";
 
 export const meta: V2_MetaFunction = () => {
   return [{ title: "Wedding C&T" }];
 };
+
+export async function loader({ request }: DataFunctionArgs) {
+  return await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login",
+  });
+}
 
 export default function Index() {
   const mountainRef = useRef<HTMLImageElement>(null);
