@@ -247,7 +247,7 @@ export const notionRsvpSchema = rsvpSchema.transform(
   }
 );
 
-const NOT_ENTERED_TEXT = "Not entered";
+const NO_RESPONSE_TEXT = "No response";
 
 export const emailSchema = rsvpSchema.transform(
   ({
@@ -269,12 +269,12 @@ export const emailSchema = rsvpSchema.transform(
     const partnerPart = {
       "Partner full name": partnerFullName,
       "Partner email": partnerEmail,
-      "Partner allergies": partnerAllergies ?? NOT_ENTERED_TEXT,
+      "Partner allergies": partnerAllergies ?? NO_RESPONSE_TEXT,
     };
 
     const attendingPart = {
-      Address: address ?? NOT_ENTERED_TEXT,
-      Allergies: allergies ?? NOT_ENTERED_TEXT,
+      Address: address ?? NO_RESPONSE_TEXT,
+      Allergies: allergies ?? NO_RESPONSE_TEXT,
       "Bringing partner": bringingPartner ? "Yes" : "No",
       ...(bringingPartner ? partnerPart : {}),
       "Room type preference": roomTypePreferences,
@@ -282,8 +282,8 @@ export const emailSchema = rsvpSchema.transform(
       ...(stayingFriday
         ? { "Dinner Friday": dinnerFriday ? "Yes" : "No" }
         : {}),
-      "Song Request": songRequest ?? NOT_ENTERED_TEXT,
-      Comments: comments ?? NOT_ENTERED_TEXT,
+      "Song Request": songRequest ?? NO_RESPONSE_TEXT,
+      Comments: comments ?? NO_RESPONSE_TEXT,
     };
 
     return {
