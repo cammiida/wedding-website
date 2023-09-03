@@ -43,7 +43,6 @@ export type ComingWith = z.infer<typeof comingWithSchema>;
 const guestSchema = z.object({
   name: z.string(),
   email: z.string().email().optional(),
-  // comingWith: comingWithSchema,
 });
 
 export type Guest = z.infer<typeof guestSchema>;
@@ -248,6 +247,8 @@ export const notionRsvpSchema = rsvpSchema.transform(
   }
 );
 
+const NOT_ENTERED_TEXT = "Not entered";
+
 export const emailSchema = rsvpSchema.transform(
   ({
     fullName,
@@ -268,12 +269,12 @@ export const emailSchema = rsvpSchema.transform(
     const partnerPart = {
       "Partner full name": partnerFullName,
       "Partner email": partnerEmail,
-      "Partner allergies": partnerAllergies,
+      "Partner allergies": partnerAllergies ?? NOT_ENTERED_TEXT,
     };
 
     const attendingPart = {
-      Address: address,
-      Allergies: allergies,
+      Address: address ?? NOT_ENTERED_TEXT,
+      Allergies: allergies ?? NOT_ENTERED_TEXT,
       "Bringing partner": bringingPartner ? "Yes" : "No",
       ...(bringingPartner ? partnerPart : {}),
       "Room type preference": roomTypePreferences,
@@ -281,8 +282,8 @@ export const emailSchema = rsvpSchema.transform(
       ...(stayingFriday
         ? { "Dinner Friday": dinnerFriday ? "Yes" : "No" }
         : {}),
-      "Song Request": songRequest,
-      Comments: comments,
+      "Song Request": songRequest ?? NOT_ENTERED_TEXT,
+      Comments: comments ?? NOT_ENTERED_TEXT,
     };
 
     return {
