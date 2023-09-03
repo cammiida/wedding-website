@@ -16,8 +16,8 @@ import TextArea from "~/components/text-area";
 import { emailSchema, notionRsvpSchema, rsvpSchema } from "~/guest-list/schema";
 import { getClient } from "~/notion/notion.server";
 import { authenticator } from "~/services/authenticator.server";
-import { sendEmail } from "~/ses/ses.server";
 import { env } from "~/variables.server";
+import { sendEmail } from "../services/email.server";
 
 export async function loader({ request }: DataFunctionArgs) {
   return await authenticator.isAuthenticated(request, {

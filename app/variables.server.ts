@@ -12,6 +12,7 @@ const zodEnv = z.object({
   RSVP_DATABASE_ID: nonEmptyString,
 
   NODE_ENV: z.enum(["development", "production", "test"]).optional(),
+  RESEND_KEY: nonEmptyString,
 });
 
 export const env = zodEnv.parse(process.env);
