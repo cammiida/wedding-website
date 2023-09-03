@@ -18,11 +18,11 @@ const BODY_HTML = (response: Partial<EmailSchema>) => {
   </html>`;
 };
 
-export async function sendEmail(response: Partial<EmailSchema>) {
+export async function sendEmail(response: EmailSchema) {
   resend.emails.send({
     from: "hello@camillaplustyler.com",
-    to: "camillamdalan@gmail.com",
+    to: env.FEATURE_FLAG_EMAIL ? response.Email : env.BCC_EMAIL,
     subject: "Tyler & Camilla: Wedding invitation response",
-    html: BODY_HTML(response),
+    react: BODY_HTML(response),
   });
 }
