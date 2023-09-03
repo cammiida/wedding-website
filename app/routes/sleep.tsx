@@ -12,8 +12,8 @@ const Sleep = () => {
   return (
     <>
       <Header position="relative" />
-      <div className="relative mx-auto flex w-full max-w-2xl flex-col gap-10 px-5 pb-10 md:pt-20 lg:px-0">
-        <section className="flex flex-col items-center">
+      <div className="relative mx-auto flex w-full max-w-lg flex-col gap-10 px-5 pb-10 md:pt-20 lg:px-0">
+        <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             The Cabin
           </h2>
@@ -44,7 +44,7 @@ const Sleep = () => {
             <img
               alt="Jotunheimen hotell i 1910"
               src="/jotunheimen-hotel-i-1910.jpg"
-              className="mx-auto my-8 rounded-md"
+              className="my-8 w-full rounded-md"
             />
             It is located in the southern part of the majestic{" "}
             <a
@@ -112,7 +112,7 @@ const Sleep = () => {
             10pm, so we will make sure there's plenty of coffee to enjoy.
           </p>
         </section>
-        <section className="flex flex-col items-center">
+        <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Program
           </h2>
@@ -136,7 +136,7 @@ const Sleep = () => {
             possible to make your visit shorter (or longer!) if you prefer.
           </p>
         </section>
-        <section className="flex flex-col items-center">
+        <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Rooms
           </h2>

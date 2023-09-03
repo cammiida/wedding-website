@@ -13,8 +13,8 @@ const Travel = () => {
     <>
       <Header position="relative"></Header>
       <div className="relative mx-auto flex w-full max-w-lg flex-col gap-14 px-5 pb-10 md:pt-20 lg:px-0">
-        <section className="flex flex-col items-center">
-          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+        <section className="flex flex-col">
+          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Travel
           </h2>
           <p className="text-grey">
@@ -24,9 +24,13 @@ const Travel = () => {
             the closest major city with an airport.
           </p>
         </section>
-        <img alt="Jotunheimen hotell i 1910" src="/map.png" className="" />
-        <section className="flex flex-col items-center">
-          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+        <img
+          alt="Stylised map of Oslo, Gardermoen, Torp and Bygdin"
+          src="/map.png"
+          className="w-full"
+        />
+        <section className="flex flex-col">
+          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Getting to Oslo
           </h2>
           <p className="text-grey">
@@ -39,8 +43,8 @@ const Travel = () => {
             to Oslo via train, bus, car, and even boat.
           </p>
         </section>
-        <section className="flex flex-col items-center">
-          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+        <section className="flex flex-col">
+          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Getting to Bygdin
           </h2>
           <p className="text-grey">
@@ -61,8 +65,8 @@ const Travel = () => {
             this takes about 3 hours 30 mins.
           </p>
         </section>
-        <section className="flex flex-col items-center">
-          <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+        <section className="flex flex-col">
+          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Travelling together
           </h2>
           <p className="text-grey">
