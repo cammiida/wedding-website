@@ -18,12 +18,13 @@ const Travel = () => {
             Travel
           </h2>
           <p className="text-grey">
-            The wedding will be taking place at the Bygin Mountain Hotel, in the
-            southern part of the majestic Jotunheimen mountain range, which is
-            located about a four and a half hour drive from Oslo, which is the
-            closest major city with an airport.
+            The wedding will be taking place at the Bygdin Mountain Hotel, in
+            the southern part of the majestic Jotunheimen mountain range, which
+            is located about a four and a half hour drive from Oslo, which is
+            the closest major city with an airport.
           </p>
         </section>
+        <img alt="Jotunheimen hotell i 1910" src="/map.png" className="" />
         <section className="flex flex-col items-center">
           <h2 className="self-start pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Getting to Oslo
