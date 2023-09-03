@@ -29,6 +29,7 @@ const Travel = () => {
           src="/map.png"
           className="w-full"
         />
+        <small className="text-right text-brown">Map: Ingvild Høgseth</small>
         <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Getting to Oslo
