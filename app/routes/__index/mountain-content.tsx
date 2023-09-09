@@ -15,7 +15,7 @@ const MountainContent = () => {
             majestic Hardangervidda, Norway. It is a four-hour bus ride from
             Oslo, where Norway's main airport (Gardemoen) is located."
         link="/travel"
-        img="/top-of-fjord.png"
+        img="/top-of-fjord.jpg"
         reverse
       />
       <Element
