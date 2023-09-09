@@ -3,6 +3,7 @@ import { Form } from "@remix-run/react";
 import { HeaderCenter } from "~/components/header-center";
 import { authenticator } from "~/services/authenticator.server";
 import { returnToCookie } from "~/services/return-to-cookie.server";
+import { buildImageUrl } from "~/utils/image";
 
 export async function loader({ request }: DataFunctionArgs) {
   let url = new URL(request.url);
@@ -54,7 +55,10 @@ const Login = () => {
         <HeaderCenter />
       </div>
       <img
-        src="/login-bg.jpg"
+        src={buildImageUrl({
+          imageName: "login-bg.jpg",
+          mode: "landscape",
+        })}
         alt="Two people's feet in the heather overlooking a body of water and the sun setting behind some mountains."
         className="fixed left-0 top-0 z-0 h-screen w-full overflow-y-clip bg-fixed object-cover object-bottom"
       />

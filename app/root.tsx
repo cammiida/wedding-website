@@ -1,4 +1,9 @@
-import type { LinksFunction, LoaderArgs, SerializeFrom } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderArgs,
+  SerializeFrom,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -24,14 +29,24 @@ export async function loader({ request }: LoaderArgs) {
   return { isAuthenticated };
 }
 
+export const meta: V2_MetaFunction = () => [
+  {
+    charset: "utf-8",
+  },
+  {
+    title: "Wedding C&T",
+  },
+  {
+    viewport: "width=device-width,initial-scale=1,user-scalable=0;",
+  },
+];
+
 export default function App() {
   const { scrollYProgress } = useScroll();
 
   return (
     <html lang="en">
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,user-scalable=0;" />
         <Meta />
         <Links />
       </head>
