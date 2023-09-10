@@ -5,6 +5,7 @@ import RsvpBtn from "~/components/rsvp-btn";
 import { AnimatedScrollButton } from "./animated-scroll-btn";
 import CountDown from "./count-down";
 import MountainContent from "./mountain-content";
+import { buildImageUrl } from "~/utils/image";
 
 export default function Index() {
   const mountainRef = useRef<HTMLImageElement>(null);
@@ -16,7 +17,10 @@ export default function Index() {
   return (
     <>
       <img
-        src="/banner-image.jpg"
+        src={buildImageUrl({
+          imageName: "banner-image.jpg",
+          mode: "landscape",
+        })}
         alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
         className="fixed left-0 top-0 z-0 min-h-screen w-full overflow-y-clip bg-fixed object-cover object-top supports-[height:100cqh]:h-[100cqh] supports-[height:100svh]:h-[100svh]"
       />
@@ -36,7 +40,10 @@ export default function Index() {
           </div>
         </div>
         <img
-          src="/mountain-silhouette.svg"
+          src={buildImageUrl({
+            imageName: "mountain-silhouette.svg",
+            mode: "landscape",
+          })}
           alt="Dark mountain silhouette"
           className="relative top-[1px] w-full"
           ref={mountainRef}
