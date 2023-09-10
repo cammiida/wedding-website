@@ -6,23 +6,22 @@ const MountainContent = () => {
     <div className="flex flex-col gap-16 lg:grid lg:grid-rows-3 lg:gap-12">
       <Element
         title="HOW C&T MET"
-        content="Prepare yourself for an exciting weekend."
+        content="Wondering how Camilla and Tyler actually met? Read our story here."
         link="/story"
         img="login-bg.jpg"
       />
       <Element
         title="HOW TO GET THERE"
         content="The wedding will take place at the Bygdin Mountain Hotel in the
-            majestic Hardangervidda, Norway. It is a four-hour bus ride from
-            Oslo, where Norway's main airport (Gardemoen) is located."
+            majestic Hardangervidda, Norway. Read more the hotel and how to get there here."
         link="/travel"
         img="top-of-fjord.jpg"
         reverse
       />
       <Element
-        title="WHERE WE CAN SLEEP"
-        content=" Prepare yourself for an exciting weekend."
-        link="/sleep"
+        title="PROGRAM"
+        content="Wondering what the plan for the weekend looks like? Read more about the program here."
+        link="/program"
         img="login-bg.jpg"
       />
     </div>

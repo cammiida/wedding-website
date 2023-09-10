@@ -17,7 +17,7 @@ const routes: Route[] = [
   { name: "Travel", path: "/travel" },
   { name: "Program", path: "/program" },
   { name: "Contact", path: "/contact" },
-  { name: "RSVP", path: "/rsvp" },
+  // { name: "RSVP", path: "/rsvp" }, // FIXME: Should it be reintroduced?
 ];
 
 type HeaderProps = {
