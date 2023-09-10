@@ -3,12 +3,12 @@ import { buildImageUrl } from "~/utils/image";
 
 const MountainContent = () => {
   return (
-    <div className="flex flex-col gap-16 lg:grid lg:grid-rows-3 lg:gap-12">
+    <div className="flex flex-col gap-16 lg:grid lg:grid-rows-3 lg:gap-20">
       <Element
         title="HOW C&T MET"
         content="Wondering how Camilla and Tyler actually met? Read our story here."
         link="/story"
-        img="login-bg.jpg"
+        img="antibes.jpg"
       />
       <Element
         title="HOW TO GET THERE"
@@ -22,7 +22,7 @@ const MountainContent = () => {
         title="PROGRAM"
         content="Wondering what the plan for the weekend looks like? Read more about the program here."
         link="/program"
-        img="login-bg.jpg"
+        img="tyler-outside-bygdin.jpg"
       />
     </div>
   );
