@@ -3,7 +3,7 @@ import { buildImageUrl } from "~/utils/image";
 
 const MountainContent = () => {
   return (
-    <div className="flex flex-col gap-16 md:grid md:grid-rows-3 md:gap-12">
+    <div className="flex flex-col gap-16 lg:grid lg:grid-rows-3 lg:gap-12">
       <Element
         title="HOW C&T MET"
         content="Prepare yourself for an exciting weekend."
@@ -44,7 +44,7 @@ const Element = ({
 }) => {
   return (
     <div
-      className={`flex flex-col items-center gap-6 md:justify-center lg:items-start lg:gap-8 ${
+      className={`flex flex-col items-center gap-6 lg:items-start lg:justify-center lg:gap-8 ${
         reverse ? "lg:flex-row-reverse" : "lg:flex-row"
       }`}
     >
