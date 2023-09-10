@@ -32,55 +32,67 @@ const Program = () => {
             possible to make your visit shorter (or longer!) if you prefer.
           </p>
         </section>
-        <div className="rounded bg-grey-transparent px-4 text-yellow">
-          <table className="table-auto border-separate border-spacing-x-1 border-spacing-y-5">
-            <thead className="text-yellow">
-              <tr>
-                <th className="w-1/3 text-left">Day</th>
-                <th className="w-2/3 text-left">Activity</th>
-              </tr>
-            </thead>
-            <tbody className="text-grey">
-              <tr>
-                <td className="flex">Friday evening</td>
-                <td>
-                  Check-in from 15:00 <br />
-                  Dinner at the hotel, followed by low-key activities, including
-                  quiz and other games
-                </td>
-              </tr>
-              <tr>
-                <td className="flex">Saturday morning</td>
-                <td>
-                  Breakfast at the hotel Outdoor activities for those who are
-                  interested, including hiking and relaxing
-                </td>
-              </tr>
-              <tr>
-                <td className="flex">Saturday afternoon</td>
-                <td>
-                  🎉 <b>Outdoor wedding ceremony</b> 🎉 <br />
-                  (weather permitting) with drinks and snacks
-                </td>
-              </tr>
-              <tr>
-                <td className="flex">Saturday evening</td>
-                <td>
-                  Celebration dinner at the hotel <br />
-                  Drinks and dancing till late 💃 🪩
-                </td>
-              </tr>
-              <tr>
-                <td className="flex">Sunday morning</td>
-                <td>
-                  Breakfast at the hotel
-                  <br />
-                  Check-out by 11:00
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table className="table-auto border-collapse border-spacing-x-1 border-spacing-y-5">
+          <thead>
+            <tr>
+              <th className="w-1/3 border border-grey-transparent p-2 text-left">
+                Day
+              </th>
+              <th className="w-2/3 border border-grey-transparent p-2 text-left">
+                Activity
+              </th>
+            </tr>
+          </thead>
+          <tbody className="text-grey">
+            <tr>
+              <td className="border border-grey-transparent p-2">
+                Friday evening
+              </td>
+              <td className="border border-grey-transparent p-2">
+                Check-in from 15:00 <br />
+                Dinner at the hotel, followed by low-key activities, including
+                quiz and other games
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-grey-transparent p-2">
+                Saturday morning
+              </td>
+              <td className="border border-grey-transparent p-2">
+                Breakfast at the hotel Outdoor activities for those who are
+                interested, including hiking and relaxing
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-grey-transparent p-2">
+                Saturday afternoon
+              </td>
+              <td className="border border-grey-transparent p-2">
+                🎉 <b>Outdoor wedding ceremony</b> 🎉 <br />
+                (weather permitting) with drinks and snacks
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-grey-transparent p-2">
+                Saturday evening
+              </td>
+              <td className="border border-grey-transparent p-2">
+                Celebration dinner at the hotel <br />
+                Drinks and dancing till late 💃 🪩
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-grey-transparent p-2">
+                Sunday morning
+              </td>
+              <td className="border border-grey-transparent p-2">
+                Breakfast at the hotel
+                <br />
+                Check-out by 11:00
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             The Cabin
