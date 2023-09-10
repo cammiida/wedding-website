@@ -1,11 +1,10 @@
-import { Form, Link, NavLink, useLocation } from "@remix-run/react";
+import { Form, NavLink } from "@remix-run/react";
 import type { Variants } from "framer-motion";
 import { motion, useCycle } from "framer-motion";
 import { useRef } from "react";
 import RsvpBtn from "~/components/rsvp-btn";
 import { useDimensions } from "~/hooks/useDimensions";
 import { useScrollBlock } from "~/hooks/useScrollBlock";
-import { useRootLoaderData } from "~/root";
 import { HeaderCenter } from "./header-center";
 import { MenuItem } from "./menu-item";
 import { MenuToggle } from "./menu-toggle";
@@ -34,9 +33,6 @@ const Header = ({ position = "fixed" }: HeaderProps) => {
 };
 
 const DesktopHeader = ({ position }: HeaderProps) => {
-  const { isAuthenticated } = useRootLoaderData();
-  const { pathname } = useLocation();
-
   return (
     <div
       className={`${position} top-0 z-20 flex h-20 w-full justify-center text-yellow`}
@@ -63,13 +59,9 @@ const DesktopHeader = ({ position }: HeaderProps) => {
         <HeaderCenter />
         <ul className="flex items-center justify-end gap-4">
           <RsvpBtn colorScheme="yellow" />
-          {isAuthenticated ? (
-            <Form method="post" action="/api/logout">
-              <button>Logout</button>
-            </Form>
-          ) : (
-            <Link to={`/login?returnTo=${pathname}`}>Log in</Link>
-          )}
+          <Form method="post" action="/api/logout">
+            <button>Logout</button>
+          </Form>
         </ul>
       </div>
     </div>
