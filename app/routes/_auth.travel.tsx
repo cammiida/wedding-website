@@ -1,4 +1,5 @@
 import Header from "~/components/header";
+import { buildImageUrl } from "~/utils/image";
 
 const Travel = () => {
   return (
@@ -18,7 +19,10 @@ const Travel = () => {
         </section>
         <img
           alt="Stylised map of Oslo, Gardermoen, Torp and Bygdin"
-          src="/map.png"
+          src={buildImageUrl({
+            imageName: "map.png",
+            customTransformation: "q_auto,w_600",
+          })}
           className="w-full"
         />
         <small className="text-right text-brown">Map: Ingvild Høgseth</small>

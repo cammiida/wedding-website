@@ -1,5 +1,6 @@
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect } from "react";
+import { buildImageUrl } from "~/utils/image";
 
 export const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
   const controls = useAnimationControls();
@@ -32,7 +33,10 @@ export const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
     >
       Scroll down to see more
       <img
-        src="/arrow-down.svg"
+        src={buildImageUrl({
+          imageName: "arrow-down.svg",
+          customTransformation: "q_auto,w_100",
+        })}
         alt="Arrow pointing downwards"
         className="h-10 w-10"
       />

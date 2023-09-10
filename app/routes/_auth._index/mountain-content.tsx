@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import { buildImageUrl } from "~/utils/image";
 
 const MountainContent = () => {
   return (
@@ -7,7 +8,7 @@ const MountainContent = () => {
         title="HOW C&T MET"
         content="Prepare yourself for an exciting weekend."
         link="/story"
-        img="/login-bg.jpg"
+        img="login-bg.jpg"
       />
       <Element
         title="HOW TO GET THERE"
@@ -15,14 +16,14 @@ const MountainContent = () => {
             majestic Hardangervidda, Norway. It is a four-hour bus ride from
             Oslo, where Norway's main airport (Gardemoen) is located."
         link="/travel"
-        img="/top-of-fjord.jpg"
+        img="top-of-fjord.jpg"
         reverse
       />
       <Element
         title="WHERE WE CAN SLEEP"
         content=" Prepare yourself for an exciting weekend."
         link="/sleep"
-        img="/login-bg.jpg"
+        img="login-bg.jpg"
       />
     </div>
   );
@@ -38,7 +39,7 @@ const Element = ({
   title: string;
   content: string;
   link: `/${string}`;
-  img: `/${string}.jpg` | `/${string}.png`;
+  img: `${string}.jpg` | `${string}.png`;
   reverse?: boolean;
 }) => {
   return (
@@ -53,7 +54,11 @@ const Element = ({
         </h3>
         <p className="pt-4 font-thin text-grey">{content}</p>
       </Link>
-      <img src={img} className="w-2/3 rounded-md lg:w-1/4" alt="" />
+      <img
+        src={buildImageUrl({ imageName: img, mode: "landscape" })}
+        className="w-2/3 rounded-md lg:w-1/4"
+        alt=""
+      />
     </div>
   );
 };

@@ -42,7 +42,7 @@ export default function Index() {
         <img
           src={buildImageUrl({
             imageName: "mountain-silhouette.svg",
-            mode: "landscape",
+            customTransformation: "w_1500",
           })}
           alt="Dark mountain silhouette"
           className="relative top-[1px] w-full"

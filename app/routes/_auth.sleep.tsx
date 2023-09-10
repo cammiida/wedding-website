@@ -1,4 +1,5 @@
 import Header from "~/components/header";
+import { buildImageUrl } from "~/utils/image";
 
 const Sleep = () => {
   return (
@@ -35,7 +36,11 @@ const Sleep = () => {
             comfortable by modern standards.
             <img
               alt="Jotunheimen hotell i 1910"
-              src="/jotunheimen-hotel-i-1910.jpg"
+              src={buildImageUrl({
+                imageName: "jotunheimen-hotel-i-1910.jpg",
+                mode: "landscape_small",
+                customTransformation: "g_south",
+              })}
               className="my-8 w-full rounded-md"
             />
             It is located in the southern part of the majestic{" "}
