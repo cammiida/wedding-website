@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { useOutsideClick } from "~/hooks/useOutsideClick";
 
 type SelectProps = {
   label: string;
@@ -18,8 +19,10 @@ const Select: React.FC<SelectProps> = ({
   description,
   required = false,
 }) => {
+  const optionsRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [chosenOption, setChosenOption] = useState<string>("");
+  useOutsideClick(optionsRef, () => setIsOpen(false));
 
   function handleChoice(option: string) {
     setChosenOption(option);
@@ -32,7 +35,7 @@ const Select: React.FC<SelectProps> = ({
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       {description}
-      <div className="relative">
+      <div className="relative" ref={optionsRef}>
         <input
           name={name}
           className="w-full cursor-pointer rounded-md bg-white p-4 text-grey placeholder:text-med-grey"
