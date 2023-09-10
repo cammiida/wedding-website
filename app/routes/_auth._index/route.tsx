@@ -66,7 +66,7 @@ export default function Index() {
               WITH ANY QUESTIONS
             </h3>
             <Link
-              to="mailto: hello@camillaplustyler.com"
+              to="mailto:hello@camillaplustyler.com"
               className="max-w-full font-roboto text-lg font-thin text-blue hover:underline lg:text-xl"
             >
               HELLO
