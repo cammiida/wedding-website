@@ -19,12 +19,6 @@ import { authenticator } from "~/services/authenticator.server";
 import { env } from "~/variables.server";
 import { sendEmail } from "../services/email.server";
 
-export async function loader({ request }: DataFunctionArgs) {
-  return await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login?returnTo=/rsvp",
-  });
-}
-
 export async function action({ request }: DataFunctionArgs) {
   const formData = await request.formData();
   const isAuthenticated = authenticator.isAuthenticated(request);

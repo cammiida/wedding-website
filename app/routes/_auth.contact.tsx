@@ -1,12 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
 import Header from "~/components/header";
-import { authenticator } from "~/services/authenticator.server";
-
-export async function loader({ request }: LoaderArgs) {
-  return await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login?returnTo=/contact",
-  });
-}
 
 const Contact = () => {
   return (

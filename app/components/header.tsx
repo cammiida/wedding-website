@@ -64,7 +64,7 @@ const DesktopHeader = ({ position }: HeaderProps) => {
         <ul className="flex items-center justify-end gap-4">
           <RsvpBtn colorScheme="yellow" />
           {isAuthenticated ? (
-            <Form method="post" action="/logout">
+            <Form method="post" action="/api/logout">
               <button>Logout</button>
             </Form>
           ) : (

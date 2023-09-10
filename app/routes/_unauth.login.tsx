@@ -22,11 +22,16 @@ export async function loader({ request }: DataFunctionArgs) {
 export async function action({ request }: DataFunctionArgs) {
   const url = new URL(request.url);
   const returnTo = url.searchParams.get("returnTo") as string | null;
+  const searchParams = new URLSearchParams(url.searchParams);
+  searchParams.delete("returnTo");
+
+  const pathname = `${returnTo ?? "/"}?${searchParams.toString()}`;
 
   try {
     return await authenticator.authenticate("passphrase", request, {
-      successRedirect: returnTo ?? "/",
+      successRedirect: pathname,
       failureRedirect: "/",
+      context: { searchParams: searchParams.toString() },
     });
   } catch (error) {
     if (!returnTo) throw error;

@@ -1,12 +1,4 @@
-import type { DataFunctionArgs } from "@remix-run/node";
 import Header from "~/components/header";
-import { authenticator } from "~/services/authenticator.server";
-
-export async function loader({ request }: DataFunctionArgs) {
-  return await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login?returnTo=/sleep",
-  });
-}
 
 const Sleep = () => {
   return (
