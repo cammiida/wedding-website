@@ -248,20 +248,21 @@ const AccomodationFormPart = () => {
             will ask you if that's alright. All our friends are nice people.
             <br />
             <br />
-            You can see details of the available room types and prices here:{" "}
+            You can see details of the available room types and prices{" "}
             <a
               className="text-blue underline"
               target="_blank"
               href="https://online.bookvisit.com/R?channelId=d55f9e6e-32f9-42dd-8e4c-0cbb775cc89f&initialPath=/accommodation#/accommodation"
               rel="noreferrer"
             >
-              link (opens new tab).
-            </a>
+              here
+            </a>{" "}
+            (opens new tab).
             <br />
             NB: all rooms with shared facilities has a sink in the room.
             <br />
             <br />
-            You can pay for everything at the cabin. Price per person.
+            You can pay for everything at the cabin. Price per person per night.
           </p>
         }
         options={[

@@ -15,7 +15,7 @@ const routes: Route[] = [
   { name: "Home", path: "/" },
   { name: "Story", path: "/story" },
   { name: "Travel", path: "/travel" },
-  { name: "Sleep", path: "/sleep" },
+  { name: "Program", path: "/program" },
   { name: "Contact", path: "/contact" },
   { name: "RSVP", path: "/rsvp" },
 ];

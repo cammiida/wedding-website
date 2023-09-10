@@ -1,11 +1,86 @@
 import Header from "~/components/header";
 import { buildImageUrl } from "~/utils/image";
 
-const Sleep = () => {
+const Program = () => {
   return (
     <>
       <Header position="relative" />
       <div className="relative mx-auto flex w-full max-w-lg flex-col gap-10 px-5 pb-10 lg:px-0 lg:pt-20">
+        <section className="flex flex-col">
+          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+            Program
+          </h2>
+          <p className="text-grey">
+            The wedding will be taking place at Bygdin Mountain Hotel, in the
+            southern part of the majestic Jotunheimen mountain range, Norway.
+            The wedding service itself will be held at the cabin on Saturday
+            afternoon. If you have a{" "}
+            <a
+              href="https://en.wikipedia.org/wiki/Bunad"
+              target="_blank"
+              className="text-blue hover:underline"
+              rel="noreferrer"
+            >
+              bunad
+            </a>
+            , we would love to see you in it! This will be followed by a dinner
+            party and dancing late into the night. We have the whole cabin from
+            Friday to Sunday and there will be optional activities on the Friday
+            night and Saturday morning, including dinner, drinks, quiz, hiking,
+            fishing, and just relaxing with a beautiful view. We'd love to have
+            you join from Friday to Sunday if you can, but of course it's also
+            possible to make your visit shorter (or longer!) if you prefer.
+          </p>
+        </section>
+        <div className="rounded bg-grey-transparent px-4 text-yellow">
+          <table className="table-auto border-separate border-spacing-x-1 border-spacing-y-5">
+            <thead className="text-yellow">
+              <tr>
+                <th className="w-1/3 text-left">Day</th>
+                <th className="w-2/3 text-left">Activity</th>
+              </tr>
+            </thead>
+            <tbody className="text-grey">
+              <tr>
+                <td className="flex">Friday evening</td>
+                <td>
+                  Check-in from 15:00 <br />
+                  Dinner at the hotel, followed by low-key activities, including
+                  quiz and other games
+                </td>
+              </tr>
+              <tr>
+                <td className="flex">Saturday morning</td>
+                <td>
+                  Breakfast at the hotel Outdoor activities for those who are
+                  interested, including hiking and relaxing
+                </td>
+              </tr>
+              <tr>
+                <td className="flex">Saturday afternoon</td>
+                <td>
+                  🎉 <b>Outdoor wedding ceremony</b> 🎉 <br />
+                  (weather permitting) with drinks and snacks
+                </td>
+              </tr>
+              <tr>
+                <td className="flex">Saturday evening</td>
+                <td>
+                  Celebration dinner at the hotel <br />
+                  Drinks and dancing till late 💃 🪩
+                </td>
+              </tr>
+              <tr>
+                <td className="flex">Sunday morning</td>
+                <td>
+                  Breakfast at the hotel
+                  <br />
+                  Check-out by 11:00
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             The Cabin
@@ -109,43 +184,9 @@ const Sleep = () => {
             10pm, so we will make sure there's plenty of coffee to enjoy.
           </p>
         </section>
-        <section className="flex flex-col">
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            Program
-          </h2>
-          <p className="text-grey">
-            The wedding service itself will be held at the cabin on Saturday
-            afternoon. If you have a{" "}
-            <a
-              href="https://en.wikipedia.org/wiki/Bunad"
-              target="_blank"
-              className="text-blue hover:underline"
-              rel="noreferrer"
-            >
-              bunad
-            </a>
-            , we would love to see you in it! This will be followed by a dinner
-            party and dancing late into the night. We have the whole cabin from
-            Friday to Sunday and there will be optional activities on the Friday
-            night and Saturday morning, including dinner, drinks, quiz, hiking,
-            fishing, and just relaxing with a beautiful view. We'd love to have
-            you join from Friday to Sunday if you can, but of course it's also
-            possible to make your visit shorter (or longer!) if you prefer.
-          </p>
-        </section>
-        <section className="flex flex-col">
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            Rooms
-          </h2>
-          <p className="text-grey">
-            Rooms There are a number of different rooms you can pick from at the
-            hotel. They are all comfortable, but vary slightly in size and
-            price.
-          </p>
-        </section>
       </div>
     </>
   );
 };
 
-export default Sleep;
+export default Program;
