@@ -8,7 +8,6 @@ export async function loader({ request }: DataFunctionArgs) {
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.searchParams);
   searchParams.append("returnTo", url.pathname);
-  console.log("searchParams", searchParams.toString());
 
   return authenticator.isAuthenticated(request, {
     failureRedirect: `/login?${searchParams.toString()}`,

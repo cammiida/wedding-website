@@ -1,4 +1,4 @@
-import { Form, NavLink } from "@remix-run/react";
+import { Form, NavLink, useNavigation } from "@remix-run/react";
 import type { Variants } from "framer-motion";
 import { motion, useCycle } from "framer-motion";
 import { useRef } from "react";
@@ -8,6 +8,7 @@ import { useScrollBlock } from "~/hooks/useScrollBlock";
 import { HeaderCenter } from "./header-center";
 import { MenuItem } from "./menu-item";
 import { MenuToggle } from "./menu-toggle";
+import Spinner from "./spinner";
 
 export type Route = { path: `/${string}`; name: string };
 const routes: Route[] = [
@@ -33,6 +34,7 @@ const Header = ({ position = "fixed" }: HeaderProps) => {
 };
 
 const DesktopHeader = ({ position }: HeaderProps) => {
+  const { state } = useNavigation();
   return (
     <div
       className={`${position} top-0 z-20 flex h-20 w-full justify-center text-yellow`}
@@ -60,7 +62,9 @@ const DesktopHeader = ({ position }: HeaderProps) => {
         <ul className="flex items-center justify-end gap-4">
           <RsvpBtn colorScheme="yellow" />
           <Form method="post" action="/api/logout">
-            <button>Logout</button>
+            <button className="flex w-20 justify-center">
+              {state === "submitting" ? <Spinner /> : "Logout"}
+            </button>
           </Form>
         </ul>
       </div>

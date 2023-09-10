@@ -1,6 +1,7 @@
 import type { DataFunctionArgs } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, useNavigation } from "@remix-run/react";
 import { HeaderCenter } from "~/components/header-center";
+import Spinner from "~/components/spinner";
 import { authenticator } from "~/services/authenticator.server";
 import { returnToCookie } from "~/services/return-to-cookie.server";
 import { buildImageUrl } from "~/utils/image";
@@ -52,6 +53,8 @@ function isRedirect(response: Response) {
 }
 
 const Login = () => {
+  const navigation = useNavigation();
+
   return (
     <>
       <div
@@ -85,10 +88,10 @@ const Login = () => {
               className="h-10 w-96 rounded-md border-2 border-gray-600 p-3 text-black"
             />
             <button
-              className="rounded-sm bg-grey p-2 text-yellow"
+              className="relative flex justify-center rounded-sm bg-grey p-2 text-yellow"
               type="submit"
             >
-              Submit
+              {navigation.state === "idle" ? "Submit" : <Spinner />}
             </button>
           </Form>
         </div>

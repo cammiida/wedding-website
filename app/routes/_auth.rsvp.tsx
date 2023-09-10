@@ -18,6 +18,7 @@ import { getClient } from "~/notion/notion.server";
 import { authenticator } from "~/services/authenticator.server";
 import { env } from "~/variables.server";
 import { sendEmail } from "../services/email.server";
+import Spinner from "~/components/spinner";
 
 export async function action({ request }: DataFunctionArgs) {
   const formData = await request.formData();
@@ -65,7 +66,6 @@ const RSVP = () => {
     <div className="relative flex w-full flex-col items-center px-8 lg:px-0 ">
       <Header position="relative" />
       <div className="flex w-full max-w-2xl flex-col">
-        {" "}
         <h1 className="text-center font-roboto text-5xl lg:pt-20">RSVP</h1>
         <h2 className="p-3 text-center text-2xl font-thin text-grey">
           Your kind response is requested by
@@ -83,7 +83,7 @@ const RSVP = () => {
             type="submit"
             disabled={isSubmitting}
           >
-            {isSubmitting ? <div className="spinner" /> : "Submit"}
+            {isSubmitting ? <Spinner /> : "Submit"}
           </button>
         </ValidatedForm>
       </div>
