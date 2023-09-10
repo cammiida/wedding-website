@@ -1,6 +1,10 @@
-import type { ActionArgs } from "@remix-run/node";
+import type { DataFunctionArgs } from "@remix-run/node";
 import { authenticator } from "~/services/authenticator.server";
 
-export async function action({ request }: ActionArgs) {
-  return authenticator.logout(request, { redirectTo: "/" });
+export async function action({ request }: DataFunctionArgs) {
+  return authenticator.logout(request, { redirectTo: "/login" });
+}
+
+export async function loader({ request }: DataFunctionArgs) {
+  return authenticator.logout(request, { redirectTo: "/login" });
 }
