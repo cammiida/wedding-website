@@ -35,7 +35,8 @@ export const meta: V2_MetaFunction = () => [
     title: "Wedding C&T",
   },
   {
-    viewport: "width=device-width,initial-scale=1,user-scalable=0;",
+    name: "viewport",
+    content: "width=device-width,user-scalable=0;",
   },
 ];
 
