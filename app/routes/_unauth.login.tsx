@@ -58,7 +58,7 @@ const Login = () => {
   return (
     <>
       <div
-        className={`fixed top-0 z-10 flex h-20 w-full justify-center p-4 text-yellow`}
+        className={`fixed top-0 z-20 flex h-20 w-full justify-center p-4 text-yellow`}
       >
         <HeaderCenter />
       </div>
@@ -72,7 +72,7 @@ const Login = () => {
       />
       <div className="z-1 fixed left-0 top-0 h-full w-full bg-gradient-radial from-transparent to-grey-transparent" />
       <div className="flex h-screen items-center justify-center text-yellow">
-        <div className="z-10 flex max-w-xl flex-col items-center rounded-md bg-grey-transparent  p-8">
+        <div className="z-10 flex h-full max-w-xl flex-col items-center justify-center rounded-md bg-grey-transparent p-4 md:h-auto md:p-8">
           <h1 className="text-center font-roboto text-3xl font-extralight ">
             OH NO! IT LOOKS LIKE YOU'RE NOT LOGGED IN 😢
           </h1>
@@ -80,12 +80,12 @@ const Login = () => {
             Enter the provided password you have received in order to gain
             access.
           </p>
-          <Form method="post" className="flex flex-col gap-1">
+          <Form method="post" className="flex w-full flex-col gap-1">
             <input
               name="passphrase"
               placeholder="Password to enter site here"
               type="password"
-              className="h-10 w-96 rounded-md border-2 border-gray-600 p-3 text-black"
+              className="h-10 w-full rounded-md border-2 border-gray-600 p-3 text-black"
             />
             <button
               className="relative flex justify-center rounded-sm bg-grey p-2 text-yellow"
