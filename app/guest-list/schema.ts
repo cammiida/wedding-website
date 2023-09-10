@@ -217,7 +217,7 @@ export const notionRsvpSchema = rsvpSchema.transform(
         email: email,
       },
       Address: { rich_text: [{ text: { content: address ?? "" } }] },
-      "Allergies or food preferences": {
+      "Allergies or dietary restrictions?": {
         rich_text: [{ text: { content: allergies ?? "" } }],
       },
       "Bringing a partner": { checkbox: bringingPartner ?? false },
@@ -240,7 +240,7 @@ export const notionRsvpSchema = rsvpSchema.transform(
       "Partner - Email": {
         email: partnerEmail ?? null,
       },
-      "Partner - Allergies or food preferences?": {
+      "Partner - Allergies or dietary restrictions?": {
         rich_text: [{ text: { content: partnerAllergies ?? "" } }],
       },
     };

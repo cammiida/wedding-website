@@ -154,8 +154,8 @@ const IsGoingFormPart = () => {
       />
       <TextArea
         name="allergies"
-        label="Allergies or food preferences?"
-        placeholder="Allergies or food preferences"
+        label="Allergies or dietary restrictions?"
+        placeholder="Allergies or dietary restrictions"
       />
       <RadioButtons
         label="Bringing a partner?"
@@ -215,9 +215,9 @@ const BringingPartnerFormPart = () => {
         error={errors?.partnerEmail}
       />
       <TextArea
-        label="Partner allergies or food preferences?"
+        label="Partner allergies or dietary restrictions?"
         name="partnerAllergies"
-        placeholder="Allergies or food preferences"
+        placeholder="Allergies or dietary restrictions"
       />
     </>
   );
