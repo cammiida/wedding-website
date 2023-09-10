@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import type { EmailSchema } from "~/guest-list/schema";
 import { env } from "~/variables.server";
+import { v4 as uuid } from "uuid";
 
 const resend = new Resend(env.RESEND_KEY);
 
@@ -23,6 +24,9 @@ export async function sendEmail(response: EmailSchema) {
     from: "hello@camillaplustyler.com",
     to: env.FEATURE_FLAG_EMAIL ? response.Email : env.BCC_EMAIL,
     subject: "Tyler & Camilla: Wedding invitation response",
-    react: BODY_HTML(response),
+    html: BODY_HTML(response),
+    headers: {
+      "X-Entity-Ref-ID": uuid(),
+    },
   });
 }
