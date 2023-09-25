@@ -31,7 +31,7 @@
         stroke-linecap: butt;
         stroke-linejoin: miter;
         stroke-miterlimit: 10;
-        fill: #ffd98f;
+        fill: #faf1e4;
         fill-rule: nonzero;
         opacity: 1;
       "
