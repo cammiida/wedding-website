@@ -20,7 +20,7 @@ const Auth = () => {
   return (
     <>
       <motion.div
-        className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-orange"
+        className="fixed bottom-0 right-0 top-0 z-40 w-2 origin-top-right bg-med-green"
         style={{ scaleY: scrollYProgress }}
       />
       <AnimatePresence mode="wait" initial={false}>

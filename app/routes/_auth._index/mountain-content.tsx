@@ -48,10 +48,10 @@ const Element = ({
       }`}
     >
       <Link to={link} className="group w-2/3 lg:w-1/4">
-        <h3 className="font-roboto text-2xl font-semibold text-orange group-hover:subpixel-antialiased	">
+        <h3 className="font-roboto text-2xl font-semibold text-light-green group-hover:subpixel-antialiased	">
           {title.toLocaleUpperCase()}
         </h3>
-        <p className="pt-4 font-thin text-grey">{content}</p>
+        <p className="pt-4 font-thin text-beige">{content}</p>
       </Link>
       <img
         src={buildImageUrl({ imageName: img, mode: "landscape" })}

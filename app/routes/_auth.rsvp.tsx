@@ -63,11 +63,11 @@ const RSVP = () => {
   const isSubmitting = useIsSubmitting("rsvpForm");
 
   return (
-    <div className="relative flex w-full flex-col items-center px-8 lg:px-0 ">
+    <div className="relative mb-8 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center px-8 lg:px-0">
       <Header position="relative" />
       <div className="flex w-full max-w-2xl flex-col">
         <h1 className="text-center font-roboto text-5xl lg:pt-20">RSVP</h1>
-        <h2 className="p-3 text-center text-2xl font-thin text-grey">
+        <h2 className="p-3 text-center text-2xl font-thin text-dark-green">
           Your kind response is requested by
           <br /> October 15th 2023
         </h2>
@@ -75,11 +75,11 @@ const RSVP = () => {
           id="rsvpForm"
           validator={withZod(rsvpSchema)}
           method="post"
-          className="flex flex-col gap-8 text-grey"
+          className="flex flex-col gap-8 text-dark-green"
         >
           <FormFields />
           <button
-            className="flex justify-center rounded-md bg-blue py-2 text-yellow disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
+            className="flex justify-center rounded-md bg-dark-green py-2 text-beige disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
             type="submit"
             disabled={isSubmitting}
           >

@@ -6,7 +6,7 @@ const Unauth = () => {
   return (
     <>
       <div
-        className={`fixed top-0 z-10 flex h-20 w-full justify-center p-4 text-yellow`}
+        className={`fixed top-0 z-10 flex h-20 w-full justify-center p-4 text-beige`}
       >
         <HeaderCenter />
       </div>

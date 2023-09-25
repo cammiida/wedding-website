@@ -10,14 +10,17 @@ module.exports = {
     },
     extend: {
       colors: {
-        yellow: "#FFD98F",
+        yellow: "#FAF1E4", // "#FFD98F",
         blue: "#3E85C6",
         "grey-transparent": "#00000040",
         "light-grey": "#d1cabd",
         "med-grey": "#686866",
         grey: "#292929",
-        orange: "#F68C59",
         brown: "#C87444",
+        beige: "#FAF1E4",
+        "light-green": "#CEDEBD",
+        "med-green": "#9EB384",
+        "dark-green": "#435334",
       },
       textShadow: {
         sm: "0 1px 2px var(--tw-shadow-color)",

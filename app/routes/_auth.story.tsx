@@ -37,20 +37,19 @@ const Story = () => {
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Early Dates
           </h2>
-          <p className="text-grey">
-            Their early dates included:
-            <ul className="list-disc text-grey">
-              <li>Darts (Camilla was three hours late)</li>
-              <li>
-                A roast chicken prepared by Tyler (extensive consultation with
-                Merinda via phone)
-              </li>
-              <li>
-                Hiking in the woods (“You must learn the ways of my people” said
-                Camilla)
-              </li>
-            </ul>
-          </p>
+          <p className="text-grey">Their early dates included:</p>
+          <br />
+          <ul className="list-disc text-grey">
+            <li>Darts (Camilla was three hours late)</li>
+            <li>
+              A roast chicken prepared by Tyler (extensive consultation with
+              Merinda via phone)
+            </li>
+            <li>
+              Hiking in the woods (“You must learn the ways of my people” said
+              Camilla)
+            </li>
+          </ul>
         </section>
         <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">

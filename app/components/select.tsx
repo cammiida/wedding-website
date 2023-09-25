@@ -52,7 +52,7 @@ const Select: React.FC<SelectProps> = ({
           {options.map((option, i) => (
             <React.Fragment key={option}>
               {i > 0 && (
-                <hr className="mx-2 border-t-[1px] border-solid border-t-orange" />
+                <hr className="mx-2 border-t-[1px] border-solid border-t-dark-green" />
               )}
               <p
                 className="flex cursor-pointer rounded-md p-4 text-grey hover:bg-light-grey"

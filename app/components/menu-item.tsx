@@ -38,8 +38,8 @@ export const MenuItem = ({
       <NavLink
         to={route.path}
         className={({ isActive }) =>
-          `text-2xl hover:text-orange ${
-            isActive ? "text-orange" : "text-yellow"
+          `text-2xl hover:text-light-green ${
+            isActive ? "text-3xl text-light-green" : "text-beige"
           }`
         }
       >

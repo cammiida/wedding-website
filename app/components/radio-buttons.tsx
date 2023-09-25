@@ -38,7 +38,7 @@ const RadioButtons = <V extends string>({
               type="radio"
               value={value}
               onChange={(e) => onChange && onChange(e.currentTarget.value as V)}
-              className="checkbox h-6 w-6 cursor-pointer appearance-none rounded-full border border-grey bg-yellow checked:border-none checked:bg-orange focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"
+              className="checkbox h-6 w-6 cursor-pointer appearance-none rounded-full border border-dark-green bg-beige checked:border-none checked:bg-med-green focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-dark-green focus:ring-offset-2"
             />
             {optionLabel}
           </label>

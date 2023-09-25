@@ -1,6 +1,8 @@
 import Header from "~/components/header";
 import { buildImageUrl } from "~/utils/image";
 
+// TODO: Where to rent a car
+
 const Travel = () => {
   return (
     <>
@@ -107,6 +109,11 @@ const Travel = () => {
                 here
               </a>
               .
+            </p>
+            <p className="mt-4 text-grey">
+              You cannot book the room yourself. We will do this for you once
+              you have RSVP'd. In the RSVP form, you can specify your preferred
+              room type. We will do our best to accommodate your preferences.
             </p>
           </section>
         </div>

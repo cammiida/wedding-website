@@ -29,12 +29,12 @@ export const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
       animate={controls}
       onHoverStart={() => controls.stop()}
       onHoverEnd={startAnimation}
-      className="weight-grow flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-yellow"
+      className="weight-grow flex max-w-sm flex-col items-center rounded-md p-2 text-lg font-medium text-beige"
     >
       Scroll down to see more
       <img
         src={buildImageUrl({
-          imageName: "arrow-down.svg",
+          imageName: "arrow-down-beige.svg",
           customTransformation: "q_auto,w_100",
         })}
         alt="Arrow pointing downwards"

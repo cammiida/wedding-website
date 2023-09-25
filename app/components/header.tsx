@@ -24,7 +24,7 @@ type HeaderProps = {
   position?: "fixed" | "relative";
 };
 
-const Header = ({ position = "fixed" }: HeaderProps) => {
+const Header = ({ position = "relative" }: HeaderProps) => {
   return (
     <>
       <DesktopHeader position={position} />
@@ -37,12 +37,12 @@ const DesktopHeader = ({ position }: HeaderProps) => {
   const { state } = useNavigation();
   return (
     <div
-      className={`${position} top-0 z-20 flex h-20 w-full justify-center text-yellow`}
+      className={`${position} top-0 z-20 flex h-20 w-full justify-center text-dark-green`}
     >
       <div
         className={`${
           position === "fixed" ? position : "absolute"
-        } left-0 top-0 hidden h-24 w-full bg-gradient-to-b from-blue lg:flex`}
+        } left-0 top-0 hidden h-24 w-full  lg:flex`}
       />
       <div className="z-20 hidden w-full max-w-6xl grid-cols-3 gap-4 lg:grid">
         <ul className="flex items-center gap-4">
@@ -51,7 +51,7 @@ const DesktopHeader = ({ position }: HeaderProps) => {
               key={route.path}
               to={route.path}
               className={({ isActive }) =>
-                isActive ? " font-semibold text-orange" : "hover:text-orange"
+                isActive ? " font-semibold " : "hover:text-dark-green"
               }
             >
               {route.name}
@@ -60,7 +60,7 @@ const DesktopHeader = ({ position }: HeaderProps) => {
         </ul>
         <HeaderCenter />
         <ul className="flex items-center justify-end gap-4">
-          <RsvpBtn colorScheme="yellow" />
+          <RsvpBtn colorScheme="green" />
           <Form method="post" action="/api/logout">
             <button className="flex w-20 justify-center">
               {state === "submitting" ? <Spinner /> : "Logout"}
@@ -113,7 +113,7 @@ const MobileHeader = () => {
       } fixed top-0 z-40 flex w-full flex-col items-center justify-center lg:hidden`}
     >
       <motion.div
-        className="absolute bottom-0 left-0 top-0 w-full bg-grey"
+        className="absolute bottom-0 left-0 top-0 w-full bg-dark-green"
         variants={sidebar}
       />
       <MenuToggle toggle={() => toggle()} />

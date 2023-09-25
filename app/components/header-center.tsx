@@ -10,7 +10,7 @@ export const HeaderCenter = () => {
           width="23"
           height="23"
           viewBox="0 0 23 23"
-          fill={z.string().parse(theme?.colors?.yellow)}
+          fill={z.string().parse(theme?.colors?.["dark-green"])}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M3.78153 15.1261L11.3446 7.56307L18.9077 15.1261L11.3446 22.6892L3.78153 15.1261Z" />
