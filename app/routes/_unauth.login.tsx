@@ -3,20 +3,14 @@ import { Form, useNavigation } from "@remix-run/react";
 import { HeaderCenter } from "~/components/header-center";
 import Spinner from "~/components/spinner";
 import { authenticator } from "~/services/authenticator.server";
-import { returnToCookie } from "~/services/return-to-cookie.server";
 import { buildImageUrl } from "~/utils/image";
 
 export async function loader({ request }: DataFunctionArgs) {
   let url = new URL(request.url);
   let returnTo = url.searchParams.get("returnTo");
 
-  let headers = new Headers();
-  if (returnTo) {
-    headers.append("Set-Cookie", await returnToCookie.serialize(returnTo));
-  }
-
   return await authenticator.isAuthenticated(request, {
-    successRedirect: "/",
+    successRedirect: returnTo ?? "/",
   });
 }
 
@@ -31,25 +25,12 @@ export async function action({ request }: DataFunctionArgs) {
   try {
     return await authenticator.authenticate("passphrase", request, {
       successRedirect: pathname,
-      failureRedirect: "/",
+      failureRedirect: "/login",
       context: { searchParams: searchParams.toString() },
     });
   } catch (error) {
-    if (!returnTo) throw error;
-    if (error instanceof Response && isRedirect(error)) {
-      error.headers.append(
-        "Set-Cookie",
-        await returnToCookie.serialize(returnTo)
-      );
-      return error;
-    }
     throw error;
   }
-}
-
-function isRedirect(response: Response) {
-  if (response.status < 300 || response.status >= 400) return false;
-  return response.headers.has("Location");
 }
 
 const Login = () => {
