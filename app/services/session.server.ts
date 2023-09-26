@@ -1,7 +1,15 @@
 import { createCookieSessionStorage } from "@remix-run/node";
 import { env } from "~/variables.server";
 
-export const session = createCookieSessionStorage({
+type SessionData = {};
+type SessionFlashData = {
+  error: string;
+};
+
+export const session = createCookieSessionStorage<
+  SessionData,
+  SessionFlashData
+>({
   cookie: {
     name: "_session",
     sameSite: "lax",
@@ -11,3 +19,5 @@ export const session = createCookieSessionStorage({
     secure: env.NODE_ENV === "production",
   },
 });
+
+export const { getSession, commitSession, destroySession } = session;
