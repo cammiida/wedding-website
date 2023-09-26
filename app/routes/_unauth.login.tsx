@@ -70,9 +70,9 @@ const Login = () => {
         alt="Two people's feet in the heather overlooking a body of water and the sun setting behind some mountains."
         className="fixed left-0 top-0 z-0 h-screen w-full overflow-y-clip bg-fixed object-cover object-bottom"
       />
-      <div className="z-1 fixed left-0 top-0 h-full w-full bg-gradient-radial from-transparent to-grey-transparent" />
+      <div className="z-1 fixed left-0 top-0 h-full w-full bg-grey-transparent" />
       <div className="flex h-screen items-center justify-center text-beige">
-        <div className="z-10 flex h-full max-w-xl flex-col items-center justify-center rounded-md bg-grey-transparent p-4 lg:h-auto lg:p-8">
+        <div className="z-10 flex h-full max-w-xl flex-col items-center justify-center rounded-md  p-4 lg:h-auto lg:p-8">
           <h1 className="text-center font-roboto text-3xl font-extralight ">
             OH NO! IT LOOKS LIKE YOU'RE NOT LOGGED IN 😢
           </h1>
