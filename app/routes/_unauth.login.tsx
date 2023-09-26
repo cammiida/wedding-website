@@ -1,17 +1,32 @@
-import type { DataFunctionArgs } from "@remix-run/node";
-import { Form, useNavigation } from "@remix-run/react";
+import { json, type DataFunctionArgs } from "@remix-run/node";
+import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 import { HeaderCenter } from "~/components/header-center";
 import Spinner from "~/components/spinner";
+import Toast from "~/components/toast";
 import { authenticator } from "~/services/authenticator.server";
+import { commitSession, getSession } from "~/services/session.server";
 import { buildImageUrl } from "~/utils/image";
+
+function isRedirect(response: Response) {
+  if (response.status < 300 || response.status >= 400) return false;
+  return response.headers.has("Location");
+}
 
 export async function loader({ request }: DataFunctionArgs) {
   let url = new URL(request.url);
   let returnTo = url.searchParams.get("returnTo");
 
-  return await authenticator.isAuthenticated(request, {
+  const session = await getSession(request.headers.get("Cookie"));
+  const error = session.get("error");
+
+  await authenticator.isAuthenticated(request, {
     successRedirect: returnTo ?? "/",
   });
+
+  return json(
+    { error },
+    { headers: { "Set-Cookie": await commitSession(session) } }
+  );
 }
 
 export async function action({ request }: DataFunctionArgs) {
@@ -25,16 +40,26 @@ export async function action({ request }: DataFunctionArgs) {
   try {
     return await authenticator.authenticate("passphrase", request, {
       successRedirect: pathname,
-      failureRedirect: "/login",
       context: { searchParams: searchParams.toString() },
     });
   } catch (error) {
-    throw error;
+    const session = await getSession(request.headers.get("Cookie"));
+    session.flash("error", "Incorrect password");
+    if (error instanceof Response && isRedirect(error)) {
+      return error;
+    }
+
+    return new Response(null, {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
   }
 }
 
 const Login = () => {
   const navigation = useNavigation();
+  const { error } = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -77,6 +102,9 @@ const Login = () => {
           </Form>
         </div>
       </div>
+      {navigation.state === "idle" && error && (
+        <Toast message={error} type="error" />
+      )}
     </>
   );
 };
