@@ -13,7 +13,7 @@ export default function RsvpSuccess() {
   return (
     <>
       <Header position="relative" />
-      <div className="mx-auto flex max-w-lg flex-col gap-4 p-12">
+      <div className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-lg flex-col gap-4 p-12">
         {email ? (
           <>
             <h1 className="text-3xl font-bold">Success!</h1>
