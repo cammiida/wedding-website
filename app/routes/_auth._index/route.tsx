@@ -49,31 +49,33 @@ export default function Index() {
           className="relative top-[1px] w-full"
           ref={mountainRef}
         />
-        <div className="flex w-full flex-col items-center gap-28 bg-dark-green py-10 lg:py-20">
-          <CountDown countDownDate={new Date("2024-06-15")} />
-          <MountainContent />
-          <div className="flex flex-col items-center gap-6 text-center">
-            <h3 className="max font-roboto text-2xl font-thin text-light-green lg:text-5xl">
-              DON'T FORGET TO RSVP
-              <br /> AS SOON AS POSSIBLE!
-            </h3>
-            <RsvpBtn colorScheme="beige" />
-          </div>
-          <div className="flex flex-col items-center gap-6 text-center">
-            <h3 className="max font-roboto text-xl font-thin text-light-green lg:text-4xl">
-              FEEL FREE TO CONTACT C&T
-              <br />
-              WITH ANY QUESTIONS
-            </h3>
-            <Link
-              to="mailto:hello@camillaplustyler.com"
-              className="max-w-full font-roboto text-lg font-thin text-blue hover:underline lg:text-xl"
-            >
-              HELLO
-              <span className="whitespace-pre before:content-['\A'] lg:before:content-none">
-                @CAMILLAPLUSTYLER.COM
-              </span>
-            </Link>
+        <div className="flex w-full justify-center bg-dark-green py-10 lg:py-20">
+          <div className="flex max-w-2xl flex-col items-center gap-28">
+            <CountDown countDownDate={new Date("2024-06-15")} />
+            <MountainContent />
+            <div className="flex flex-col items-center gap-6 text-center">
+              <h3 className="max font-roboto text-2xl font-thin text-light-green lg:text-5xl">
+                DON'T FORGET TO RSVP
+                <br /> AS SOON AS POSSIBLE!
+              </h3>
+              <RsvpBtn colorScheme="beige" />
+            </div>
+            <div className="flex flex-col items-center gap-6 text-center">
+              <h3 className="max font-roboto text-xl font-thin text-light-green lg:text-4xl">
+                FEEL FREE TO CONTACT C&T
+                <br />
+                WITH ANY QUESTIONS
+              </h3>
+              <Link
+                to="mailto:hello@camillaplustyler.com"
+                className="max-w-full font-roboto text-lg font-thin text-blue hover:underline lg:text-xl"
+              >
+                HELLO
+                <span className="whitespace-pre before:content-['\A'] lg:before:content-none">
+                  @CAMILLAPLUSTYLER.COM
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

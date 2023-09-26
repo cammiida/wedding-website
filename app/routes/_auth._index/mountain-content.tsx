@@ -42,23 +42,24 @@ const Element = ({
   reverse?: boolean;
 }) => {
   return (
-    <div
-      className={`flex flex-col items-center gap-6 lg:items-start lg:justify-center lg:gap-8 ${
+    <Link
+      to={link}
+      className={`group flex flex-col items-center gap-6 lg:items-start lg:gap-8 ${
         reverse ? "lg:flex-row-reverse" : "lg:flex-row"
       }`}
     >
-      <Link to={link} className="group w-2/3 lg:w-1/4">
+      <div className="w-2/3 lg:w-1/2">
         <h3 className="font-roboto text-2xl font-semibold text-light-green group-hover:subpixel-antialiased	">
           {title.toLocaleUpperCase()}
         </h3>
         <p className="pt-4 font-thin text-beige">{content}</p>
-      </Link>
+      </div>
       <img
         src={buildImageUrl({ imageName: img, mode: "landscape" })}
-        className="w-2/3 rounded-md lg:w-1/4"
+        className="w-2/3 rounded-md lg:w-1/2"
         alt=""
       />
-    </div>
+    </Link>
   );
 };
 
