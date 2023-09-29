@@ -6,7 +6,7 @@ import { buildImageUrl } from "~/utils/image";
 const Travel = () => {
   return (
     <>
-      <Header position="relative"></Header>
+      <Header />
       <div className="relative mx-auto flex w-full max-w-lg flex-col  px-5 pb-10 lg:px-0 lg:pt-20">
         <h1 className="pb-2 font-roboto text-4xl font-semibold group-hover:subpixel-antialiased	">
           Travel

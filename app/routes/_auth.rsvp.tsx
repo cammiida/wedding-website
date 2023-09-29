@@ -64,7 +64,7 @@ const RSVP = () => {
 
   return (
     <div className="relative mb-8 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center px-8 lg:px-0">
-      <Header position="relative" />
+      <Header />
       <div className="flex w-full max-w-2xl flex-col">
         <h1 className="text-center font-roboto text-5xl lg:pt-20">RSVP</h1>
         <h2 className="p-3 text-center text-2xl font-thin text-dark-green">

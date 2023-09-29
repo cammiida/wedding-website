@@ -3,7 +3,7 @@ import Header from "~/components/header";
 const Story = () => {
   return (
     <>
-      <Header position="relative" />
+      <Header />
       <div className="relative mx-auto flex w-full max-w-lg flex-col gap-10 px-5 pb-10 lg:px-0 lg:pt-20">
         <h1 className="pb-2 font-roboto text-4xl font-semibold group-hover:subpixel-antialiased	">
           C&T's Story

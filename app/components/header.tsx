@@ -20,30 +20,19 @@ const routes: Route[] = [
   { name: "RSVP", path: "/rsvp" },
 ];
 
-type HeaderProps = {
-  position?: "fixed" | "relative";
-};
-
-const Header = ({ position = "relative" }: HeaderProps) => {
+const Header = () => {
   return (
     <>
-      <DesktopHeader position={position} />
+      <DesktopHeader />
       <MobileHeader />
     </>
   );
 };
 
-const DesktopHeader = ({ position }: HeaderProps) => {
+const DesktopHeader = () => {
   const { state } = useNavigation();
   return (
-    <div
-      className={`${position} top-0 z-20 flex h-20 w-full justify-center text-dark-green`}
-    >
-      <div
-        className={`${
-          position === "fixed" ? position : "absolute"
-        } left-0 top-0 hidden h-24 w-full  lg:flex`}
-      />
+    <div className="relative z-20 flex h-20 w-full justify-center text-dark-green">
       <div className="z-20 hidden w-full max-w-6xl grid-cols-3 gap-4 lg:grid">
         <ul className="flex items-center gap-4">
           {routes.map((route) => (
