@@ -123,9 +123,11 @@ const Navigation = ({ toggle }: { toggle: () => void }) => {
     },
   };
 
+  const logoutRoute: Route = { name: "Logout", path: "/api/logout" };
+
   return (
     <motion.ul variants={variants} className="z-10 flex-col items-center gap-4">
-      {routes.map((route) => (
+      {[...routes, logoutRoute].map((route) => (
         <MenuItem key={route.path} route={route} onClick={toggle} />
       ))}
     </motion.ul>
