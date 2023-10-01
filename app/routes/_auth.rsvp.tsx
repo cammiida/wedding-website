@@ -1,6 +1,6 @@
 import { isNotionClientError } from "@notionhq/client";
 import type { DataFunctionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import {
@@ -19,12 +19,26 @@ import { authenticator } from "~/services/authenticator.server";
 import { env } from "~/variables.server";
 import { sendEmail } from "../services/email.server";
 import Spinner from "~/components/spinner";
+import { commitSession, getSession } from "~/services/session.server";
+import { useLoaderData, useNavigation } from "@remix-run/react";
+import Toast from "~/components/toast";
+
+export async function loader({ request }: DataFunctionArgs) {
+  const session = await getSession(request.headers.get("Cookie"));
+  const error = session.get("error");
+
+  return json(
+    { error },
+    { headers: { "Set-Cookie": await commitSession(session) } }
+  );
+}
 
 export async function action({ request }: DataFunctionArgs) {
   const formData = await request.formData();
   const isAuthenticated = authenticator.isAuthenticated(request);
+  const session = await getSession(request.headers.get("Cookie"));
+
   if (!isAuthenticated) {
-    // TODO: set flash message
     throw redirect("/");
   }
 
@@ -34,8 +48,12 @@ export async function action({ request }: DataFunctionArgs) {
   const emailResponseData = await withZod(emailSchema).validate(formData);
 
   if (validatedProperties.error || emailResponseData.error) {
-    // TODO: set flash message
-    return null;
+    session.flash("error", "Something went wrong. Please try again.");
+    return new Response(null, {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
   }
 
   try {
@@ -46,24 +64,44 @@ export async function action({ request }: DataFunctionArgs) {
       },
       properties: validatedProperties.data,
     });
+  } catch (error) {
+    const errorMessage = isNotionClientError(error)
+      ? error.message
+      : "Something went wrong when saving the response to Notion. Please try again.";
+    session.flash("error", errorMessage);
 
+    return new Response(null, {
+      headers: { "Set-Cookie": await commitSession(session) },
+    });
+  }
+
+  try {
     await sendEmail(emailResponseData.data);
 
     return redirect(`/rsvp/success?email=${emailResponseData.data.Email}`);
   } catch (error) {
-    if (isNotionClientError(error)) {
-      // TODO: set flash message
-    }
-    console.error(error);
-    return null;
+    session.flash(
+      "error",
+      "Your response was successfully saved, but something went wrong when sending the email." +
+        " Please contact us directly if you would like a confirmation of your response."
+    );
+
+    return redirect(`/rsvp/success?email=${emailResponseData.data.Email}`, {
+      headers: { "Set-Cookie": await commitSession(session) },
+    });
   }
 }
 
 const RSVP = () => {
+  const { error } = useLoaderData<typeof loader>();
+  const navigation = useNavigation();
   const isSubmitting = useIsSubmitting("rsvpForm");
 
   return (
     <div className="relative mb-8 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center px-8 lg:px-0">
+      {navigation.state === "idle" && error && (
+        <Toast message={error} type="error" />
+      )}
       <Header />
       <div className="flex w-full max-w-2xl flex-col">
         <h1 className="text-center font-roboto text-5xl lg:pt-20">RSVP</h1>

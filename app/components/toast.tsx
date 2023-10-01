@@ -17,7 +17,7 @@ const Toast: React.FC<ToastProps> = ({ message, type, timeout = 5_000 }) => {
   return (
     <div
       className={`
-          fixed bottom-5 left-1/2 mx-auto -ml-32 w-64 rounded-md p-4 text-center text-grey
+         fixed bottom-5 left-1/2 z-20 mx-auto -ml-32 w-64 rounded-md p-4 text-center text-grey
         ${type === "success" ? "bg-light-green" : "bg-red-100"} 
         ${show ? "block" : "hidden"}
       `}
