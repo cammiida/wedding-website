@@ -59,8 +59,10 @@ const Program = () => {
                 Saturday morning
               </td>
               <td className="border border-grey-transparent p-2">
-                Breakfast at the hotel Outdoor activities for those who are
-                interested, including hiking and relaxing
+                Breakfast at the hotel
+                <br />
+                Outdoor activities for those who are interested, including
+                hiking and relaxing
               </td>
             </tr>
             <tr>
