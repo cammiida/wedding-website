@@ -65,6 +65,7 @@ export async function action({ request }: DataFunctionArgs) {
       properties: validatedProperties.data,
     });
   } catch (error) {
+    console.error(error);
     const errorMessage = isNotionClientError(error)
       ? error.message
       : "Something went wrong when saving the response to Notion. Please try again.";
@@ -80,6 +81,7 @@ export async function action({ request }: DataFunctionArgs) {
 
     return redirect(`/rsvp/success?email=${emailResponseData.data.Email}`);
   } catch (error) {
+    console.error(error);
     session.flash(
       "error",
       "Your response was successfully saved, but something went wrong when sending the email." +
