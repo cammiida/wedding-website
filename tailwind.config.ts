@@ -1,7 +1,7 @@
-const plugin = require("tailwindcss/plugin");
+import type { Config } from "tailwindcss";
+import type { PluginAPI } from "tailwindcss/types/config";
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
@@ -33,7 +33,7 @@ module.exports = {
     plugins: [],
   },
   plugins: [
-    plugin(function ({ matchUtilities, theme }) {
+    ({ matchUtilities, theme }: PluginAPI) => {
       matchUtilities(
         {
           "text-shadow": (value) => ({
@@ -42,6 +42,6 @@ module.exports = {
         },
         { values: theme("textShadow") }
       );
-    }),
+    },
   ],
-};
+} satisfies Config;
