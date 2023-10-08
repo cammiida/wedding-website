@@ -173,6 +173,9 @@ const FormFields = () => {
         onChange={setIsGoing}
         error={errors?.attending}
       />
+      {isGoing === undefined && (
+        <p>More options will appear if you are attending.</p>
+      )}
       {isGoing === "true" && <IsGoingFormPart />}
     </>
   );
@@ -324,10 +327,36 @@ const AccomodationFormPart = () => {
         name="stayingFriday"
         label="Which nights will you be staying at the cabin?"
         required
-        description={`The service and party will be held on Saturday from 13:00 to late, 
-          however there will also be activities planned for Friday evening
-          and Saturday morning. We will cover the cost of food and drinks on the Saturday, 
-          but unfortunately not the Friday.`}
+        description={
+          <>
+            The service and party will be held on Saturday from 13:00 to late,
+            however there will also be activities planned for Friday evening and
+            Saturday morning. We will cover the cost of food and drinks on the
+            Saturday, but unfortunately not the Friday.
+            <br />
+            <br />
+            If you would like to stay at the cabin other nights in addition to
+            Friday and Saturday, you can book directly with the cabin by either
+            calling them on{" "}
+            <a className="text-blue underline" href="tel:+4761341400">
+              +47 61 34 14 00
+            </a>
+            , sending them an email at{" "}
+            <a className="text-blue underline" href="mailto:booking@bygdin.com">
+              booking@bygdin.com
+            </a>
+            , or{" "}
+            <a
+              className="text-blue underline"
+              target="_blank"
+              href="https://online.bookvisit.com/R?channelId=d55f9e6e-32f9-42dd-8e4c-0cbb775cc89f&initialPath=/accommodation#/accommodation"
+              rel="noreferrer"
+            >
+              booking online
+            </a>
+            .
+          </>
+        }
         options={[
           {
             label: "Friday and Saturday",

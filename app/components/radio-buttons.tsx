@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 type RadioOption<V extends string> = {
   value: V;
   id: string;
@@ -8,7 +10,7 @@ type RadioButtonsProps<V extends string> = {
   name: string;
   label: string;
   options: RadioOption<V>[];
-  description?: string;
+  description?: ReactNode;
   required?: boolean;
   onChange?: (value: V | undefined) => void;
   error?: string;
