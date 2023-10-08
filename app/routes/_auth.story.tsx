@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import { useRef, type PropsWithChildren, useEffect, useState } from "react";
 import Header from "~/components/header";
 import { buildImageUrl } from "~/utils/image";
 
@@ -139,10 +139,30 @@ type StorySectionProps = PropsWithChildren<{
 }>;
 
 const StorySection = ({ imgs, children }: StorySectionProps) => {
+  const outerContainerRef = useRef<HTMLDivElement>(null);
+  const imgContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollToSeeMore, setShowScrollToSeeMore] = useState(false);
+
+  useEffect(() => {
+    setShowScrollToSeeMore(
+      (imgContainerRef.current?.scrollWidth ?? 0) >
+        (outerContainerRef.current?.scrollWidth ?? 0)
+    );
+  }, []);
+
   return (
-    <div className={`flex flex-col justify-center gap-8`}>
+    <div
+      ref={outerContainerRef}
+      className={`flex flex-col justify-center gap-8`}
+    >
       <section className="flex flex-1 flex-col">{children}</section>
-      <div className="mx-auto flex max-w-full overflow-x-auto rounded-md">
+      {showScrollToSeeMore && (
+        <p className="underline">Scroll to see more &gt;&gt;</p>
+      )}
+      <div
+        ref={imgContainerRef}
+        className="mx-auto flex max-w-full overflow-x-auto rounded-md"
+      >
         {imgs.length > 0 &&
           imgs.map(({ uri, alt }) => (
             <img
