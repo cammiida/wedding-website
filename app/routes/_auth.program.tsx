@@ -126,7 +126,7 @@ const Program = () => {
             <img
               alt="Jotunheimen hotell i 1910"
               src={buildImageUrl({
-                imageName: "jotunheimen-hotel-i-1910.jpg",
+                imgUri: "jotunheimen-hotel-i-1910.jpg",
                 mode: "landscape_small",
                 customTransformation: "g_south",
               })}

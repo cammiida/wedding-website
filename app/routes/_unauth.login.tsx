@@ -70,7 +70,7 @@ const Login = () => {
       </div>
       <img
         src={buildImageUrl({
-          imageName: "login-bg.jpg",
+          imgUri: "login-bg.jpg",
           mode: "landscape",
         })}
         alt="Two people's feet in the heather overlooking a body of water and the sun setting behind some mountains."

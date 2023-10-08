@@ -23,7 +23,7 @@ export type ImageMode = z.infer<typeof imageModeSchema>;
 export type ImageOptions = z.infer<typeof imageOptionsSchema>;
 
 export const imageRequestSchema = z.object({
-  imageName: z.string(),
+  imgUri: z.string(),
 });
 export type ImageRequest = z.infer<typeof imageRequestSchema>;
 
@@ -59,10 +59,10 @@ const buildCloudinaryUrl = (
 };
 
 export const buildImageUrl = ({
-  imageName,
+  imgUri,
   ...options
 }: ImageRequest & ImageOptions) => {
-  const originalImageUrl = `https://camillaplustyler.com/${imageName}`;
+  const originalImageUrl = `https://camillaplustyler.com/${imgUri}`;
 
   // Link the user directly to the image cdn
   return buildCloudinaryUrl(originalImageUrl, options);

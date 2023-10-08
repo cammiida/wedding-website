@@ -19,7 +19,7 @@ export default function Index() {
       <Header />
       <img
         src={buildImageUrl({
-          imageName: "banner-image.jpg",
+          imgUri: "banner-image.jpg",
           customTransformation: "b_gen_fill,c_pad,ar_3:2",
         })}
         alt="Tyler and Camilla peeking up from the heather in Hardangervidda, looking at the camera."
@@ -42,7 +42,7 @@ export default function Index() {
         </div>
         <img
           src={buildImageUrl({
-            imageName: "mountain-silhouette-green.svg",
+            imgUri: "mountain-silhouette-green.svg",
             customTransformation: "w_1500",
           })}
           alt="Dark mountain silhouette"

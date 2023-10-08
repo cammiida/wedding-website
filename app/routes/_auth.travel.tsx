@@ -23,7 +23,7 @@ const Travel = () => {
           <img
             alt="Stylised map of Oslo, Gardermoen, Torp and Bygdin"
             src={buildImageUrl({
-              imageName: "map.png",
+              imgUri: "map.png",
               customTransformation: "q_auto,w_600",
             })}
             className="w-full"

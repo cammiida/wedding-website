@@ -55,7 +55,7 @@ const Element = ({
         <p className="pt-4 font-thin text-beige">{content}</p>
       </div>
       <img
-        src={buildImageUrl({ imageName: img, mode: "landscape" })}
+        src={buildImageUrl({ imgUri: img, mode: "landscape" })}
         className="w-2/3 rounded-md lg:w-1/2"
         alt=""
       />
