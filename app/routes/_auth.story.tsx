@@ -146,7 +146,7 @@ const StorySection = ({ imgs, children }: StorySectionProps) => {
         {imgs.length > 0 &&
           imgs.map(({ uri, alt }) => (
             <img
-              key={alt}
+              key={uri}
               alt={alt}
               src={buildImageUrl({
                 imgUri: uri,
