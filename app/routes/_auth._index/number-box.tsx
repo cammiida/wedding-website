@@ -1,8 +1,16 @@
-import React from "react";
+import { useHydrated } from "~/hooks/useHydrated";
 
 type NumberBoxProps = { num: string | number; unit: string };
 
-const NumberBox: React.FC<NumberBoxProps> = ({ num, unit }: NumberBoxProps) => {
+export const ClientOnlyNumberBox = (props: NumberBoxProps) => {
+  return useHydrated() ? (
+    <NumberBox {...props} />
+  ) : (
+    <NumberBox num={0} unit={props.unit} />
+  );
+};
+
+export const NumberBox = ({ num, unit }: NumberBoxProps) => {
   return (
     <div className="mt-4 flex flex-col items-center text-beige">
       <div className="relative mt-4 flex h-16 w-16 flex-col items-center justify-center rounded-lg bg-transparent text-xl md:h-24 md:w-24 lg:h-28 lg:w-28 lg:text-4xl ">
@@ -14,5 +22,3 @@ const NumberBox: React.FC<NumberBoxProps> = ({ num, unit }: NumberBoxProps) => {
     </div>
   );
 };
-
-export default NumberBox;
