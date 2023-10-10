@@ -1,6 +1,7 @@
 import { isNotionClientError } from "@notionhq/client";
 import type { DataFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+import { useLoaderData, useNavigation } from "@remix-run/react";
 import { withZod } from "@remix-validated-form/with-zod";
 import { useState } from "react";
 import {
@@ -8,20 +9,18 @@ import {
   useFormContext,
   useIsSubmitting,
 } from "remix-validated-form";
-import Header from "~/components/header";
 import Input from "~/components/input";
 import RadioButtons from "~/components/radio-buttons";
 import Select from "~/components/select";
+import Spinner from "~/components/spinner";
 import TextArea from "~/components/text-area";
+import Toast from "~/components/toast";
 import { emailSchema, notionRsvpSchema, rsvpSchema } from "~/guest-list/schema";
 import { getClient } from "~/notion/notion.server";
 import { authenticator } from "~/services/authenticator.server";
+import { commitSession, getSession } from "~/services/session.server";
 import { env } from "~/variables.server";
 import { sendEmail } from "../services/email.server";
-import Spinner from "~/components/spinner";
-import { commitSession, getSession } from "~/services/session.server";
-import { useLoaderData, useNavigation } from "@remix-run/react";
-import Toast from "~/components/toast";
 
 export async function loader({ request }: DataFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
@@ -104,9 +103,8 @@ const RSVP = () => {
       {navigation.state === "idle" && error && (
         <Toast message={error} type="error" />
       )}
-      <Header />
       <div className="flex w-full max-w-2xl flex-col">
-        <h1 className="text-center font-roboto text-5xl lg:pt-20">RSVP</h1>
+        <h1 className="text-center font-roboto text-5xl">RSVP</h1>
         <h2 className="p-3 text-center text-2xl font-thin text-dark-green">
           Your kind response is requested by
           <br /> October 15th 2023

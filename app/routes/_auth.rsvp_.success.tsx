@@ -1,6 +1,5 @@
 import { json, type DataFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import Header from "~/components/header";
 import Toast from "~/components/toast";
 import { commitSession, getSession } from "~/services/session.server";
 
@@ -21,10 +20,8 @@ export default function RsvpSuccess() {
   const { error } = useLoaderData<typeof loader>();
 
   return (
-    <>
-      <Header />
+    <div className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-lg flex-col gap-4 p-12">
       {error && <Toast message={error} type="error" timeout={20_000} />}
-      <div className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-lg flex-col gap-4 p-12">
         {email ? (
           <>
             <h1 className="text-3xl font-bold">Success!</h1>
@@ -41,6 +38,5 @@ export default function RsvpSuccess() {
           <p className="text-center">Sure you're supposed to be here? 🤔</p>
         )}
       </div>
-    </>
   );
 }

@@ -29,6 +29,10 @@ export default {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
+      gridTemplateRows: {
+        // Complex site-specific row configuration
+        layout: "5rem 1fr 5rem",
+      },
     },
     plugins: [],
   },

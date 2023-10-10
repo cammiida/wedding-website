@@ -1,19 +1,16 @@
-import Header from "~/components/header";
 import { buildImageUrl } from "~/utils/image";
 
 const Program = () => {
   return (
-    <>
-      <Header />
-      <div className="relative mx-auto flex w-full max-w-lg flex-col gap-10 px-5 pb-10 lg:px-0 lg:pt-20">
+    <div className="relative mx-auto flex w-full max-w-lg flex-col gap-10 px-5 pb-10 lg:px-0">
         <section className="flex flex-col">
           <h1 className="pb-2 font-roboto text-4xl font-semibold group-hover:subpixel-antialiased	">
             Program
           </h1>
           <p className="text-grey">
             The wedding will be taking place at Bygdin Mountain Hotel, in the
-            southern part of the majestic Jotunheimen mountain range, Norway.
-            The wedding service itself will be held at the cabin on Saturday
+          southern part of the majestic Jotunheimen mountain range, Norway. The
+          wedding service itself will be held at the cabin on Saturday
             afternoon. If you have a{" "}
             <a
               href="https://en.wikipedia.org/wiki/Bunad"
@@ -29,7 +26,10 @@ const Program = () => {
             night and Saturday morning, including dinner, drinks, quiz, hiking,
             fishing, and just relaxing with a beautiful view. We'd love to have
             you join from Friday to Sunday if you can, but of course it's also
-            possible to make your visit shorter (or longer!) if you prefer.
+          possible to make your visit shorter (or longer!) if you prefer. <br />
+          <br />
+          We kindly ask that you do not bring presents. Folks are travelling a
+          long way to be at the wedding and your attendance is more than enough.
           </p>
         </section>
         <table className="table-auto border-collapse border-spacing-x-1 border-spacing-y-5">
@@ -61,8 +61,8 @@ const Program = () => {
               <td className="border border-grey-transparent p-2">
                 Breakfast at the hotel
                 <br />
-                Outdoor activities for those who are interested, including
-                hiking and relaxing
+              Outdoor activities for those who are interested, including hiking
+              and relaxing
               </td>
             </tr>
             <tr>
@@ -117,12 +117,12 @@ const Program = () => {
             >
               here
             </a>
-            ) is family owned and is run by Tor Oxhovd Svalesen together with
-            his mother, Bente Oxhovd. Named after the lake on which it is built,
-            it is located 1,065 metres above sea level. It was built in 1897 and
-            still maintains a lot of the charm and character from these early
-            days, although it has undergone many renovations to make it more
-            comfortable by modern standards.
+          ) is family owned and is run by Tor Oxhovd Svalesen together with his
+          mother, Bente Oxhovd. Named after the lake on which it is built, it is
+          located 1,065 metres above sea level. It was built in 1897 and still
+          maintains a lot of the charm and character from these early days,
+          although it has undergone many renovations to make it more comfortable
+          by modern standards.
             <img
               alt="Jotunheimen hotell i 1910"
               src={buildImageUrl({
@@ -192,14 +192,30 @@ const Program = () => {
             that you can visit or stay at while you wander. They have basic
             accommodation in dormitories, or private rooms. Many also serve
             delicious three-course dinners which taste like a Michelin-star
-            restaurant after a long day in nature! Even in June, which is the
-            Norwegian summer, it can be a little cold, so pack some warm
-            clothes. Also, the days are long and the sun doesn't set before
-            10pm, so we will make sure there's plenty of coffee to enjoy.
+          restaurant after a long day in nature! There's also a{" "}
+          <a
+            target="_blank"
+            href="https://www.synshorn.no/"
+            rel="noreferrer"
+            className="text-blue hover:underline"
+          >
+            via ferrata
+          </a>{" "}
+          nearby the cabin.
+        </p>
+      </section>
+      <section>
+        <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased">
+          The Weather
+        </h2>
+        <p className="text-grey">
+          Even in June, which is the Norwegian summer, it can be a little cold,
+          so pack some warm clothes. Also, the days are long and the sun doesn't
+          set before 10pm, so we will make sure there's plenty of coffee to
+          enjoy.
           </p>
         </section>
       </div>
-    </>
   );
 };
 

@@ -1,11 +1,10 @@
 import { Link } from "@remix-run/react";
 import { useRef } from "react";
-import Header from "~/components/header";
 import RsvpBtn from "~/components/rsvp-btn";
+import { buildImageUrl } from "~/utils/image";
 import { AnimatedScrollButton } from "./animated-scroll-btn";
 import CountDown from "./count-down";
 import MountainContent from "./mountain-content";
-import { buildImageUrl } from "~/utils/image";
 
 export default function Index() {
   const mountainRef = useRef<HTMLImageElement>(null);
@@ -16,7 +15,6 @@ export default function Index() {
 
   return (
     <>
-      <Header />
       <img
         src={buildImageUrl({
           imgUri: "banner-image.jpg",
@@ -27,7 +25,7 @@ export default function Index() {
       />
       <div className="fixed top-0 z-0 min-h-screen w-full bg-grey-transparent lg:hidden" />
       <div className="relative flex flex-col">
-        <div className="relative flex h-screen w-full flex-col items-center justify-between p-5 sm:p-20">
+        <div className="relative flex h-[calc(h-screen-5rem)] w-full flex-col items-center justify-between p-5 sm:p-20">
           <div className="m-auto flex max-w-xl flex-col items-center gap-10 rounded-md shadow-grey-transparent text-shadow lg:bg-grey-transparent lg:p-8">
             <h1 className="z-20 mt-8 h-full text-center font-roboto text-5xl font-thin text-beige md:h-auto md:text-6xl">
               WE'RE GETTING MARRIED!
