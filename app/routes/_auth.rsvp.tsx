@@ -33,20 +33,22 @@ export async function loader({ request }: DataFunctionArgs) {
 }
 
 export async function action({ request }: DataFunctionArgs) {
+  await authenticator.isAuthenticated(request, { failureRedirect: "/" });
+
   const formData = await request.formData();
-  const isAuthenticated = authenticator.isAuthenticated(request);
   const session = await getSession(request.headers.get("Cookie"));
 
-  if (!isAuthenticated) {
-    throw redirect("/");
-  }
+  const [notionResponse, emailResponse, formResponse] = await Promise.all([
+    withZod(notionRsvpSchema).validate(formData),
+    withZod(emailSchema).validate(formData),
+    withZod(rsvpSchema).validate(formData),
+  ]);
 
-  const validatedProperties = await withZod(notionRsvpSchema).validate(
-    formData
-  );
-  const emailResponseData = await withZod(emailSchema).validate(formData);
+  if (notionResponse.error || emailResponse.error || formResponse.error) {
+    notionResponse.error && console.error(notionResponse.error);
+    emailResponse.error && console.error(emailResponse.error);
+    formResponse.error && console.error(formResponse.error);
 
-  if (validatedProperties.error || emailResponseData.error) {
     session.flash("error", "Something went wrong. Please try again.");
     return new Response(null, {
       headers: {
@@ -61,7 +63,7 @@ export async function action({ request }: DataFunctionArgs) {
         type: "database_id",
         database_id: env.RSVP_DATABASE_ID,
       },
-      properties: validatedProperties.data,
+      properties: notionResponse.data,
     });
   } catch (error) {
     console.error(error);
@@ -75,10 +77,14 @@ export async function action({ request }: DataFunctionArgs) {
     });
   }
 
-  try {
-    await sendEmail(emailResponseData.data);
+  const searchParams = new URLSearchParams();
+  searchParams.append("email", formResponse.data.email);
+  searchParams.append("isAttending", formResponse.data.attending.toString());
 
-    return redirect(`/rsvp/success?email=${emailResponseData.data.Email}`);
+  try {
+    await sendEmail(emailResponse.data);
+
+    return redirect(`/rsvp/success?${searchParams.toString()}`);
   } catch (error) {
     console.error(error);
     session.flash(
@@ -87,7 +93,7 @@ export async function action({ request }: DataFunctionArgs) {
         " Please contact us directly if you would like a confirmation of your response."
     );
 
-    return redirect(`/rsvp/success?email=${emailResponseData.data.Email}`, {
+    return redirect(`/rsvp/success?${searchParams.toString()}`, {
       headers: { "Set-Cookie": await commitSession(session) },
     });
   }
@@ -99,7 +105,7 @@ const RSVP = () => {
   const isSubmitting = useIsSubmitting("rsvpForm");
 
   return (
-    <div className="relative mb-8 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center px-8 lg:px-0">
+    <div className="relative flex min-h-[calc(100vh-12.5rem)] w-full flex-col items-center px-8 lg:px-0">
       {navigation.state === "idle" && error && (
         <Toast message={error} type="error" />
       )}
@@ -117,7 +123,7 @@ const RSVP = () => {
         >
           <FormFields />
           <button
-            className="flex justify-center rounded-md bg-dark-green py-2 text-beige disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
+            className="mb-10 flex justify-center rounded-md bg-dark-green py-2 text-beige disabled:grayscale disabled:filter lg:w-1/4 lg:self-end"
             type="submit"
             disabled={isSubmitting}
           >
