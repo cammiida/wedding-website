@@ -19,12 +19,18 @@ const BODY_HTML = (response: Partial<EmailSchema>) => {
   </html>`;
 };
 
-export async function sendEmail(response: EmailSchema) {
+export async function sendEmail({
+  email,
+  content,
+}: {
+  email: string;
+  content: EmailSchema;
+}) {
   resend.emails.send({
     from: "hello@camillaplustyler.com",
-    to: env.FEATURE_FLAG_EMAIL ? response.Email : env.BCC_EMAIL,
+    to: env.FEATURE_FLAG_EMAIL ? email : env.BCC_EMAIL,
     subject: "Tyler & Camilla: Wedding invitation response",
-    html: BODY_HTML(response),
+    html: BODY_HTML(content),
     headers: {
       "X-Entity-Ref-ID": uuid(),
     },

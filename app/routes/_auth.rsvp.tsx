@@ -82,7 +82,10 @@ export async function action({ request }: DataFunctionArgs) {
   searchParams.append("isAttending", formResponse.data.attending.toString());
 
   try {
-    await sendEmail(emailResponse.data);
+    await sendEmail({
+      email: formResponse.data.email,
+      content: emailResponse.data,
+    });
 
     return redirect(`/rsvp/success?${searchParams.toString()}`);
   } catch (error) {
