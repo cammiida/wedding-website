@@ -20,7 +20,7 @@ export default function RsvpSuccess() {
   const { email, isAttending, error } = useLoaderData<typeof loader>();
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-lg flex-col gap-4">
+    <div className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-lg flex-col gap-4 pb-10">
       {error && <Toast message={error} type="error" timeout={20_000} />}
       {email ? (
         <>

@@ -1,7 +1,5 @@
 import { buildImageUrl } from "~/utils/image";
 
-// TODO: Where to rent a car
-
 const Travel = () => {
   return (
     <div className="relative mx-auto flex w-full max-w-lg flex-col  px-5 pb-10 lg:px-0">
@@ -66,6 +64,7 @@ const Travel = () => {
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Renting a car
           </h2>
+          {/* TODO: Where to rent a car */}
           <p className="text-grey">Coming soon...</p>
         </section>
         <section className="flex flex-col">
@@ -80,7 +79,7 @@ const Travel = () => {
           </p>
         </section>
       </div>
-      <h1 className=" mt-20 pb-2 font-roboto text-4xl font-semibold group-hover:subpixel-antialiased	">
+      <h1 className="mt-20 pb-2 font-roboto text-4xl font-semibold group-hover:subpixel-antialiased	">
         Sleeping arrangements
       </h1>
       <div className="flex flex-col gap-14">
