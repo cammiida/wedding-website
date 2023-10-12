@@ -35,7 +35,7 @@ export const AnimatedScrollButton = ({ onClick }: { onClick: () => void }) => {
       <img
         src={buildImageUrl({
           imgUri: "arrow-down-beige.svg",
-          customTransformation: "q_auto,w_100",
+          customTransformation: "w_100,f_auto,q_auto",
         })}
         alt="Arrow pointing downwards"
         className="h-10 w-10"

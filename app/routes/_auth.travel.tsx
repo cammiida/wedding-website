@@ -21,7 +21,7 @@ const Travel = () => {
           alt="Stylised map of Oslo, Gardermoen, Torp and Bygdin"
           src={buildImageUrl({
             imgUri: "map.png",
-            customTransformation: "q_auto,w_600",
+            customTransformation: "w_600,f_auto,q_auto",
           })}
           className="w-full"
         />

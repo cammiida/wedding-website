@@ -43,10 +43,13 @@ const getModeTransformation = (mode: ImageMode) => {
   }
 };
 
-const buildCloudinaryUrl = (
-  src: string,
-  { mode, customTransformation }: ImageOptions
-) => {
+export const buildImageUrl = ({
+  imgUri,
+  mode,
+  customTransformation,
+}: ImageRequest & ImageOptions) => {
+  const originalImageUrl = `https://camillaplustyler.com/${imgUri}`;
+
   const modeTransformationString = mode ? getModeTransformation(mode) : "";
 
   const transformationString = [modeTransformationString, customTransformation]
@@ -54,16 +57,6 @@ const buildCloudinaryUrl = (
     .join(",");
 
   return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/fetch/${transformationString}/${encodeURIComponent(
-    src
+    originalImageUrl
   )}`;
-};
-
-export const buildImageUrl = ({
-  imgUri,
-  ...options
-}: ImageRequest & ImageOptions) => {
-  const originalImageUrl = `https://camillaplustyler.com/${imgUri}`;
-
-  // Link the user directly to the image cdn
-  return buildCloudinaryUrl(originalImageUrl, options);
 };

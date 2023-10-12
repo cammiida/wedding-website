@@ -55,7 +55,13 @@ const Element = ({
         <p className="pt-4 font-thin text-beige">{content}</p>
       </div>
       <img
-        src={buildImageUrl({ imgUri: img, mode: "landscape" })}
+        srcSet={`${buildImageUrl({
+          imgUri: img,
+          customTransformation: "w_600,f_auto,q_auto",
+        })} 600w, ${buildImageUrl({
+          imgUri: img,
+          customTransformation: "w_1000,f_auto,q_auto",
+        })} 1000w`}
         className="w-2/3 rounded-md lg:w-1/2"
         alt=""
       />

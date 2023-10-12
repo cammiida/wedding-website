@@ -168,9 +168,9 @@ const StorySection = ({ imgs, title, children }: StorySectionProps) => {
               alt={alt}
               src={buildImageUrl({
                 imgUri: uri,
-                customTransformation: "q_auto",
+                customTransformation: "h_500,q_auto",
               })}
-              className="max-h-64"
+              className="h-64"
             />
           ))}
       </div>
