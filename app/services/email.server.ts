@@ -9,12 +9,14 @@ const resend = new Resend(env.RESEND_KEY);
 const BODY_HTML = (response: Partial<EmailSchema>) => {
   return `<html><head></head>
   <body>
-  <h2>Your response regarding Tyler and Camilla's wedding in Jotunheimen, Norway, on the 15th of June 2024.</h2>
+  <h2>Your response regarding Camilla and Tyler's wedding in Jotunheimen, Norway, on the 15th of June 2024.</h2>
   <ul>
     ${Object.entries(response)
       .map(([key, value]) => `<li>${key}: ${value}</li>`)
       .join("")}
   </ul>
+  <br/>
+  <p>Love, Camilla and Tyler</p>
   </body>
   </html>`;
 };
@@ -27,9 +29,9 @@ export async function sendEmail({
   content: EmailSchema;
 }) {
   resend.emails.send({
-    from: "hello@camillaplustyler.com",
+    from: "Camilla + Tyler <hello@camillaplustyler.com>",
     to: env.FEATURE_FLAG_EMAIL ? email : env.BCC_EMAIL,
-    subject: "Tyler & Camilla: Wedding invitation response",
+    subject: "Wedding invitation response",
     html: BODY_HTML(content),
     headers: {
       "X-Entity-Ref-ID": uuid(),
