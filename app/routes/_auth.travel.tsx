@@ -64,6 +64,12 @@ const Travel = () => {
         </section>
         <section className="flex flex-col">
           <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+            Renting a car
+          </h2>
+          <p className="text-grey">Coming soon...</p>
+        </section>
+        <section className="flex flex-col">
+          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
             Travelling together
           </h2>
           <p className="text-grey">
