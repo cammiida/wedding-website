@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type PropsWithChildren } from "react";
+import { useHydrated } from "~/hooks/useHydrated";
 import { buildImageUrl } from "~/utils/image";
 
 const Story = () => {
@@ -8,10 +9,10 @@ const Story = () => {
         C&T's Story
       </h1>
       <div className="flex flex-col gap-32">
-        <StorySection imgs={[{ uri: "images/story/cc-skiing.jpg", alt: "" }]}>
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            The Meeting
-          </h2>
+        <StorySection
+          imgs={[{ uri: "images/story/cc-skiing.jpg", alt: "" }]}
+          title="The Meeting"
+        >
           <p className="text-grey">
             Camilla and Tyler met in 2017 when they were studying at university
             in Trondheim. They bonded over stories of Australia (where Tyler is
@@ -21,10 +22,10 @@ const Story = () => {
             dancefloor at the wedding).
           </p>
         </StorySection>
-        <StorySection imgs={[{ uri: "images/story/sushi.jpg", alt: "" }]}>
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            Getting to Know Each Other
-          </h2>
+        <StorySection
+          imgs={[{ uri: "images/story/sushi.jpg", alt: "" }]}
+          title="Getting to Know Each Other"
+        >
           <p className="text-grey">
             Between classes in Trondheim, Camilla was working as a bartender
             while Tyler was working as a waiter at a sushi restaurant. They soon
@@ -34,6 +35,7 @@ const Story = () => {
           </p>
         </StorySection>
         <StorySection
+          title="Early Dates"
           imgs={[
             { uri: "images/story/darts.jpg", alt: "" },
             {
@@ -43,9 +45,6 @@ const Story = () => {
             { uri: "images/story/kvikk-lunsj.jpg", alt: "" },
           ]}
         >
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            Early Dates
-          </h2>
           <p className="text-grey">Their early dates included:</p>
           <br />
           <ul className="list-disc text-grey">
@@ -61,6 +60,7 @@ const Story = () => {
           </ul>
         </StorySection>
         <StorySection
+          title="Favourite Adventures"
           imgs={[
             {
               uri: "images/story/skjeberg-cabin.jpg",
@@ -78,9 +78,6 @@ const Story = () => {
             { uri: "images/story/hardangervidda-bridge.jpg", alt: "" },
           ]}
         >
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            Favourite Adventures
-          </h2>
           <p className="text-grey">
             Tyler got to know Camilla's family better during trips to the cabin
             in Skjeberg, where Kjell (Camilla's grandfather) would teach them
@@ -102,6 +99,7 @@ const Story = () => {
           </p>
         </StorySection>
         <StorySection
+          title="Moving to Oslo"
           imgs={[
             {
               uri: "images/story/moving-van.jpg",
@@ -111,9 +109,6 @@ const Story = () => {
             { uri: "images/story/tuscany-trail-fall.jpg", alt: "" },
           ]}
         >
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            Moving to Oslo
-          </h2>
           <p className="text-grey">
             In 2019, they moved to Oslo together and have been living and
             working there ever since. We're looking forward to celebrating our
@@ -131,26 +126,34 @@ export default Story;
 type Image = { uri: string; alt: string };
 type StorySectionProps = PropsWithChildren<{
   imgs: Image[];
+  title: string;
 }>;
 
-const StorySection = ({ imgs, children }: StorySectionProps) => {
+const StorySection = ({ imgs, title, children }: StorySectionProps) => {
+  const isHydrated = useHydrated();
   const outerContainerRef = useRef<HTMLDivElement>(null);
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const [showScrollToSeeMore, setShowScrollToSeeMore] = useState(false);
 
   useEffect(() => {
-    setShowScrollToSeeMore(
-      (imgContainerRef.current?.scrollWidth ?? 0) >
-        (outerContainerRef.current?.scrollWidth ?? 0)
-    );
-  }, []);
+    isHydrated &&
+      setShowScrollToSeeMore(
+        (imgContainerRef.current?.scrollWidth ?? 0) >
+          (outerContainerRef.current?.scrollWidth ?? 0)
+      );
+  }, [isHydrated]);
 
   return (
     <div
       ref={outerContainerRef}
       className={`flex flex-col justify-center gap-8`}
     >
-      <section className="flex flex-1 flex-col">{children}</section>
+      <section className="flex flex-1 flex-col">
+        <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
+          {title}
+        </h2>
+        {children}
+      </section>
       {showScrollToSeeMore && (
         <p className="underline">Scroll to see more &gt;&gt;</p>
       )}
