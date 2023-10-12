@@ -49,9 +49,9 @@ const Program = () => {
               Friday evening
             </td>
             <td className="border border-grey-transparent p-2">
-              Check-in from 15:00 <br />
+              Check-in from 15:00. <br />
               Dinner at the hotel, followed by low-key activities, including
-              quiz and other games
+              quiz and other games.
             </td>
           </tr>
           <tr>
@@ -59,10 +59,10 @@ const Program = () => {
               Saturday morning
             </td>
             <td className="border border-grey-transparent p-2">
-              Breakfast at the hotel
+              Breakfast at the hotel.
               <br />
-              Outdoor activities for those who are interested, including hiking
-              and relaxing
+              Possibly some outdoor activities for those who are interested,
+              including hiking and relaxing.
             </td>
           </tr>
           <tr>
@@ -71,7 +71,7 @@ const Program = () => {
             </td>
             <td className="border border-grey-transparent p-2">
               🎉 <b>Outdoor wedding ceremony</b> 🎉 <br />
-              (weather permitting) with drinks and snacks
+              (weather permitting)
             </td>
           </tr>
           <tr>
@@ -79,8 +79,8 @@ const Program = () => {
               Saturday evening
             </td>
             <td className="border border-grey-transparent p-2">
-              Celebration dinner at the hotel <br />
-              Drinks and dancing till late 💃 🪩
+              Celebration dinner at the hotel. <br />
+              Drinks and dancing till late. 💃 🪩
             </td>
           </tr>
           <tr>
@@ -88,9 +88,9 @@ const Program = () => {
               Sunday morning
             </td>
             <td className="border border-grey-transparent p-2">
-              Breakfast at the hotel
+              Breakfast at the hotel.
               <br />
-              Check-out by 11:00
+              Check-out by 11:00.
             </td>
           </tr>
         </tbody>
