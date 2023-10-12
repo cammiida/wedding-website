@@ -13,7 +13,7 @@ const MountainContent = () => {
       <Element
         title="HOW TO GET THERE"
         content="The wedding will take place at the Bygdin Mountain Hotel in the
-            majestic Jotunheimen mountain range, Norway. Read more the hotel and how to get there here."
+            majestic Jotunheimen mountain range, Norway. Read more about the hotel and how to get there here."
         link="/travel"
         img="top-of-fjord.jpg"
         reverse
