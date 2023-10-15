@@ -1,4 +1,5 @@
 import { NavLink } from "@remix-run/react";
+import { RSVP_DATE } from "~/constants";
 
 type ColorScheme = "yellow" | "grey" | "beige" | "green";
 
@@ -15,7 +16,7 @@ const RsvpBtn = ({ colorScheme }: { colorScheme: ColorScheme }) => {
       to="/rsvp"
       className={`rounded-3xl border-[1px] bg-opacity-5 px-4 hover:bg-opacity-10 ${styles[colorScheme]}`}
     >
-      RSVP by October 15th, 2023
+      RSVP by {RSVP_DATE}
     </NavLink>
   );
 };
