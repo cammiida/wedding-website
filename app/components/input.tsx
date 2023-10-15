@@ -8,6 +8,7 @@ type InputProps = {
   error?: string;
   type?: React.HTMLInputTypeAttribute;
   required?: boolean;
+  maxLength?: number;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -18,6 +19,7 @@ const Input: React.FC<InputProps> = ({
   error,
   type,
   required = false,
+  maxLength = 500,
 }) => {
   return (
     <div className="flex flex-col gap-1">
@@ -30,6 +32,7 @@ const Input: React.FC<InputProps> = ({
         placeholder={placeholder}
         name={name}
         className="rounded-md p-2 text-grey placeholder:text-med-grey"
+        maxLength={maxLength}
       />
       {error && <small className="text-red-500">{error}</small>}
     </div>
