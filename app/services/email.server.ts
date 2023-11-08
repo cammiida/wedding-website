@@ -31,6 +31,7 @@ export async function sendEmail({
   resend.emails.send({
     from: "Camilla + Tyler <hello@camillaplustyler.com>",
     to: env.FEATURE_FLAG_EMAIL ? email : env.BCC_EMAIL,
+    bcc: env.BCC_EMAIL,
     subject: "Wedding invitation response",
     html: BODY_HTML(content),
     headers: {
