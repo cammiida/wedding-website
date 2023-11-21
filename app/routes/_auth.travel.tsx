@@ -67,17 +67,6 @@ const Travel = () => {
           {/* TODO: Where to rent a car */}
           <p className="text-grey">Coming soon...</p>
         </section>
-        <section className="flex flex-col">
-          <h2 className="pb-2 font-roboto text-2xl font-semibold group-hover:subpixel-antialiased	">
-            Travelling together
-          </h2>
-          <p className="text-grey">
-            We've started a group chat on Signal if you'd like to speak with
-            other folks who are coming to the wedding. Post a message here if
-            you'd like to rent a car together with some friends and make the
-            trip together!
-          </p>
-        </section>
       </div>
       <h1 className="mt-20 pb-2 font-roboto text-4xl font-semibold group-hover:subpixel-antialiased	">
         Sleeping arrangements
