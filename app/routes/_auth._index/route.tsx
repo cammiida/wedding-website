@@ -52,7 +52,7 @@ export default function Index() {
             <CountDown countDownDate={new Date("2024-06-15")} />
             <MountainContent />
             <div className="flex flex-col items-center gap-6 text-center">
-              <h3 className="max font-roboto text-2xl font-thin text-light-green lg:text-5xl">
+              <h3 className="max font-roboto text-2xl font-thin capitalize text-light-green lg:text-4xl">
                 DON'T FORGET TO RSVP
                 <br /> AS SOON AS POSSIBLE!
               </h3>

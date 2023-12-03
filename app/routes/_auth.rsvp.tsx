@@ -21,7 +21,6 @@ import { authenticator } from "~/services/authenticator.server";
 import { commitSession, getSession } from "~/services/session.server";
 import { env } from "~/variables.server";
 import { sendEmail } from "../services/email.server";
-import { RSVP_DATE } from "~/constants";
 
 export async function loader({ request }: DataFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
@@ -115,11 +114,6 @@ const RSVP = () => {
       )}
       <div className="flex w-full max-w-2xl flex-col">
         <h1 className="text-center font-roboto text-5xl">RSVP</h1>
-        <h2 className="p-3 text-center text-2xl font-thin text-dark-green">
-          Your kind response is requested by
-          <br />
-          {RSVP_DATE}
-        </h2>
         <ValidatedForm
           id="rsvpForm"
           validator={withZod(rsvpSchema)}
